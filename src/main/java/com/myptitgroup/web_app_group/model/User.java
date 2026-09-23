@@ -1,12 +1,15 @@
 package com.myptitgroup.web_app_group.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 /**
- * JavaBean ánh xạ bảng admins (Quản trị viên)
+ * JavaBean ánh xạ bảng users (Tài khoản Khách hàng mua sắm)
  */
-public class Admin implements Serializable {
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id;
@@ -15,26 +18,27 @@ public class Admin implements Serializable {
     private String fullName;
     private String email;
     private String phone;
-    private String role; // 'ADMIN', 'SUPER_ADMIN'
+    private String address;
     private boolean isActive;
-    private Timestamp lastLogin;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public Admin() {
+    // Các trường thống kê mở rộng (dành cho Admin quản lý khách hàng)
+    private int totalOrders;
+    private BigDecimal totalSpent;
+
+    public User() {
+        this.isActive = true;
     }
 
-    public Admin(int id, String username, String passwordHash, String fullName, String email, 
-                 String phone, String role, boolean isActive, Timestamp lastLogin) {
-        this.id = id;
+    public User(String username, String passwordHash, String fullName, String email, String phone, String address) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
-        this.role = role;
-        this.isActive = isActive;
-        this.lastLogin = lastLogin;
+        this.address = address;
+        this.isActive = true;
     }
 
     public int getId() {
@@ -85,15 +89,19 @@ public class Admin implements Serializable {
         this.phone = phone;
     }
 
-    public String getRole() {
-        return role;
+    public String getAddress() {
+        return address;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public boolean isActive() {
+        return isActive;
+    }
+
+    public boolean getIsActive() {
         return isActive;
     }
 
@@ -101,12 +109,8 @@ public class Admin implements Serializable {
         isActive = active;
     }
 
-    public Timestamp getLastLogin() {
-        return lastLogin;
-    }
-
-    public void setLastLogin(Timestamp lastLogin) {
-        this.lastLogin = lastLogin;
+    public void setIsActive(boolean active) {
+        isActive = active;
     }
 
     public Timestamp getCreatedAt() {
@@ -125,10 +129,40 @@ public class Admin implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public int getTotalOrders() {
+        return totalOrders;
+    }
+
+    public void setTotalOrders(int totalOrders) {
+        this.totalOrders = totalOrders;
+    }
+
+    public BigDecimal getTotalSpent() {
+        return totalSpent;
+    }
+
+    public void setTotalSpent(BigDecimal totalSpent) {
+        this.totalSpent = totalSpent;
+    }
+
+    public String getFormattedTotalSpent() {
+        if (totalSpent == null) return "0 đ";
+        DecimalFormat df = new DecimalFormat("###,###,### đ");
+        return df.format(totalSpent);
+    }
+
+    public String getFormattedCreatedAt() {
+        if (createdAt == null) return "";
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(createdAt);
+    }
+
     public String getAvatarInitial() {
         if (fullName != null && !fullName.trim().isEmpty()) {
             return fullName.trim().substring(0, 1).toUpperCase();
         }
-        return "A";
+        if (username != null && !username.trim().isEmpty()) {
+            return username.trim().substring(0, 1).toUpperCase();
+        }
+        return "U";
     }
 }

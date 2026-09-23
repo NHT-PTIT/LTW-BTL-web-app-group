@@ -117,7 +117,7 @@ public class ProductDAO {
     public Product getById(int id) {
         String sql = "SELECT p.*, c.name AS category_name " +
                      "FROM products p " +
-                     "JOIN categories c ON p.category_id = c.id " +
+                     "LEFT JOIN categories c ON p.category_id = c.id " +
                      "WHERE p.id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
@@ -337,6 +337,109 @@ public class ProductDAO {
             sql.append("AND p.power_val <= ? ");
             params.add(maxPower);
         }
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append("AND (p.name LIKE ? OR p.sku LIKE ? OR p.brand LIKE ? OR p.short_description LIKE ?) ");
+            String searchPattern = "%" + keyword.trim() + "%";
+            params.add(searchPattern);
+            params.add(searchPattern);
+            params.add(searchPattern);
+            params.add(searchPattern);
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql.toString());
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, rs);
+        }
+        return 0;
+    }
+
+    /**
+     * BỘ LỌC DÀNH CHO ADMIN:
+     * - Hiển thị cả sản phẩm ẩn (is_active = 0 hoặc 1)
+     * - LEFT JOIN categories để không bị mất sản phẩm nếu danh mục có sai khác
+     * - Hỗ trợ lọc danh mục, tìm kiếm từ khóa theo tên, SKU, thương hiệu
+     */
+    public List<Product> filterProductsForAdmin(Integer categoryId, String keyword, int page, int pageSize) {
+        List<Product> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder(
+            "SELECT p.*, c.name AS category_name " +
+            "FROM products p " +
+            "LEFT JOIN categories c ON p.category_id = c.id " +
+            "WHERE 1=1 "
+        );
+
+        List<Object> params = new ArrayList<>();
+
+        if (categoryId != null && categoryId > 0) {
+            sql.append("AND (p.category_id = ? OR p.category_id IN (SELECT id FROM categories WHERE parent_id = ?)) ");
+            params.add(categoryId);
+            params.add(categoryId);
+        }
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append("AND (p.name LIKE ? OR p.sku LIKE ? OR p.brand LIKE ? OR p.short_description LIKE ?) ");
+            String searchPattern = "%" + keyword.trim() + "%";
+            params.add(searchPattern);
+            params.add(searchPattern);
+            params.add(searchPattern);
+            params.add(searchPattern);
+        }
+
+        sql.append("ORDER BY p.id DESC LIMIT ? OFFSET ?");
+        int offset = Math.max(0, (page - 1) * pageSize);
+        params.add(pageSize);
+        params.add(offset);
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql.toString());
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, rs);
+        }
+        return list;
+    }
+
+    public int countProductsForAdmin(Integer categoryId, String keyword) {
+        StringBuilder sql = new StringBuilder(
+            "SELECT COUNT(*) FROM products p " +
+            "LEFT JOIN categories c ON p.category_id = c.id " +
+            "WHERE 1=1 "
+        );
+
+        List<Object> params = new ArrayList<>();
+
+        if (categoryId != null && categoryId > 0) {
+            sql.append("AND (p.category_id = ? OR p.category_id IN (SELECT id FROM categories WHERE parent_id = ?)) ");
+            params.add(categoryId);
+            params.add(categoryId);
+        }
+
         if (keyword != null && !keyword.trim().isEmpty()) {
             sql.append("AND (p.name LIKE ? OR p.sku LIKE ? OR p.brand LIKE ? OR p.short_description LIKE ?) ");
             String searchPattern = "%" + keyword.trim() + "%";
@@ -653,4 +756,58 @@ public class ProductDAO {
         }
         return false;
     }
+
+    /**
+     * Đếm số lượng sản phẩm sắp hết hàng (tồn kho <= threshold)
+     */
+    public int countLowStock(int threshold) {
+        String sql = "SELECT COUNT(*) FROM products WHERE stock_quantity <= ? AND is_active = 1";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, threshold);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, rs);
+        }
+        return 0;
+    }
+
+    /**
+     * Lấy danh sách sản phẩm có tồn kho thấp phục vụ cảnh báo Admin
+     */
+    public List<Product> getLowStockProducts(int threshold, int limit) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT p.*, c.name AS category_name FROM products p " +
+                     "LEFT JOIN categories c ON p.category_id = c.id " +
+                     "WHERE p.stock_quantity <= ? AND p.is_active = 1 " +
+                     "ORDER BY p.stock_quantity ASC LIMIT ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, threshold);
+            ps.setInt(2, limit);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, rs);
+        }
+        return list;
+    }
 }
+

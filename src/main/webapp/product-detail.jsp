@@ -146,23 +146,36 @@
                             </p>
                         </div>
 
-                        <form action="${pageContext.request.contextPath}/cart.jsp" method="get" style="margin-top: 25px;">
-                            <input type="hidden" name="productId" value="${product.id}">
-                            <div class="single-shop-price" style="margin-bottom: 15px;">
-                                <p class="qnt" style="display: flex; align-items: center; gap: 10px;">
-                                    <span>Số lượng:</span>
-                                    <input value="1" min="1" max="${product.stockQuantity > 0 ? product.stockQuantity : 1}" name="quantity" type="number" style="width: 80px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; text-align: center;">
-                                </p>
-                            </div>
-                            <div class="single-shop-page-btn" style="display: flex; gap: 15px; margin-top: 20px;">
-                                <button type="submit" class="bleezy-btn" style="cursor: pointer;">
-                                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
-                                </button>
-                                <a href="${pageContext.request.contextPath}/checkout.jsp" class="bleezy-btn" style="background: #28a745; border-color: #28a745;">
-                                    Mua ngay
-                                </a>
-                            </div>
-                        </form>
+                        <c:choose>
+                            <c:when test="${product.stockQuantity > 0}">
+                                <form action="${pageContext.request.contextPath}/cart-action" method="post" style="margin-top: 25px;">
+                                    <input type="hidden" name="action" value="add">
+                                    <input type="hidden" name="productId" value="${product.id}">
+                                    <div class="single-shop-price" style="margin-bottom: 15px;">
+                                        <p class="qnt" style="display: flex; align-items: center; gap: 10px;">
+                                            <span style="font-weight: 600; color: #444;">Số lượng:</span>
+                                            <input value="1" min="1" max="${product.stockQuantity}" name="quantity" type="number" 
+                                                   style="width: 80px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-weight: bold;">
+                                            <span style="color: #666; font-size: 13px;">(Còn ${product.stockQuantity} sản phẩm trong kho)</span>
+                                        </p>
+                                    </div>
+                                    <div class="single-shop-page-btn" style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                                        <button type="submit" class="bleezy-btn" style="cursor: pointer; padding: 12px 24px;">
+                                            <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                        </button>
+                                        <button type="submit" name="buyNow" value="1" class="bleezy-btn" 
+                                                style="background: #16a34a; border-color: #16a34a; cursor: pointer; padding: 12px 24px;">
+                                            <i class="fa fa-bolt"></i> Mua ngay
+                                        </button>
+                                    </div>
+                                </form>
+                            </c:when>
+                            <c:otherwise>
+                                <div style="margin-top: 25px; padding: 15px; background: #fee2e2; border: 1px solid #fca5a5; border-radius: 6px; color: #b91c1c;">
+                                    <i class="fa fa-exclamation-triangle"></i> <strong>Sản phẩm hiện đang tạm hết hàng.</strong> Quý khách vui lòng liên hệ hotline để đặt hàng trước.
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
 
                         <div class="share-product" style="margin-top: 30px;">
                             <h3>Chia sẻ sản phẩm</h3>

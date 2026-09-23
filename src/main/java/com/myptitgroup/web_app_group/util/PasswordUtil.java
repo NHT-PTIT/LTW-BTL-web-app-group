@@ -54,9 +54,14 @@ public class PasswordUtil {
                 if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
-            return hexString.toString().equalsIgnoreCase(hashedPassword);
+            if (hexString.toString().equalsIgnoreCase(hashedPassword)) {
+                return true;
+            }
         } catch (Exception e) {
-            return false;
+            // Ignore
         }
+
+        // Fallback: So sánh trực tiếp nếu trong database lưu mật khẩu dạng plaintext
+        return plainPassword.equals(hashedPassword);
     }
 }

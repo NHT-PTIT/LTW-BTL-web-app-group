@@ -15,6 +15,7 @@ public class Order implements Serializable {
 
     private int id;
     private String orderCode;
+    private Integer userId;
     private String customerName;
     private String customerPhone;
     private String customerEmail;
@@ -49,6 +50,11 @@ public class Order implements Serializable {
         if (totalAmount == null) return "0 đ";
         DecimalFormat df = new DecimalFormat("###,###,### đ");
         return df.format(totalAmount);
+    }
+
+    public String getFormattedCreatedAt() {
+        if (createdAt == null) return "";
+        return new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(createdAt);
     }
 
     public String getStatusDisplayName() {
@@ -97,6 +103,14 @@ public class Order implements Serializable {
 
     public void setOrderCode(String orderCode) {
         this.orderCode = orderCode;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getCustomerName() {

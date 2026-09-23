@@ -266,8 +266,8 @@
                                                     </div>
                                                     <div class="product-button">
                                                         <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}">Chi tiết</a>
-                                                        <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}"><i class="fa fa-eye"></i></a>
-                                                        <a href="${pageContext.request.contextPath}/cart.jsp"><i class="fa fa-shopping-cart"></i></a>
+                                                        <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}" title="Xem chi tiết"><i class="fa fa-eye"></i></a>
+                                                        <a href="${pageContext.request.contextPath}/cart-action?action=add&productId=${p.id}&quantity=1" title="Thêm vào giỏ hàng"><i class="fa fa-shopping-cart"></i></a>
                                                     </div>
                                                 </div>
                                             </div>

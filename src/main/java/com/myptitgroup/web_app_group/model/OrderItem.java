@@ -91,6 +91,10 @@ public class OrderItem implements Serializable {
         return productImage;
     }
 
+    public String getProductImageUrl() {
+        return productImage;
+    }
+
     public void setProductImage(String productImage) {
         this.productImage = productImage;
     }

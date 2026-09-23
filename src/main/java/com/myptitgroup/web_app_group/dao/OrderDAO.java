@@ -3,6 +3,7 @@ package com.myptitgroup.web_app_group.dao;
 import com.myptitgroup.web_app_group.config.DBContext;
 import com.myptitgroup.web_app_group.model.Order;
 import com.myptitgroup.web_app_group.model.OrderItem;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,6 +52,10 @@ public class OrderDAO {
         o.setStatus(rs.getString("status"));
         o.setCreatedAt(rs.getTimestamp("created_at"));
         o.setUpdatedAt(rs.getTimestamp("updated_at"));
+        try {
+            int uId = rs.getInt("user_id");
+            o.setUserId(rs.wasNull() ? null : uId);
+        } catch (SQLException ignored) {}
         return o;
     }
 
@@ -70,9 +75,9 @@ public class OrderDAO {
             order.setOrderCode(generateOrderCode());
         }
 
-        String sqlOrder = "INSERT INTO orders (order_code, customer_name, customer_phone, customer_email, " +
+        String sqlOrder = "INSERT INTO orders (order_code, user_id, customer_name, customer_phone, customer_email, " +
                           "shipping_address, note, total_amount, payment_method, status) " +
-                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         String sqlItem = "INSERT INTO order_items (order_id, product_id, product_sku, product_name, " +
                          "product_image, unit_price, quantity, subtotal) " +
@@ -94,14 +99,19 @@ public class OrderDAO {
             // 1. Lưu đơn hàng
             psOrder = conn.prepareStatement(sqlOrder, Statement.RETURN_GENERATED_KEYS);
             psOrder.setString(1, order.getOrderCode());
-            psOrder.setString(2, order.getCustomerName());
-            psOrder.setString(3, order.getCustomerPhone());
-            psOrder.setString(4, order.getCustomerEmail());
-            psOrder.setString(5, order.getShippingAddress());
-            psOrder.setString(6, order.getNote());
-            psOrder.setBigDecimal(7, order.getTotalAmount());
-            psOrder.setString(8, order.getPaymentMethod() != null ? order.getPaymentMethod() : "COD");
-            psOrder.setString(9, order.getStatus() != null ? order.getStatus() : "PENDING");
+            if (order.getUserId() != null && order.getUserId() > 0) {
+                psOrder.setInt(2, order.getUserId());
+            } else {
+                psOrder.setNull(2, java.sql.Types.INTEGER);
+            }
+            psOrder.setString(3, order.getCustomerName());
+            psOrder.setString(4, order.getCustomerPhone());
+            psOrder.setString(5, order.getCustomerEmail());
+            psOrder.setString(6, order.getShippingAddress());
+            psOrder.setString(7, order.getNote());
+            psOrder.setBigDecimal(8, order.getTotalAmount());
+            psOrder.setString(9, order.getPaymentMethod() != null ? order.getPaymentMethod() : "COD");
+            psOrder.setString(10, order.getStatus() != null ? order.getStatus() : "PENDING");
 
             int affected = psOrder.executeUpdate();
             if (affected == 0) {
@@ -407,5 +417,82 @@ public class OrderDAO {
             DBContext.close(conn, ps, rs);
         }
         return stats;
+    }
+
+    /**
+     * Tính tổng doanh thu từ các đơn hàng thành công (COMPLETED)
+     */
+    public java.math.BigDecimal getTotalRevenue() {
+        String sql = "SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE status = 'COMPLETED'";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getBigDecimal(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, rs);
+        }
+        return java.math.BigDecimal.ZERO;
+    }
+
+    /**
+     * Lấy toàn bộ lịch sử đơn hàng của một khách hàng cụ thể
+     */
+    public List<Order> getOrdersByUserId(int userId) {
+        List<Order> list = new ArrayList<>();
+        String sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY id DESC";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Order o = mapRow(rs);
+                o.setItems(getOrderItems(o.getId()));
+                list.add(o);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, rs);
+        }
+        return list;
+    }
+
+    /**
+     * Lấy chi tiết đơn hàng của người dùng (kèm kiểm tra quyền sở hữu chống IDOR)
+     */
+    public Order getOrderByIdAndUserId(int orderId, int userId) {
+        String sql = "SELECT * FROM orders WHERE id = ? AND user_id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, orderId);
+            ps.setInt(2, userId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Order o = mapRow(rs);
+                o.setItems(getOrderItems(o.getId()));
+                return o;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, rs);
+        }
+        return null;
     }
 }

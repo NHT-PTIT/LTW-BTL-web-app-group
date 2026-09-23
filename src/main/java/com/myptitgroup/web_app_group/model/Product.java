@@ -224,11 +224,27 @@ public class Product implements Serializable {
         return isFeatured;
     }
 
+    public boolean getFeatured() {
+        return isFeatured;
+    }
+
+    public boolean getIsFeatured() {
+        return isFeatured;
+    }
+
     public void setFeatured(boolean featured) {
         isFeatured = featured;
     }
 
     public boolean isActive() {
+        return isActive;
+    }
+
+    public boolean getActive() {
+        return isActive;
+    }
+
+    public boolean getIsActive() {
         return isActive;
     }
 
