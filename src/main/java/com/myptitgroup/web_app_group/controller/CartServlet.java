@@ -51,6 +51,16 @@ public class CartServlet extends HttpServlet {
             request.setAttribute("alertInfo", "Đã xóa toàn bộ sản phẩm khỏi giỏ hàng.");
         } else if ("empty_cart".equals(msg)) {
             request.setAttribute("alertWarning", "Giỏ hàng của bạn đang trống. Vui lòng chọn sản phẩm trước khi thanh toán!");
+        } else if ("coupon_applied".equals(msg)) {
+            if (cart.getAppliedCoupon() != null) {
+                request.setAttribute("alertSuccess", "Áp dụng mã giảm giá [" + cart.getAppliedCoupon().getCode() + "] thành công! Đã trừ " + cart.getFormattedDiscountAmount() + " vào đơn hàng.");
+            } else {
+                request.setAttribute("alertSuccess", "Áp dụng mã giảm giá thành công!");
+            }
+        } else if ("coupon_invalid".equals(msg)) {
+            request.setAttribute("alertWarning", "Mã giảm giá không hợp lệ, đã hết hạn hoặc đơn hàng chưa đạt giá trị tối thiểu!");
+        } else if ("coupon_removed".equals(msg)) {
+            request.setAttribute("alertInfo", "Đã hủy áp dụng mã giảm giá.");
         }
 
         request.setAttribute("pageTitle", "Giỏ hàng của bạn - Bleezy Inverter & Solar Power");
@@ -147,6 +157,27 @@ public class CartServlet extends HttpServlet {
             case "clear": {
                 cart.clear();
                 response.sendRedirect(request.getContextPath() + "/cart?msg=cleared");
+                return;
+            }
+
+            case "apply-coupon": {
+                String couponCode = request.getParameter("couponCode");
+                if (couponCode != null && !couponCode.trim().isEmpty()) {
+                    com.myptitgroup.web_app_group.dao.CouponDAO couponDAO = new com.myptitgroup.web_app_group.dao.CouponDAO();
+                    com.myptitgroup.web_app_group.model.Coupon coupon = couponDAO.getValidCoupon(couponCode.trim(), cart.getTotalAmount());
+                    if (coupon != null) {
+                        cart.applyCoupon(coupon);
+                        response.sendRedirect(request.getContextPath() + "/cart?msg=coupon_applied");
+                        return;
+                    }
+                }
+                response.sendRedirect(request.getContextPath() + "/cart?msg=coupon_invalid");
+                return;
+            }
+
+            case "remove-coupon": {
+                cart.removeCoupon();
+                response.sendRedirect(request.getContextPath() + "/cart?msg=coupon_removed");
                 return;
             }
 

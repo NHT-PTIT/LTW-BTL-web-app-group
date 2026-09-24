@@ -61,6 +61,22 @@
             </a>
         </li>
         <li class="admin-nav-item">
+            <a href="${pageContext.request.contextPath}/admin/coupons" class="admin-nav-link ${activeMenu == 'coupons' ? 'active' : ''}">
+                <div class="admin-nav-link-content">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>Mã Giảm Giá / Voucher</span>
+                </div>
+            </a>
+        </li>
+        <li class="admin-nav-item">
+            <a href="${pageContext.request.contextPath}/admin/reviews" class="admin-nav-link ${activeMenu == 'reviews' ? 'active' : ''}">
+                <div class="admin-nav-link-content">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Đánh Giá Sản Phẩm</span>
+                </div>
+            </a>
+        </li>
+        <li class="admin-nav-item">
             <a href="${pageContext.request.contextPath}/admin/contacts" class="admin-nav-link ${activeMenu == 'contacts' ? 'active' : ''}">
                 <div class="admin-nav-link-content">
                     <i class="fa-solid fa-envelope-open-text"></i>
@@ -71,19 +87,45 @@
                 </c:if>
             </a>
         </li>
+        <li class="admin-nav-item">
+            <a href="${pageContext.request.contextPath}/admin/company" class="admin-nav-link ${activeMenu == 'company' ? 'active' : ''}">
+                <div class="admin-nav-link-content">
+                    <i class="fa-solid fa-building"></i>
+                    <span>Thông tin Doanh nghiệp</span>
+                </div>
+            </a>
+        </li>
+        <li class="admin-nav-item">
+            <a href="${pageContext.request.contextPath}/admin/team" class="admin-nav-link ${activeMenu == 'team' ? 'active' : ''}">
+                <div class="admin-nav-link-content">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span>Đội ngũ Nhân sự</span>
+                </div>
+            </a>
+        </li>
+        <li class="admin-nav-item">
+            <a href="${pageContext.request.contextPath}/admin/profile" class="admin-nav-link ${activeMenu == 'profile' ? 'active' : ''}">
+                <div class="admin-nav-link-content">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Hồ sơ & Đổi Mật Khẩu</span>
+                </div>
+            </a>
+        </li>
     </ul>
 
     <!-- Footer Profile & Logout -->
     <div class="admin-sidebar-footer">
-        <div class="admin-user-info">
-            <div class="admin-user-avatar">
-                <i class="fa-solid fa-user-shield"></i>
+        <a href="${pageContext.request.contextPath}/admin/profile" style="text-decoration: none; display: block;">
+            <div class="admin-user-info" style="transition: opacity 0.2s;" onmouseover="this.style.opacity='0.85';" onmouseout="this.style.opacity='1';">
+                <div class="admin-user-avatar">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    <div style="font-weight: 600; color: #fff; font-size: 13px;">${sessionScope.currentAdmin.fullName}</div>
+                    <div style="font-size: 11px; color: #94a3b8;">${sessionScope.currentAdmin.role} &bull; Cài đặt</div>
+                </div>
             </div>
-            <div style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                <div style="font-weight: 600; color: #fff; font-size: 13px;">${sessionScope.currentAdmin.fullName}</div>
-                <div style="font-size: 11px; color: #94a3b8;">${sessionScope.currentAdmin.role}</div>
-            </div>
-        </div>
+        </a>
         <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);">
             <a href="${pageContext.request.contextPath}/" target="_blank" style="color: #94a3b8; font-size: 12px; text-decoration: none;" title="Xem website người dùng">
                 <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Trang chủ

@@ -64,6 +64,9 @@ CREATE TABLE `company_info` (
     `facebook_url` VARCHAR(255) NULL,
     `youtube_url` VARCHAR(255) NULL,
     `working_hours` VARCHAR(100) NULL DEFAULT 'Thứ 2 - Thứ 7: 08:00 - 17:30',
+    `bank_name` VARCHAR(100) NULL DEFAULT 'MBBank' COMMENT 'Tên ngân hàng thụ hưởng (VietQR)',
+    `bank_account_no` VARCHAR(50) NULL DEFAULT '0988123456' COMMENT 'Số tài khoản ngân hàng (VietQR)',
+    `bank_account_name` VARCHAR(100) NULL DEFAULT 'CTY TNHH BLEEZY SOLAR' COMMENT 'Tên chủ tài khoản thụ hưởng (VietQR)',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -172,6 +175,8 @@ CREATE TABLE `orders` (
     `shipping_address` VARCHAR(255) NOT NULL,
     `note` TEXT NULL,
     `total_amount` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+    `coupon_code` VARCHAR(50) NULL COMMENT 'Mã khuyến mãi đã áp dụng',
+    `discount_amount` DECIMAL(12,2) NOT NULL DEFAULT 0.00 COMMENT 'Số tiền được giảm giá',
     `payment_method` VARCHAR(30) NOT NULL DEFAULT 'COD' COMMENT 'COD, BANK_TRANSFER',
     `status` VARCHAR(30) NOT NULL DEFAULT 'PENDING' COMMENT 'PENDING (Chờ xử lý), SHIPPING (Đang giao), COMPLETED (Hoàn thành), CANCELLED (Đã hủy)',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -219,6 +224,64 @@ CREATE TABLE `contact_inquiries` (
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- ------------------------------------------------------------------------------
+-- 11. BẢNG MÃ GIẢM GIÁ / VOUCHER (Coupons)
+-- ------------------------------------------------------------------------------
+CREATE TABLE `coupons` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `code` VARCHAR(50) NOT NULL UNIQUE COMMENT 'Mã voucher (VD: SOLAR2026, GIAM500K)',
+    `description` VARCHAR(255) NULL COMMENT 'Mô tả chi tiết chương trình ưu đãi',
+    `discount_type` VARCHAR(20) NOT NULL DEFAULT 'PERCENT' COMMENT 'PERCENT (giảm theo %) hoặc FIXED (giảm số tiền)',
+    `discount_value` DECIMAL(12,2) NOT NULL COMMENT 'Giá trị giảm (VD: 10% hoặc 500,000đ)',
+    `min_order_amount` DECIMAL(12,2) NOT NULL DEFAULT 0.00 COMMENT 'Giá trị đơn hàng tối thiểu để áp dụng voucher',
+    `max_discount_amount` DECIMAL(12,2) NULL COMMENT 'Số tiền giảm tối đa (nếu là dạng PERCENT)',
+    `usage_limit` INT NOT NULL DEFAULT 100 COMMENT 'Tổng lượt dùng tối đa của toàn hệ thống',
+    `used_count` INT NOT NULL DEFAULT 0 COMMENT 'Số lượt đã sử dụng thực tế',
+    `start_date` DATETIME NULL COMMENT 'Thời điểm bắt đầu áp dụng',
+    `end_date` DATETIME NULL COMMENT 'Thời điểm hết hạn voucher',
+    `is_active` BOOLEAN NOT NULL DEFAULT TRUE COMMENT 'TRUE = Đang hiệu lực, FALSE = Tạm khóa',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE INDEX `idx_coupons_code` ON `coupons` (`code`);
+
+-- ------------------------------------------------------------------------------
+-- 12. BẢNG ĐÁNH GIÁ & NHẬN XÉT SẢN PHẨM (Product Reviews & Ratings)
+-- ------------------------------------------------------------------------------
+CREATE TABLE `product_reviews` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `product_id` INT NOT NULL,
+    `user_id` INT NULL COMMENT 'FK tới users.id nếu đã đăng nhập (NULL nếu đánh giá vãng lai)',
+    `customer_name` VARCHAR(100) NOT NULL,
+    `customer_email` VARCHAR(100) NULL,
+    `rating` TINYINT NOT NULL COMMENT 'Số sao đánh giá từ 1 đến 5',
+    `comment` TEXT NOT NULL COMMENT 'Nội dung nhận xét chi tiết về sản phẩm',
+    `is_approved` BOOLEAN NOT NULL DEFAULT TRUE COMMENT 'TRUE = Đã duyệt hiển thị, FALSE = Chờ duyệt/Ẩn',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT `fk_reviews_product` FOREIGN KEY (`product_id`) 
+        REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_reviews_user` FOREIGN KEY (`user_id`) 
+        REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE INDEX `idx_reviews_product_id` ON `product_reviews` (`product_id`);
+
+-- ------------------------------------------------------------------------------
+-- 13. BẢNG SẢN PHẨM YÊU THÍCH (Wishlists)
+-- ------------------------------------------------------------------------------
+CREATE TABLE `wishlists` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL,
+    `product_id` INT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY `unique_user_wishlist_product` (`user_id`, `product_id`),
+    CONSTRAINT `fk_wishlist_user` FOREIGN KEY (`user_id`) 
+        REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_wishlist_product` FOREIGN KEY (`product_id`) 
+        REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- ==============================================================================
 -- PHẦN DỮ LIỆU KHỞI TẠO MẪU (SEED DATA)
@@ -238,7 +301,7 @@ INSERT INTO `admins` (`id`, `username`, `password_hash`, `full_name`, `email`, `
 (2, 'bleezy', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'Kỹ Sư Quản Trị Bleezy', 'bleezy@ptittech.vn', '0912345678', 'ADMIN', 1);
 
 -- 2. Dữ liệu thông tin công ty (CMS)
-INSERT INTO `company_info` (`id`, `company_name`, `slogan`, `hotline`, `email`, `address`, `about_summary`, `about_detail`, `vision`, `mission`, `core_values`, `logo_url`) VALUES
+INSERT INTO `company_info` (`id`, `company_name`, `slogan`, `hotline`, `email`, `address`, `about_summary`, `about_detail`, `vision`, `mission`, `core_values`, `logo_url`, `bank_name`, `bank_account_no`, `bank_account_name`) VALUES
 (1, 
  'Công Ty TNHH Giải Pháp Cơ Điện PTIT Tech', 
  'Giải pháp truyền động & Tự động hóa công nghiệp hàng đầu', 
@@ -250,7 +313,10 @@ INSERT INTO `company_info` (`id`, `company_name`, `slogan`, `hotline`, `email`, 
  'Trở thành nhà cung cấp giải pháp tự động hóa công nghiệp và thiết bị điện thông minh uy tín số 1 Việt Nam đến năm 2030.',
  'Cung cấp thiết bị chất lượng cao, tối ưu hóa năng lượng tiêu thụ cho doanh nghiệp sản xuất và đồng hành cùng tiến trình chuyển đổi số của các nhà máy.',
  'Chất lượng chuẩn mực - Tận tâm chuyên nghiệp - Đổi mới sáng tạo - Bền vững cùng khách hàng',
- 'assets/img/site-logo.png'
+ 'assets/img/site-logo.png',
+ 'MBBank',
+ '0988123456',
+ 'CTY TNHH BLEEZY SOLAR'
 );
 
 -- 3. Đội ngũ nhân sự công ty (Team Members)
@@ -368,10 +434,10 @@ INSERT INTO `users` (`id`, `username`, `password_hash`, `full_name`, `email`, `p
 (3, 'tuan.ptit', 'ba3253876aed6bc22d4a6ff53d8406e6ad92442c8de3563e0516ec0626ed514c', 'Vũ Minh Tuấn', 'tuanvm.ptit@gmail.com', '0977889900', 'Tòa nhà A2, Học viện Công nghệ BCVT, Hà Đông, Hà Nội', 1, '2026-09-17 15:45:00');
 
 -- 8. Đơn hàng mẫu (Orders - Có đơn của thành viên và đơn khách vãng lai)
-INSERT INTO `orders` (`id`, `order_code`, `user_id`, `customer_name`, `customer_phone`, `customer_email`, `shipping_address`, `note`, `total_amount`, `payment_method`, `status`, `created_at`) VALUES
-(1, 'ORD-20260918-9102', 1, 'Nguyễn Đức Thắng', '0912345678', 'thang.nd@gmail.com', 'Số 45 Lê Văn Lương, Trung Hòa, Cầu Giấy, Hà Nội', 'Giao giờ hành chính, gọi trước khi giao 30 phút.', 3850000.00, 'COD', 'COMPLETED', '2026-09-18 10:15:00'),
-(2, 'ORD-20260919-4821', 2, 'Công ty Cơ Khí Hoàng Gia (Anh Hùng)', '0983112233', 'hoanggia.mech@outlook.com', 'KCN Biên Hòa 2, TP. Biên Hòa, Đồng Nai', 'Xuất hóa đơn VAT cho công ty.', 27900000.00, 'BANK_TRANSFER', 'SHIPPING', '2026-09-19 14:30:00'),
-(3, 'ORD-20260920-7734', 3, 'Vũ Minh Tuấn', '0977889900', 'tuanvm.ptit@gmail.com', 'Tòa nhà A2, Học viện Công nghệ BCVT, Hà Đông, Hà Nội', 'Cần tư vấn hỗ trợ kỹ thuật cài đặt tham số ban đầu.', 10400000.00, 'COD', 'PENDING', '2026-09-20 20:45:00');
+INSERT INTO `orders` (`id`, `order_code`, `user_id`, `customer_name`, `customer_phone`, `customer_email`, `shipping_address`, `note`, `total_amount`, `coupon_code`, `discount_amount`, `payment_method`, `status`, `created_at`) VALUES
+(1, 'ORD-20260918-9102', 1, 'Nguyễn Đức Thắng', '0912345678', 'thang.nd@gmail.com', 'Số 45 Lê Văn Lương, Trung Hòa, Cầu Giấy, Hà Nội', 'Giao giờ hành chính, gọi trước khi giao 30 phút.', 3850000.00, NULL, 0.00, 'COD', 'COMPLETED', '2026-09-18 10:15:00'),
+(2, 'ORD-20260919-4821', 2, 'Công ty Cơ Khí Hoàng Gia (Anh Hùng)', '0983112233', 'hoanggia.mech@outlook.com', 'KCN Biên Hòa 2, TP. Biên Hòa, Đồng Nai', 'Xuất hóa đơn VAT cho công ty.', 26900000.00, 'GIAM1TR', 1000000.00, 'BANK_TRANSFER', 'SHIPPING', '2026-09-19 14:30:00'),
+(3, 'ORD-20260920-7734', 3, 'Vũ Minh Tuấn', '0977889900', 'tuanvm.ptit@gmail.com', 'Tòa nhà A2, Học viện Công nghệ BCVT, Hà Đông, Hà Nội', 'Cần tư vấn hỗ trợ kỹ thuật cài đặt tham số ban đầu.', 10400000.00, NULL, 0.00, 'COD', 'PENDING', '2026-09-20 20:45:00');
 
 -- 9. Chi tiết đơn hàng mẫu (Order Items)
 INSERT INTO `order_items` (`order_id`, `product_id`, `product_sku`, `product_name`, `product_image`, `unit_price`, `quantity`, `subtotal`) VALUES
@@ -383,3 +449,22 @@ INSERT INTO `order_items` (`order_id`, `product_id`, `product_sku`, `product_nam
 INSERT INTO `contact_inquiries` (`full_name`, `email`, `phone`, `subject`, `message`, `status`, `admin_notes`, `created_at`) VALUES
 ('Lê Đình Trọng', 'trong.ld@diencongnghiep.vn', '0903456789', 'Báo giá biến tần Schneider 22kW số lượng lớn', 'Chào công ty, chúng tôi đang chuẩn bị dự án nâng cấp trạm bơm xử lý nước, cần mua 05 bộ biến tần ATV630 22kW. Vui lòng gửi bảng báo giá và chiết khấu đại lý.', 'PROCESSING', 'Đã gọi điện tư vấn lần 1 lúc 09h sáng, hẹn gửi file báo giá qua email trong ngày.', '2026-09-19 08:30:00'),
 ('Phạm Thu Hà', 'thuha.nguyen@vinamech.com', '0944556677', 'Hỗ trợ kỹ thuật lỗi E.OV3 biến tần Mitsubishi', 'Biến tần bên em đang chạy máy dệt bị báo lỗi quá áp khi dừng máy (E.OV3). Nhờ các anh kỹ sư tư vấn giúp nguyên nhân và hướng xử lý.', 'NEW', NULL, '2026-09-20 16:10:00');
+
+-- 11. Dữ liệu Mã giảm giá / Voucher mẫu (Coupons)
+INSERT INTO `coupons` (`id`, `code`, `description`, `discount_type`, `discount_value`, `min_order_amount`, `max_discount_amount`, `usage_limit`, `used_count`, `start_date`, `end_date`, `is_active`) VALUES
+(1, 'SOLAR2026', 'Ưu đãi kích hoạt đầu tư xanh - Giảm 10% tối đa 2.000.000đ cho đơn từ 5.000.000đ', 'PERCENT', 10.00, 5000000.00, 2000000.00, 200, 15, '2026-01-01 00:00:00', '2026-12-31 23:59:59', 1),
+(2, 'GIAM500K', 'Tri ân khách hàng thân thiết - Giảm ngay 500.000đ trực tiếp cho đơn từ 8.000.000đ', 'FIXED', 500000.00, 8000000.00, NULL, 100, 8, '2026-01-01 00:00:00', '2026-12-31 23:59:59', 1),
+(3, 'PTITVIP', 'Chiết khấu đặc quyền đối tác kỹ thuật PTIT - Giảm 15% tối đa 5.000.000đ', 'PERCENT', 15.00, 15000000.00, 5000000.00, 50, 4, '2026-01-01 00:00:00', '2026-12-31 23:59:59', 1);
+
+-- 12. Dữ liệu Đánh giá & Nhận xét sản phẩm mẫu (Product Reviews)
+INSERT INTO `product_reviews` (`product_id`, `user_id`, `customer_name`, `customer_email`, `rating`, `comment`, `is_approved`, `created_at`) VALUES
+(1, 1, 'Nguyễn Đức Thắng (Kỹ sư Nhà máy)', 'thang.nd@gmail.com', 5, 'Biến tần Mitsubishi dòng D740 chạy cực kỳ êm và bền bỉ. Đã lắp cho hệ thống băng tải 2 tháng nay hoạt động ổn định, tài liệu catalog tiếng Việt đi kèm rất rõ ràng.', 1, '2026-09-18 14:20:00'),
+(1, 2, 'Hoàng Văn Hùng (Cơ điện)', 'hung.hoang@hoanggia.vn', 5, 'Hàng chính hãng full VAT, tem bảo hành đầy đủ. Đội ngũ kỹ sư PTIT Tech hỗ trợ setup thông số qua Zalo rất nhiệt tình!', 1, '2026-09-19 09:15:00'),
+(2, 3, 'Vũ Minh Tuấn', 'tuanvm.ptit@gmail.com', 4, 'Dòng ATV310 của Schneider dễ cài đặt phím xoay, tản nhiệt tốt. Giá cả rất cạnh tranh so với các đại lý khác tại Hà Nội.', 1, '2026-09-21 10:00:00'),
+(4, NULL, 'Trần Quốc Đạt (Nhà thầu MEP)', 'dat.tran@mepelectric.com', 5, 'Biến tần công suất 15kW đáp ứng hoàn hảo cho trạm bơm nước sạch, dòng khởi động êm không sụt áp lưới. Rất hài lòng!', 1, '2026-09-22 16:30:00');
+
+-- 13. Dữ liệu Danh sách Yêu thích mẫu (Wishlists)
+INSERT INTO `wishlists` (`user_id`, `product_id`, `created_at`) VALUES
+(1, 2, '2026-09-18 10:20:00'),
+(1, 4, '2026-09-18 10:25:00'),
+(2, 1, '2026-09-19 14:35:00');

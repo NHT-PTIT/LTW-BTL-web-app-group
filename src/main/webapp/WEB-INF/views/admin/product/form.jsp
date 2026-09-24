@@ -109,6 +109,79 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Bảng Thông Số Kỹ Thuật (Specs) -->
+                    <div class="admin-card">
+                        <div class="admin-card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="admin-card-title">
+                                <i class="fa-solid fa-list-check" style="color: var(--admin-primary);"></i> THÔNG SỐ KỸ THUẬT CHI TIẾT
+                            </div>
+                            <button type="button" class="admin-btn admin-btn-sm admin-btn-secondary" onclick="addSpecRow()">
+                                <i class="fa-solid fa-plus"></i> Thêm Thông Số
+                            </button>
+                        </div>
+                        <div class="admin-card-body" style="padding: 0;">
+                            <div class="table-responsive">
+                                <table class="admin-table" id="specsTable" style="margin-bottom: 0;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 40%;">Tên Thông Số</th>
+                                            <th>Giá Trị Thông Số</th>
+                                            <th style="width: 50px; text-align: center;">Xóa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="specsBody">
+                                        <c:choose>
+                                            <c:when test="${not empty product.specifications}">
+                                                <c:forEach var="spec" items="${product.specifications}">
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" name="specName" value="<c:out value='${spec.specName}' />" class="admin-input admin-input-sm" placeholder="Ví dụ: Điện áp danh định">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="specValue" value="<c:out value='${spec.specValue}' />" class="admin-input admin-input-sm" placeholder="Ví dụ: 380V / 3 Pha 50-60Hz">
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <button type="button" class="admin-btn admin-btn-sm admin-btn-danger" onclick="removeRow(this)" title="Xóa thông số">
+                                                                <i class="fa-solid fa-trash-can"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="specName" value="Điện áp định mức" class="admin-input admin-input-sm" placeholder="Tên thông số">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="specValue" value="3 Pha 380V / 50Hz" class="admin-input admin-input-sm" placeholder="Giá trị thông số">
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <button type="button" class="admin-btn admin-btn-sm admin-btn-danger" onclick="removeRow(this)" title="Xóa thông số">
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="specName" value="Cấp bảo vệ" class="admin-input admin-input-sm" placeholder="Tên thông số">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="specValue" value="IP65 (Kháng nước & bụi)" class="admin-input admin-input-sm" placeholder="Giá trị thông số">
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <button type="button" class="admin-btn admin-btn-sm admin-btn-danger" onclick="removeRow(this)" title="Xóa thông số">
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Cột Phải: Giá, Tồn Kho & Ảnh -->
@@ -200,6 +273,35 @@
                         </div>
                     </div>
 
+                    <!-- Thư Viện Ảnh Chi Tiết (Gallery) -->
+                    <div class="admin-card">
+                        <div class="admin-card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="admin-card-title">
+                                <i class="fa-solid fa-images" style="color: var(--admin-primary);"></i> THƯ VIỆN ẢNH CHI TIẾT
+                            </div>
+                            <button type="button" class="admin-btn admin-btn-sm admin-btn-secondary" onclick="addGalleryRow()">
+                                <i class="fa-solid fa-plus"></i> Thêm Ảnh
+                            </button>
+                        </div>
+                        <div class="admin-card-body" id="galleryContainer">
+                            <c:choose>
+                                <c:when test="${not empty product.gallery}">
+                                    <c:forEach var="gImg" items="${product.gallery}">
+                                        <div class="gallery-item-row" style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
+                                            <input type="text" name="galleryImageUrl" value="<c:out value='${gImg.imageUrl}' />" class="admin-input admin-input-sm" placeholder="https://... hoặc assets/img/product/...">
+                                            <button type="button" class="admin-btn admin-btn-sm admin-btn-danger" onclick="removeGalleryRow(this)">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </div>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="empty-gallery-tip" style="font-size: 12px; color: var(--admin-muted); margin-bottom: 8px;">Chưa có ảnh phụ nào. Bấm "Thêm Ảnh" để bổ sung ảnh chi tiết các góc chụp.</p>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+
                     <!-- Nút Thao Tác Lưu -->
                     <div style="display: flex; flex-direction: column; gap: 10px;">
                         <button type="submit" class="admin-btn admin-btn-primary" style="justify-content: center; padding: 12px; font-size: 15px;">
@@ -217,6 +319,37 @@
 </main>
 
 <script>
+function addSpecRow() {
+    var tbody = document.getElementById('specsBody');
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><input type="text" name="specName" class="admin-input admin-input-sm" placeholder="Tên thông số (VD: Hiệu suất)"></td>' +
+                   '<td><input type="text" name="specValue" class="admin-input admin-input-sm" placeholder="Giá trị (VD: 98.4%)"></td>' +
+                   '<td style="text-align: center;"><button type="button" class="admin-btn admin-btn-sm admin-btn-danger" onclick="removeRow(this)" title="Xóa thông số"><i class="fa-solid fa-trash-can"></i></button></td>';
+    tbody.appendChild(tr);
+}
+
+function removeRow(btn) {
+    var tr = btn.closest('tr');
+    if (tr) tr.remove();
+}
+
+function addGalleryRow() {
+    var container = document.getElementById('galleryContainer');
+    var tip = container.querySelector('.empty-gallery-tip');
+    if (tip) tip.remove();
+    var div = document.createElement('div');
+    div.className = 'gallery-item-row';
+    div.style = 'display: flex; gap: 8px; margin-bottom: 10px; align-items: center;';
+    div.innerHTML = '<input type="text" name="galleryImageUrl" class="admin-input admin-input-sm" placeholder="https://... hoặc assets/img/product/...">' +
+                    '<button type="button" class="admin-btn admin-btn-sm admin-btn-danger" onclick="removeGalleryRow(this)"><i class="fa-solid fa-trash-can"></i></button>';
+    container.appendChild(div);
+}
+
+function removeGalleryRow(btn) {
+    var row = btn.closest('.gallery-item-row');
+    if (row) row.remove();
+}
+
 function updateImagePreview(url) {
     var previewImg = document.getElementById('previewImg');
     var placeholder = document.getElementById('placeholderText');

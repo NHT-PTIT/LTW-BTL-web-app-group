@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     // Fallback nạp dữ liệu nếu truy cập trực tiếp product-detail.jsp không qua ProductDetailServlet
     if (request.getAttribute("product") == null) {
         com.myptitgroup.web_app_group.dao.ProductDAO pDao = new com.myptitgroup.web_app_group.dao.ProductDAO();
         com.myptitgroup.web_app_group.dao.CategoryDAO cDao = new com.myptitgroup.web_app_group.dao.CategoryDAO();
+        com.myptitgroup.web_app_group.dao.ProductReviewDAO rDao = new com.myptitgroup.web_app_group.dao.ProductReviewDAO();
 
         String idParam = request.getParameter("id");
         int prodId = 1;
@@ -20,6 +22,8 @@
             request.setAttribute("product", p);
             request.setAttribute("category", cDao.getById(p.getCategoryId()));
             request.setAttribute("relatedProducts", pDao.getRelatedProducts(p.getCategoryId(), p.getId(), 4));
+            request.setAttribute("reviews", rDao.getApprovedReviewsByProductId(p.getId()));
+            request.setAttribute("reviewStats", rDao.getReviewStats(p.getId()));
             request.setAttribute("pageTitle", p.getName() + " - Bleezy Inverter & Solar Power");
         }
     }
@@ -28,7 +32,7 @@
     <jsp:param name="pageTitle" value="${not empty pageTitle ? pageTitle : 'Chi tiết sản phẩm - Bleezy'}" />
     <jsp:param name="activeMenu" value="shop" />
 </jsp:include>
-
+    
     <!-- Breadcromb Area Start -->
     <section class="bleezy-breadcromb-area">
         <div class="breadcromb-top section_50">
@@ -69,20 +73,63 @@
     <!-- Single Product Area Start -->
     <section class="bleezy-shop-page-area section_100">
         <div class="container">
+
+            <c:if test="${param.reviewMsg == 'success'}">
+                <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom: 25px;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <i class="fa fa-check-circle"></i> Cảm ơn bạn! Đánh giá và nhận xét của bạn về sản phẩm đã được ghi nhận thành công.
+                </div>
+            </c:if>
+            <c:if test="${param.reviewMsg == 'empty_comment'}">
+                <div class="alert alert-warning alert-dismissible" role="alert" style="margin-bottom: 25px;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <i class="fa fa-exclamation-triangle"></i> Vui lòng nhập nội dung đánh giá của bạn trước khi gửi!
+                </div>
+            </c:if>
+
             <div class="row">
                 <c:set var="detailImgIdx" value="${product.id > 0 ? ((product.id - 1) % 7 + 1) : 1}" />
+                <c:set var="fallbackDetailImg" value="${pageContext.request.contextPath}/assets/img/product-${detailImgIdx}.jpg" />
+                <c:set var="mainImgSrc" value="${fallbackDetailImg}" />
+                <c:if test="${not empty product.mainImageUrl}">
+                    <c:choose>
+                        <c:when test="${product.mainImageUrl.startsWith('http://') || product.mainImageUrl.startsWith('https://')}">
+                            <c:set var="mainImgSrc" value="${product.mainImageUrl}" />
+                        </c:when>
+                        <c:when test="${product.mainImageUrl.startsWith('/')}">
+                            <c:set var="mainImgSrc" value="${pageContext.request.contextPath}${product.mainImageUrl}" />
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="mainImgSrc" value="${pageContext.request.contextPath}/${product.mainImageUrl}" />
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
                 <div class="col-md-6 col-sm-6">
-                    <div class="single-pro-page-img" style="background: #fff; padding: 20px; border: 1px solid #eee; text-align: center;">
-                        <img id="mainProductImage" src="${pageContext.request.contextPath}/assets/img/product-${detailImgIdx}.jpg" alt="${product.name}" style="max-height: 400px; width: auto; object-fit: contain;" />
+                    <div class="single-pro-page-img" style="background: #fff; padding: 20px; border: 1px solid #eee; text-align: center; border-radius: 8px;">
+                        <img id="mainProductImage" src="${mainImgSrc}" alt="<c:out value='${product.name}'/>" 
+                             onerror="this.onerror=null; this.src='${fallbackDetailImg}';"
+                             style="max-height: 400px; width: auto; max-width: 100%; object-fit: contain; border-radius: 4px;" />
                         
                         <!-- Image Gallery Thumbnails if present -->
                         <c:if test="${not empty product.gallery}">
-                            <div class="gallery-thumbs" style="display: flex; gap: 10px; margin-top: 15px; justify-content: center;">
+                            <div class="gallery-thumbs" style="display: flex; gap: 10px; margin-top: 15px; justify-content: center; flex-wrap: wrap;">
+                                <!-- Thumbnail ảnh chính -->
+                                <img src="${mainImgSrc}" 
+                                     alt="Ảnh chính" 
+                                     style="width: 70px; height: 70px; object-fit: cover; border: 2px solid #e85b24; cursor: pointer; border-radius: 6px; padding: 2px;"
+                                     onclick="document.getElementById('mainProductImage').src = this.src;" />
+                                <!-- Các ảnh phụ trong gallery -->
                                 <c:forEach items="${product.gallery}" var="gImg" varStatus="loop">
-                                    <c:set var="thumbIdx" value="${(product.id + loop.index) % 7 + 1}" />
-                                    <img src="${pageContext.request.contextPath}/assets/img/product-${thumbIdx}.jpg" 
-                                         alt="Gallery" 
-                                         style="width: 70px; height: 70px; object-fit: cover; border: 1px solid #ddd; cursor: pointer; border-radius: 4px;"
+                                    <c:set var="thumbSrc" value="${gImg.imageUrl}" />
+                                    <c:if test="${!thumbSrc.startsWith('http://') && !thumbSrc.startsWith('https://') && !thumbSrc.startsWith('/')}">
+                                        <c:set var="thumbSrc" value="${pageContext.request.contextPath}/${thumbSrc}" />
+                                    </c:if>
+                                    <img src="${thumbSrc}" 
+                                         alt="Gallery ${loop.index + 1}" 
+                                         onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/assets/img/product-${(product.id + loop.index) % 7 + 1}.jpg';"
+                                         style="width: 70px; height: 70px; object-fit: cover; border: 1px solid #ddd; cursor: pointer; border-radius: 6px; padding: 2px; transition: border-color 0.2s;"
+                                         onmouseover="this.style.borderColor='#e85b24';"
+                                         onmouseout="this.style.borderColor='#ddd';"
                                          onclick="document.getElementById('mainProductImage').src = this.src;" />
                                 </c:forEach>
                             </div>
@@ -100,14 +147,19 @@
                             <c:out value="${product.name}"/>
                         </h2>
                         
-                        <ul class="product-rating" style="margin-bottom: 15px;">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star-half-o"></i></li>
-                            <li style="color: #666; font-size: 13px; margin-left: 10px;">(5 sao đánh giá từ kỹ sư lắp đặt)</li>
-                        </ul>
+                        <!-- Dynamic Star Rating Header -->
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px; flex-wrap: wrap;">
+                            <ul class="product-rating" style="margin: 0; padding: 0; list-style: none; display: flex; color: #f59e0b; font-size: 15px; gap: 2px;">
+                                <c:forEach begin="1" end="5" var="i">
+                                    <li><i class="fa ${i <= reviewStats.averageRating ? 'fa-star' : (i - reviewStats.averageRating < 0.8 ? 'fa-star-half-o' : 'fa-star-o')}"></i></li>
+                                </c:forEach>
+                            </ul>
+                            <strong style="color: #1e293b; font-size: 14px;">${reviewStats.averageRating} / 5</strong>
+                            <a href="#reviews" onclick="$('a[href=\'#tab-customer-reviews\']').tab('show'); document.getElementById('tab-customer-reviews').scrollIntoView({behavior: 'smooth'});" 
+                               style="color: #64748b; font-size: 13px; text-decoration: underline;">
+                                (${reviewStats.totalReviews} đánh giá từ khách hàng)
+                            </a>
+                        </div>
                         
                         <div class="single-pro-page-para">
                             <p style="color: #555; line-height: 24px;">
@@ -159,7 +211,7 @@
                                             <span style="color: #666; font-size: 13px;">(Còn ${product.stockQuantity} sản phẩm trong kho)</span>
                                         </p>
                                     </div>
-                                    <div class="single-shop-page-btn" style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                                    <div class="single-shop-page-btn" style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; align-items: center;">
                                         <button type="submit" class="bleezy-btn" style="cursor: pointer; padding: 12px 24px;">
                                             <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                                         </button>
@@ -167,6 +219,12 @@
                                                 style="background: #16a34a; border-color: #16a34a; cursor: pointer; padding: 12px 24px;">
                                             <i class="fa fa-bolt"></i> Mua ngay
                                         </button>
+                                        <a href="${pageContext.request.contextPath}/wishlist-action?action=toggle&productId=${product.id}&redirect=detail" 
+                                           class="btn btn-default" 
+                                           style="padding: 11px 18px; border-radius: 4px; border: 1px solid #e11d48; color: #e11d48; font-weight: 600; text-decoration: none;"
+                                           title="Thêm hoặc xóa khỏi danh sách yêu thích">
+                                            <i class="fa fa-heart"></i> Yêu thích
+                                        </a>
                                     </div>
                                 </form>
                             </c:when>
@@ -191,13 +249,16 @@
             </div>
             
             <!-- Specifications and Reviews Tabs -->
-            <div class="row" style="margin-top: 60px;">
+            <div class="row" style="margin-top: 60px;" id="reviews">
                 <div class="col-md-12">
                     <div class="service-details-tab">
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#tab-spec" aria-controls="tab-spec" role="tab" data-toggle="tab">Thông số kỹ thuật</a></li>
                             <li role="presentation"><a href="#tab-desc" aria-controls="tab-desc" role="tab" data-toggle="tab">Mô tả chi tiết</a></li>
-                            <li role="presentation"><a href="#tab-review" aria-controls="tab-review" role="tab" data-toggle="tab">Đánh giá & Bảo hành</a></li>
+                            <li role="presentation"><a href="#tab-review" aria-controls="tab-review" role="tab" data-toggle="tab">Cam kết & Bảo hành</a></li>
+                            <li role="presentation"><a href="#tab-customer-reviews" aria-controls="tab-customer-reviews" role="tab" data-toggle="tab">
+                                <i class="fa fa-star text-warning" style="color: #f59e0b;"></i> Đánh giá khách hàng (${reviewStats.totalReviews})
+                            </a></li>
                         </ul>
                         <div class="tab-content" style="padding: 30px; background: #fdfdfd; border: 1px solid #eee; border-top: none;">
                             <!-- Tab Spec -->
@@ -230,6 +291,7 @@
                                     </tbody>
                                 </table>
                             </div>
+
                             <!-- Tab Desc -->
                             <div role="tabpanel" class="tab-pane" id="tab-desc">
                                 <h4>Mô tả ứng dụng & tính năng vận hành</h4>
@@ -245,7 +307,8 @@
                                     </c:choose>
                                 </div>
                             </div>
-                            <!-- Tab Review -->
+
+                            <!-- Tab Commit & Warranty -->
                             <div role="tabpanel" class="tab-pane" id="tab-review">
                                 <h4>Cam kết chất lượng & Chính sách bảo hành</h4>
                                 <div class="review-list" style="margin-top: 15px;">
@@ -260,6 +323,113 @@
                                     <div>
                                         <strong><i class="fa fa-truck" style="color: #e67e22;"></i> Giao hàng & Lắp đặt:</strong>
                                         <p style="margin-top: 5px;">Hỗ trợ giao hàng toàn quốc, kiểm tra hàng trước khi thanh toán, kèm tài liệu hướng dẫn đấu nối chi tiết bằng tiếng Việt.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Customer Reviews -->
+                            <div role="tabpanel" class="tab-pane" id="tab-customer-reviews">
+                                <div class="row">
+                                    <!-- Cột Tổng quan điểm sao -->
+                                    <div class="col-sm-5" style="border-right: 1px solid #eee; padding-right: 25px;">
+                                        <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 25px; text-align: center; margin-bottom: 25px;">
+                                            <div style="font-size: 48px; font-weight: 800; color: #1e293b; line-height: 1;">
+                                                ${reviewStats.averageRating}
+                                            </div>
+                                            <div style="color: #f59e0b; font-size: 20px; margin: 10px 0;">
+                                                <c:forEach begin="1" end="5" var="i">
+                                                    <i class="fa ${i <= reviewStats.averageRating ? 'fa-star' : (i - reviewStats.averageRating < 0.8 ? 'fa-star-half-o' : 'fa-star-o')}"></i>
+                                                </c:forEach>
+                                            </div>
+                                            <p style="color: #64748b; font-size: 13px; margin: 0;">Dựa trên ${reviewStats.totalReviews} đánh giá thực tế</p>
+                                        </div>
+
+                                        <!-- Form gửi đánh giá -->
+                                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 15px;">
+                                                <i class="fa fa-pencil"></i> Gửi đánh giá của bạn
+                                            </h4>
+                                            <form action="${pageContext.request.contextPath}/product-review" method="post">
+                                                <input type="hidden" name="productId" value="${product.id}">
+                                                
+                                                <div class="form-group" style="margin-bottom: 12px;">
+                                                    <label style="font-size: 13px; font-weight: 600; color: #334155; display: block; margin-bottom: 5px;">Mức độ hài lòng:</label>
+                                                    <select name="rating" class="form-control" style="font-size: 13px; border-radius: 4px;">
+                                                        <option value="5" selected>⭐⭐⭐⭐⭐ Tuyệt vời (5/5 sao)</option>
+                                                        <option value="4">⭐⭐⭐⭐ Rất tốt (4/5 sao)</option>
+                                                        <option value="3">⭐⭐⭐ Bình thường (3/5 sao)</option>
+                                                        <option value="2">⭐⭐ Kém (2/5 sao)</option>
+                                                        <option value="1">⭐ Rất tệ (1/5 sao)</option>
+                                                    </select>
+                                                </div>
+
+                                                <c:if test="${empty sessionScope.currentUser}">
+                                                    <div class="form-group" style="margin-bottom: 12px;">
+                                                        <label style="font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 4px;">Họ tên của bạn *</label>
+                                                        <input type="text" name="customerName" class="form-control" placeholder="Ví dụ: Kỹ sư Hoàng Nam" required style="font-size: 13px;">
+                                                    </div>
+                                                    <div class="form-group" style="margin-bottom: 12px;">
+                                                        <label style="font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 4px;">Email (không bắt buộc)</label>
+                                                        <input type="email" name="customerEmail" class="form-control" placeholder="Để nhận phản hồi từ kỹ thuật" style="font-size: 13px;">
+                                                    </div>
+                                                </c:if>
+
+                                                <div class="form-group" style="margin-bottom: 15px;">
+                                                    <label style="font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 4px;">Nhận xét chi tiết *</label>
+                                                    <textarea name="comment" rows="4" class="form-control" placeholder="Chia sẻ cảm nhận về hiệu suất, độ êm và hỗ trợ kỹ thuật..." required style="font-size: 13px;"></textarea>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary" style="width: 100%; background: #e85b24; border-color: #e85b24; font-weight: 600; padding: 10px 0;">
+                                                    <i class="fa fa-paper-plane"></i> Gửi Đánh Giá Ngay
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <!-- Cột Danh sách nhận xét -->
+                                    <div class="col-sm-7" style="padding-left: 25px;">
+                                        <h4 style="font-size: 16px; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 20px;">
+                                            Khách hàng nói gì về thiết bị này (${reviewStats.totalReviews})
+                                        </h4>
+
+                                        <c:choose>
+                                            <c:when test="${not empty reviews}">
+                                                <div class="reviews-container">
+                                                    <c:forEach var="rev" items="${reviews}">
+                                                        <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px 20px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                                                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                                                <div>
+                                                                    <strong style="color: #0f172a; font-size: 14px;">
+                                                                        <i class="fa fa-user-circle" style="color: #64748b; margin-right: 4px;"></i> <c:out value="${rev.customerName}"/>
+                                                                    </strong>
+                                                                    <span class="label label-success" style="font-size: 11px; margin-left: 6px; background-color: #10b981;">
+                                                                        <i class="fa fa-check"></i> Đã mua hàng
+                                                                    </span>
+                                                                </div>
+                                                                <span style="font-size: 12px; color: #94a3b8;">${rev.formattedCreatedAt}</span>
+                                                            </div>
+                                                            <div style="color: #f59e0b; font-size: 13px; margin-bottom: 10px;">
+                                                                <c:forEach begin="1" end="${rev.rating}">
+                                                                    <i class="fa fa-star"></i>
+                                                                </c:forEach>
+                                                                <c:forEach begin="${rev.rating + 1}" end="5">
+                                                                    <i class="fa fa-star-o" style="color: #cbd5e1;"></i>
+                                                                </c:forEach>
+                                                            </div>
+                                                            <p style="color: #334155; font-size: 13.5px; line-height: 1.6; margin: 0;">
+                                                                <c:out value="${rev.comment}"/>
+                                                            </p>
+                                                        </div>
+                                                    </c:forEach>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div style="text-align: center; padding: 40px 20px; background: #fff; border: 1px dashed #cbd5e1; border-radius: 8px;">
+                                                    <i class="fa fa-comments-o" style="font-size: 40px; color: #94a3b8; margin-bottom: 10px; display: block;"></i>
+                                                    <p style="color: #64748b; font-size: 14px; margin: 0;">Chưa có đánh giá nào cho sản phẩm này. Hãy là người đầu tiên chia sẻ cảm nhận của bạn!</p>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
@@ -309,7 +479,7 @@
                                     <div class="product-button">
                                         <a href="${pageContext.request.contextPath}/product-detail?id=${rp.id}">Chi tiết</a>
                                         <a href="${pageContext.request.contextPath}/product-detail?id=${rp.id}"><i class="fa fa-eye"></i></a>
-                                        <a href="${pageContext.request.contextPath}/cart.jsp"><i class="fa fa-shopping-cart"></i></a>
+                                        <a href="${pageContext.request.contextPath}/wishlist-action?action=toggle&productId=${rp.id}&redirect=shop" title="Yêu thích"><i class="fa fa-heart"></i></a>
                                     </div>
                                 </div>
                             </div>

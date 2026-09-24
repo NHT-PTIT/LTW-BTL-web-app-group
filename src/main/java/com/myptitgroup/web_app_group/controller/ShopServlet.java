@@ -112,6 +112,13 @@ public class ShopServlet extends HttpServlet {
         request.setAttribute("brands", brands);
         request.setAttribute("featuredSidebar", featuredSidebar);
 
+        javax.servlet.http.HttpSession session = request.getSession(false);
+        com.myptitgroup.web_app_group.model.User currentUser = (session != null) ? (com.myptitgroup.web_app_group.model.User) session.getAttribute("currentUser") : null;
+        if (currentUser != null) {
+            com.myptitgroup.web_app_group.dao.WishlistDAO wishlistDAO = new com.myptitgroup.web_app_group.dao.WishlistDAO();
+            request.setAttribute("wishlistProductIds", wishlistDAO.getWishlistProductIds(currentUser.getId()));
+        }
+
         // Giữ lại trạng thái bộ lọc trên UI
         request.setAttribute("selectedCategoryId", categoryId);
         request.setAttribute("selectedBrand", brand);

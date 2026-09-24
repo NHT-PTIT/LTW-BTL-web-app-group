@@ -78,9 +78,69 @@
                                                 <p style="margin-bottom: 8px;"><strong>Ghi chú:</strong> <c:out value="${order.note}"/></p>
                                             </c:if>
                                             <p style="margin-bottom: 8px;"><strong>Phí vận chuyển:</strong> <span style="color: #16a34a; font-weight: bold;">Miễn phí</span></p>
+                                            <c:if test="${not empty order.couponCode}">
+                                                <p style="margin-bottom: 8px;"><strong>Mã giảm giá áp dụng:</strong> <span class="label label-success" style="font-size: 12px;"><i class="fa fa-tag"></i> <c:out value="${order.couponCode}"/></span> (<span style="color: #16a34a; font-weight: bold;">${order.formattedDiscountAmount}</span>)</p>
+                                            </c:if>
                                             <p style="margin-bottom: 8px;"><strong>Tổng thanh toán:</strong> <strong style="color: #e85b24; font-size: 20px;">${order.formattedTotalAmount}</strong></p>
                                         </div>
                                     </div>
+
+                                    <!-- VietQR Payment Block for BANK_TRANSFER -->
+                                    <c:if test="${order.paymentMethod == 'BANK_TRANSFER'}">
+                                        <div style="background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%); border: 2px solid #6366f1; border-radius: 12px; padding: 25px; margin: 25px 0; text-align: left; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.1);">
+                                            <div class="row" style="align-items: center;">
+                                                <div class="col-sm-5 text-center" style="margin-bottom: 15px;">
+                                                    <h5 style="color: #4338ca; font-weight: 700; margin-bottom: 12px; font-size: 15px;">
+                                                        <i class="fa fa-qrcode"></i> QUÉT MÃ VIETQR QUA APP NGÂN HÀNG
+                                                    </h5>
+                                                    <div style="background: #fff; padding: 12px; display: inline-block; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                                                        <img src="https://img.vietqr.io/image/${companyInfo.bankName}-${companyInfo.bankAccountNo}-compact2.png?amount=${order.totalAmount}&addInfo=${order.orderCode}&accountName=${companyInfo.bankAccountName}" 
+                                                             alt="Mã VietQR thanh toán ${order.orderCode}" 
+                                                             style="max-width: 100%; width: 230px; height: auto; border-radius: 6px; display: block;" />
+                                                    </div>
+                                                    <p style="font-size: 12px; color: #6b7280; margin-top: 8px; margin-bottom: 0;">
+                                                        Mã QR tự động điền đúng Số tài khoản, Số tiền và Nội dung
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <div style="background: #fff; padding: 18px 20px; border-radius: 10px; border: 1px solid #cbd5e1;">
+                                                        <h5 style="color: #1e293b; font-weight: 700; margin-top: 0; margin-bottom: 15px; font-size: 16px; border-bottom: 2px solid #6366f1; padding-bottom: 8px;">
+                                                            <i class="fa fa-university"></i> THÔNG TIN CHUYỂN KHOẢN THỦ CÔNG
+                                                        </h5>
+                                                        <p style="margin-bottom: 10px; font-size: 14px;">
+                                                            <strong>Ngân hàng thụ hưởng:</strong> 
+                                                            <span style="color: #4338ca; font-weight: 700; text-transform: uppercase;">${companyInfo.bankName}</span>
+                                                        </p>
+                                                        <p style="margin-bottom: 10px; font-size: 14px;">
+                                                            <strong>Số tài khoản:</strong> 
+                                                            <span style="font-size: 17px; font-weight: 800; color: #1e293b; font-family: monospace; letter-spacing: 1px;">${companyInfo.bankAccountNo}</span>
+                                                            <button type="button" class="btn btn-default btn-xs" onclick="navigator.clipboard.writeText('${companyInfo.bankAccountNo}'); alert('Đã sao chép số tài khoản!');" style="margin-left: 8px; padding: 2px 8px; font-size: 11px;">
+                                                                <i class="fa fa-copy"></i> Sao chép
+                                                            </button>
+                                                        </p>
+                                                        <p style="margin-bottom: 10px; font-size: 14px;">
+                                                            <strong>Chủ tài khoản:</strong> 
+                                                            <span style="font-weight: 700; color: #334155; text-transform: uppercase;">${companyInfo.bankAccountName}</span>
+                                                        </p>
+                                                        <p style="margin-bottom: 10px; font-size: 14px;">
+                                                            <strong>Số tiền thanh toán:</strong> 
+                                                            <span style="font-size: 18px; font-weight: 800; color: #e85b24;">${order.formattedTotalAmount}</span>
+                                                        </p>
+                                                        <p style="margin-bottom: 5px; font-size: 14px;">
+                                                            <strong>Nội dung chuyển khoản (bắt buộc):</strong> 
+                                                            <span style="font-size: 16px; font-weight: 800; color: #b91c1c; font-family: monospace; background: #fef2f2; padding: 2px 6px; border-radius: 4px; border: 1px dashed #f87171;">${order.orderCode}</span>
+                                                            <button type="button" class="btn btn-default btn-xs" onclick="navigator.clipboard.writeText('${order.orderCode}'); alert('Đã sao chép mã đơn hàng!');" style="margin-left: 8px; padding: 2px 8px; font-size: 11px;">
+                                                                <i class="fa fa-copy"></i> Sao chép
+                                                            </button>
+                                                        </p>
+                                                        <div style="margin-top: 12px; padding: 8px 12px; background: #fffbeb; border-radius: 6px; border-left: 3px solid #f59e0b; font-size: 12px; color: #92400e;">
+                                                            <i class="fa fa-info-circle"></i> Đơn hàng sẽ tự động chuyển sang trạng thái <strong>Đang chuẩn bị hàng</strong> ngay khi bộ phận kế toán xác nhận số dư tài khoản.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
 
                                     <!-- Order Items List -->
                                     <c:if test="${not empty order.items}">
@@ -129,6 +189,9 @@
                                 <i class="fa fa-shopping-bag"></i> Tiếp tục mua sắm
                             </a>
                             <c:if test="${not empty order}">
+                                <a href="${pageContext.request.contextPath}/invoice?code=${order.orderCode}" target="_blank" class="bleezy-btn" style="background: #e85b24; border-color: #e85b24;">
+                                    <i class="fa fa-print"></i> In hóa đơn / Phiếu xuất
+                                </a>
                                 <a href="${pageContext.request.contextPath}/track-order?q=${order.orderCode}" class="bleezy-btn" style="background: #0284c7; border-color: #0284c7;">
                                     <i class="fa fa-truck"></i> Theo dõi đơn hàng
                                 </a>

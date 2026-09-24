@@ -56,15 +56,20 @@ public class OrderDAO {
             int uId = rs.getInt("user_id");
             o.setUserId(rs.wasNull() ? null : uId);
         } catch (SQLException ignored) {}
+        try {
+            o.setCouponCode(rs.getString("coupon_code"));
+            o.setDiscountAmount(rs.getBigDecimal("discount_amount"));
+        } catch (SQLException ignored) {}
         return o;
     }
 
     /**
      * TẠO ĐƠN HÀNG VỚI TRANSACTION QUẢN LÝ
-     * Thực hiện 3 bước trong 1 transaction:
-     * 1. Lưu thông tin đơn hàng vào bảng orders
+     * Thực hiện các bước trong 1 transaction:
+     * 1. Lưu thông tin đơn hàng vào bảng orders (kèm coupon & discount)
      * 2. Lưu từng mặt hàng vào bảng order_items
      * 3. Trừ số lượng tồn kho stock_quantity của sản phẩm
+     * 4. Cập nhật số lượt đã dùng của mã giảm giá (nếu có)
      */
     public boolean createOrder(Order order, List<OrderItem> items) {
         if (order == null || items == null || items.isEmpty()) {
@@ -76,8 +81,8 @@ public class OrderDAO {
         }
 
         String sqlOrder = "INSERT INTO orders (order_code, user_id, customer_name, customer_phone, customer_email, " +
-                          "shipping_address, note, total_amount, payment_method, status) " +
-                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                          "shipping_address, note, total_amount, coupon_code, discount_amount, payment_method, status) " +
+                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         String sqlItem = "INSERT INTO order_items (order_id, product_id, product_sku, product_name, " +
                          "product_image, unit_price, quantity, subtotal) " +
@@ -110,8 +115,10 @@ public class OrderDAO {
             psOrder.setString(6, order.getShippingAddress());
             psOrder.setString(7, order.getNote());
             psOrder.setBigDecimal(8, order.getTotalAmount());
-            psOrder.setString(9, order.getPaymentMethod() != null ? order.getPaymentMethod() : "COD");
-            psOrder.setString(10, order.getStatus() != null ? order.getStatus() : "PENDING");
+            psOrder.setString(9, order.getCouponCode());
+            psOrder.setBigDecimal(10, order.getDiscountAmount() != null ? order.getDiscountAmount() : BigDecimal.ZERO);
+            psOrder.setString(11, order.getPaymentMethod() != null ? order.getPaymentMethod() : "COD");
+            psOrder.setString(12, order.getStatus() != null ? order.getStatus() : "PENDING");
 
             int affected = psOrder.executeUpdate();
             if (affected == 0) {
@@ -157,6 +164,15 @@ public class OrderDAO {
 
             psItem.executeBatch();
             psStock.executeBatch();
+
+            // 3. Tăng lượt sử dụng của mã giảm giá (nếu có)
+            if (order.getCouponCode() != null && !order.getCouponCode().trim().isEmpty()) {
+                String sqlCoupon = "UPDATE coupons SET used_count = used_count + 1 WHERE code = ?";
+                try (PreparedStatement psC = conn.prepareStatement(sqlCoupon)) {
+                    psC.setString(1, order.getCouponCode().trim());
+                    psC.executeUpdate();
+                }
+            }
 
             // Cam kết toàn bộ giao dịch (Commit)
             conn.commit();
@@ -364,16 +380,118 @@ public class OrderDAO {
     }
 
     /**
+     * Hoàn lại số lượng tồn kho cho các sản phẩm trong đơn hàng bị hủy
+     */
+    private void restoreOrderStock(Connection conn, int orderId) throws SQLException {
+        String getItemsSql = "SELECT product_id, quantity FROM order_items WHERE order_id = ? AND product_id IS NOT NULL";
+        String restoreStockSql = "UPDATE products SET stock_quantity = stock_quantity + ? WHERE id = ?";
+        try (PreparedStatement psItems = conn.prepareStatement(getItemsSql);
+             PreparedStatement psStock = conn.prepareStatement(restoreStockSql)) {
+            psItems.setInt(1, orderId);
+            try (ResultSet rs = psItems.executeQuery()) {
+                while (rs.next()) {
+                    int pId = rs.getInt("product_id");
+                    int qty = rs.getInt("quantity");
+                    if (pId > 0 && qty > 0) {
+                        psStock.setInt(1, qty);
+                        psStock.setInt(2, pId);
+                        psStock.executeUpdate();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Hủy đơn hàng kèm Transaction hoàn trả số lượng tồn kho sản phẩm
+     * Chỉ cho phép hủy khi đơn hàng đang ở trạng thái 'PENDING'
+     * @param orderId ID của đơn hàng
+     * @param userId ID khách hàng (nếu truyền null thì không kiểm tra quyền sở hữu, dùng cho Admin)
+     * @return true nếu hủy và hoàn kho thành công, false nếu đơn không hợp lệ hoặc đã ở trạng thái khác
+     */
+    public boolean cancelOrder(int orderId, Integer userId) {
+        Connection conn = null;
+        PreparedStatement psCheck = null;
+        PreparedStatement psUpdate = null;
+        ResultSet rsCheck = null;
+        try {
+            conn = DBContext.getConnection();
+            conn.setAutoCommit(false);
+
+            // Kiểm tra trạng thái hiện tại và quyền sở hữu
+            StringBuilder checkSql = new StringBuilder("SELECT status FROM orders WHERE id = ?");
+            if (userId != null && userId > 0) {
+                checkSql.append(" AND user_id = ?");
+            }
+            checkSql.append(" FOR UPDATE");
+
+            psCheck = conn.prepareStatement(checkSql.toString());
+            psCheck.setInt(1, orderId);
+            if (userId != null && userId > 0) {
+                psCheck.setInt(2, userId);
+            }
+            rsCheck = psCheck.executeQuery();
+            if (!rsCheck.next()) {
+                conn.rollback();
+                return false;
+            }
+
+            String currentStatus = rsCheck.getString("status");
+            if (!"PENDING".equalsIgnoreCase(currentStatus)) {
+                // Đơn đã giao, đang giao hoặc đã hủy trước đó -> Không được hủy tiếp
+                conn.rollback();
+                return false;
+            }
+
+            // 1. Cập nhật trạng thái đơn thành CANCELLED
+            String updateSql = "UPDATE orders SET status = 'CANCELLED' WHERE id = ?";
+            psUpdate = conn.prepareStatement(updateSql);
+            psUpdate.setInt(1, orderId);
+            int affected = psUpdate.executeUpdate();
+            if (affected == 0) {
+                conn.rollback();
+                return false;
+            }
+
+            // 2. Hoàn lại số lượng tồn kho sản phẩm trong kho
+            restoreOrderStock(conn, orderId);
+
+            conn.commit();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (conn != null) {
+                try { conn.rollback(); } catch (SQLException ignored) {}
+            }
+        } finally {
+            DBContext.close(conn, psUpdate, rsCheck);
+            if (psCheck != null) {
+                try { psCheck.close(); } catch (SQLException ignored) {}
+            }
+        }
+        return false;
+    }
+
+    /**
      * Cập nhật trạng thái đơn hàng (PENDING, SHIPPING, COMPLETED, CANCELLED)
+     * Tự động hoàn kho nếu đơn chuyển sang trạng thái CANCELLED
      */
     public boolean updateOrderStatus(int orderId, String newStatus) {
+        if (newStatus == null) return false;
+        String normalizedStatus = newStatus.trim().toUpperCase();
+
+        if ("CANCELLED".equals(normalizedStatus)) {
+            // Tận dụng hàm cancelOrder (userId = null) để cập nhật và hoàn trả tồn kho an toàn
+            return cancelOrder(orderId, null);
+        }
+
         String sql = "UPDATE orders SET status = ? WHERE id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = DBContext.getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setString(1, newStatus);
+            ps.setString(1, normalizedStatus);
             ps.setInt(2, orderId);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {

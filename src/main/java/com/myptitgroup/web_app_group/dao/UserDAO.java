@@ -222,7 +222,7 @@ public class UserDAO {
     public boolean changePassword(int userId, String rawOrHashedPassword) {
         String passwordHash = rawOrHashedPassword;
         if (passwordHash != null && passwordHash.length() != 64) {
-            passwordHash = SecurityUtils.sha256Hex(passwordHash);
+            passwordHash = SecurityUtils.hashPassword(passwordHash);
         }
         String sql = "UPDATE users SET password_hash = ? WHERE id = ?";
         Connection conn = null;
@@ -311,6 +311,13 @@ public class UserDAO {
         }
         return list;
     }
+
+    /**
+     * Đếm tổng số người dùng trong hệ thống (không lọc)
+     */
+     public int countUsers() {
+         return countUsers((String) null, (Integer) null);
+     }
 
     /**
      * Overload: Đếm tổng số khách hàng hỗ trợ status dạng String ("ALL", "ACTIVE", "LOCKED")

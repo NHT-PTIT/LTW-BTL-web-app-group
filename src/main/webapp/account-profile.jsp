@@ -68,6 +68,12 @@
                                 </a>
                             </li>
                             <li style="margin-bottom: 8px;">
+                                <a href="${pageContext.request.contextPath}/account/wishlist" 
+                                   style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 6px; font-weight: 500; text-decoration: none; color: #475569; transition: all 0.2s;">
+                                    <i class="fa fa-heart" style="width: 18px;"></i> Sản phẩm yêu thích
+                                </a>
+                            </li>
+                            <li style="margin-bottom: 8px;">
                                 <a href="${pageContext.request.contextPath}/cart" 
                                    style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 6px; font-weight: 500; text-decoration: none; color: #475569; transition: all 0.2s;">
                                     <i class="fa fa-shopping-cart" style="width: 18px;"></i> Giỏ hàng hiện tại

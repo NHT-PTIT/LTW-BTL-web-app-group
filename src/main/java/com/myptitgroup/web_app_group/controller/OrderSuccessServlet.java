@@ -35,6 +35,8 @@ public class OrderSuccessServlet extends HttpServlet {
         }
 
         request.setAttribute("order", order);
+        com.myptitgroup.web_app_group.dao.CompanyInfoDAO companyInfoDAO = new com.myptitgroup.web_app_group.dao.CompanyInfoDAO();
+        request.setAttribute("companyInfo", companyInfoDAO.getCompanyInfo());
         request.setAttribute("pageTitle", "Đặt hàng thành công #" + order.getOrderCode() + " - Bleezy Inverter & Solar Power");
         request.getRequestDispatcher("/order-success.jsp").forward(request, response);
     }

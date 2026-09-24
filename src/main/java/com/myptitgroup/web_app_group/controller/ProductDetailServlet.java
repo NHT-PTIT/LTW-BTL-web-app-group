@@ -67,7 +67,12 @@ public class ProductDetailServlet extends HttpServlet {
         // 5. Lấy danh sách sản phẩm liên quan (cùng danh mục)
         List<Product> relatedProducts = productDAO.getRelatedProducts(product.getCategoryId(), product.getId(), 4);
 
-        // 6. Đính kèm dữ liệu vào Request
+        // 6. Lấy đánh giá và thống kê sao của sản phẩm
+        com.myptitgroup.web_app_group.dao.ProductReviewDAO reviewDAO = new com.myptitgroup.web_app_group.dao.ProductReviewDAO();
+        request.setAttribute("reviews", reviewDAO.getApprovedReviewsByProductId(product.getId()));
+        request.setAttribute("reviewStats", reviewDAO.getReviewStats(product.getId()));
+
+        // 7. Đính kèm dữ liệu vào Request
         request.setAttribute("product", product);
         request.setAttribute("category", category);
         request.setAttribute("relatedProducts", relatedProducts);

@@ -15,6 +15,7 @@ public class Cart implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final Map<Integer, CartItem> items = new LinkedHashMap<>();
+    private Coupon appliedCoupon;
 
     public Cart() {
     }
@@ -78,6 +79,7 @@ public class Cart implements Serializable {
      */
     public void clear() {
         items.clear();
+        appliedCoupon = null;
     }
 
     /**
@@ -106,7 +108,7 @@ public class Cart implements Serializable {
     }
 
     /**
-     * Tính tổng số tiền của toàn bộ giỏ hàng
+     * Tính tổng số tiền của toàn bộ giỏ hàng (chưa trừ voucher)
      */
     public BigDecimal getTotalAmount() {
         BigDecimal total = BigDecimal.ZERO;
@@ -117,11 +119,64 @@ public class Cart implements Serializable {
     }
 
     /**
-     * Định dạng tổng tiền theo chuẩn tiền tệ VNĐ (ví dụ: 12.500.000 đ)
+     * Định dạng tổng tiền gốc theo chuẩn tiền tệ VNĐ (ví dụ: 12.500.000 đ)
      */
     public String getFormattedTotalAmount() {
         DecimalFormat df = new DecimalFormat("###,###,### đ");
         return df.format(getTotalAmount());
+    }
+
+    /**
+     * Áp dụng mã giảm giá
+     */
+    public void applyCoupon(Coupon coupon) {
+        this.appliedCoupon = coupon;
+    }
+
+    /**
+     * Hủy bỏ mã giảm giá hiện tại
+     */
+    public void removeCoupon() {
+        this.appliedCoupon = null;
+    }
+
+    public Coupon getAppliedCoupon() {
+        return appliedCoupon;
+    }
+
+    /**
+     * Tính số tiền giảm giá theo voucher đã áp dụng
+     */
+    public BigDecimal getDiscountAmount() {
+        if (appliedCoupon == null || items.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+        BigDecimal total = getTotalAmount();
+        return appliedCoupon.calculateDiscount(total);
+    }
+
+    public String getFormattedDiscountAmount() {
+        BigDecimal discount = getDiscountAmount();
+        if (discount.compareTo(BigDecimal.ZERO) <= 0) {
+            return "0 đ";
+        }
+        DecimalFormat df = new DecimalFormat("###,###,### đ");
+        return "-" + df.format(discount);
+    }
+
+    /**
+     * Tính tổng tiền thực thanh toán sau khi trừ khuyến mãi voucher
+     */
+    public BigDecimal getFinalTotal() {
+        BigDecimal total = getTotalAmount();
+        BigDecimal discount = getDiscountAmount();
+        BigDecimal finalTotal = total.subtract(discount);
+        return finalTotal.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : finalTotal;
+    }
+
+    public String getFormattedFinalTotal() {
+        DecimalFormat df = new DecimalFormat("###,###,### đ");
+        return df.format(getFinalTotal());
     }
 
     /**

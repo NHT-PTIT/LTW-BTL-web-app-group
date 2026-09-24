@@ -20,9 +20,9 @@
             </div>
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
-            <button onclick="window.print()" class="admin-btn admin-btn-secondary">
-                <i class="fa-solid fa-print"></i> In Hóa Đơn
-            </button>
+            <a href="${pageContext.request.contextPath}/invoice?id=${order.id}" target="_blank" class="admin-btn admin-btn-secondary">
+                <i class="fa-solid fa-print"></i> In Hóa Đơn / Xuất Kho
+            </a>
             <a href="${pageContext.request.contextPath}/track-order?keyword=${order.orderCode}" target="_blank" class="admin-btn admin-btn-secondary">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Xem Trang Khách
             </a>

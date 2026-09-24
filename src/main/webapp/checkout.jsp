@@ -149,6 +149,22 @@
                                         </tr>
                                     </c:forEach>
                                     <tr style="border-top: 1px solid #eee;">
+                                        <td style="padding: 10px 0; color: #666;">Tạm tính đơn hàng:</td>
+                                        <td style="padding: 10px 0; text-align: right; color: #333; font-weight: 600;">
+                                            ${sessionScope.cart.formattedTotalAmount}
+                                        </td>
+                                    </tr>
+                                    <c:if test="${not empty sessionScope.cart.appliedCoupon}">
+                                        <tr style="background: #f0fdf4;">
+                                            <td style="padding: 10px 0; color: #166534; font-weight: 600;">
+                                                <i class="fa fa-ticket"></i> Mã giảm giá (${sessionScope.cart.appliedCoupon.code}):
+                                            </td>
+                                            <td style="padding: 10px 0; text-align: right; color: #16a34a; font-weight: bold;">
+                                                ${sessionScope.cart.formattedDiscountAmount}
+                                            </td>
+                                        </tr>
+                                    </c:if>
+                                    <tr>
                                         <td style="padding: 10px 0; color: #666;">Phí vận chuyển & Bảo hiểm hàng:</td>
                                         <td style="padding: 10px 0; text-align: right; color: #16a34a; font-weight: bold;">
                                             <i class="fa fa-check"></i> Miễn phí giao hàng
@@ -161,7 +177,7 @@
                                     <tr style="border-top: 2px solid #ddd; background: #fafafa;">
                                         <td style="padding: 15px 10px;"><strong style="font-size: 16px; color: #111;">Tổng thanh toán:</strong></td>
                                         <td style="padding: 15px 10px; text-align: right;">
-                                            <strong style="color: #e85b24; font-size: 22px;">${sessionScope.cart.formattedTotalAmount}</strong>
+                                            <strong style="color: #e85b24; font-size: 22px;">${sessionScope.cart.formattedFinalTotal}</strong>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -180,14 +196,21 @@
                                         Nhận hàng, kiểm tra sản phẩm chính hãng nguyên tem bảo hành trước khi thanh toán tiền mặt cho nhân viên giao hàng.
                                     </p>
                                 </div>
-                                <div class="payment" style="border: 1px solid #ddd; padding: 15px; border-radius: 6px; margin-bottom: 12px; background: #fafafa;">
+                                <div class="payment" style="border: 1px solid #c7d2fe; padding: 15px; border-radius: 6px; margin-bottom: 12px; background: #f8faff;">
                                     <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-bottom: 0;">
                                         <input type="radio" name="paymentMethod" value="BANK_TRANSFER" style="width: 18px; height: 18px;">
-                                        <h4 style="margin: 0; font-size: 15px; font-weight: 600; color: #222;">Chuyển khoản ngân hàng (VietQR / Internet Banking)</h4>
+                                        <h4 style="margin: 0; font-size: 15px; font-weight: 600; color: #4338ca;">
+                                            <i class="fa fa-qrcode"></i> Chuyển khoản ngân hàng (Quét mã VietQR tự động)
+                                        </h4>
                                     </label>
-                                    <p style="margin: 8px 0 0 28px; color: #666; font-size: 13px;">
-                                        STK: <strong>0011001234567</strong> - Vietcombank Chi nhánh Hà Nội. Chủ TK: CÔNG TY TNHH GIẢI PHÁP CƠ ĐIỆN PTIT TECH.
-                                    </p>
+                                    <div style="margin: 8px 0 0 28px; color: #475569; font-size: 13px;">
+                                        Ngân hàng: <strong style="color: #4338ca;">${companyInfo.bankName}</strong> | 
+                                        Số TK: <strong style="font-family: monospace; font-size: 14px;">${companyInfo.bankAccountNo}</strong> | 
+                                        Chủ TK: <strong>${companyInfo.bankAccountName}</strong>
+                                        <div style="margin-top: 6px; color: #059669; font-size: 12px; font-weight: 600;">
+                                            <i class="fa fa-bolt"></i> Mã VietQR chuẩn Napas 24/7 tự động điền số tiền sẽ được hiển thị ngay khi bạn nhấn "Hoàn tất đặt hàng".
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

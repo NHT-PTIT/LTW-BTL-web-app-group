@@ -70,6 +70,12 @@
                                 </a>
                             </li>
                             <li style="margin-bottom: 8px;">
+                                <a href="${pageContext.request.contextPath}/account/wishlist" 
+                                   style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 6px; font-weight: 500; text-decoration: none; color: #475569; transition: all 0.2s;">
+                                    <i class="fa fa-heart" style="width: 18px;"></i> Sản phẩm yêu thích
+                                </a>
+                            </li>
+                            <li style="margin-bottom: 8px;">
                                 <a href="${pageContext.request.contextPath}/cart" 
                                    style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 6px; font-weight: 500; text-decoration: none; color: #475569; transition: all 0.2s;">
                                     <i class="fa fa-shopping-cart" style="width: 18px;"></i> Giỏ hàng hiện tại
@@ -90,6 +96,18 @@
 
                     <!-- TRƯỜNG HỢP 1: XEM CHI TIẾT ĐƠN HÀNG (orderDetail) -->
                     <c:if test="${not empty orderDetail}">
+                        <!-- Thông báo khi hủy đơn -->
+                        <c:if test="${param.msg == 'cancel_success'}">
+                            <div class="alert alert-success" style="padding: 14px; margin-bottom: 20px; border-radius: 6px; background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; font-size: 14px;">
+                                <i class="fa fa-check-circle" style="margin-right: 6px;"></i> Đơn hàng #${orderDetail.orderCode} đã được hủy thành công. Số lượng sản phẩm đã được tự động hoàn trả lại kho hàng!
+                            </div>
+                        </c:if>
+                        <c:if test="${param.err == 'cancel_failed'}">
+                            <div class="alert alert-danger" style="padding: 14px; margin-bottom: 20px; border-radius: 6px; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; font-size: 14px;">
+                                <i class="fa fa-exclamation-triangle" style="margin-right: 6px;"></i> Không thể hủy đơn hàng này do đơn đã được chuyển sang khâu vận chuyển hoặc đã kết thúc.
+                            </div>
+                        </c:if>
+
                         <div style="background: #fff; border-radius: 8px; border: 1px solid #e2e8f0; padding: 28px; margin-bottom: 24px;">
                             <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
                                 <div>
@@ -103,7 +121,7 @@
                                         Đặt ngày: <fmt:formatDate value="${orderDetail.createdAt}" pattern="dd/MM/yyyy HH:mm" />
                                     </span>
                                 </div>
-                                <div>
+                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                                     <c:choose>
                                         <c:when test="${orderDetail.status == 'COMPLETED'}">
                                             <span style="display: inline-block; background: #dcfce7; color: #15803d; padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 13px;">
@@ -126,6 +144,28 @@
                                             </span>
                                         </c:otherwise>
                                     </c:choose>
+
+                                    <!-- Nút In hóa đơn bán lẻ -->
+                                    <a href="${pageContext.request.contextPath}/invoice?id=${orderDetail.id}" target="_blank"
+                                       style="display: inline-flex; align-items: center; gap: 5px; background: #fff; border: 1px solid #0284c7; color: #0284c7; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s;"
+                                       onmouseover="this.style.background='#0284c7'; this.style.color='#fff';"
+                                       onmouseout="this.style.background='#fff'; this.style.color='#0284c7';">
+                                        <i class="fa fa-print"></i> In hóa đơn
+                                    </a>
+
+                                    <!-- Nút Hủy đơn hàng cho Khách nếu đơn còn PENDING -->
+                                    <c:if test="${orderDetail.status == 'PENDING'}">
+                                        <form action="${pageContext.request.contextPath}/account/orders" method="post" style="display: inline-block; margin: 0;"
+                                              onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng #${orderDetail.orderCode} không?\nSố lượng sản phẩm sẽ được tự động hoàn lại kho hàng.');">
+                                            <input type="hidden" name="action" value="cancel-order">
+                                            <input type="hidden" name="orderId" value="${orderDetail.id}">
+                                            <button type="submit" style="background: #fff; border: 1px solid #ef4444; color: #ef4444; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;"
+                                                    onmouseover="this.style.background='#ef4444'; this.style.color='#fff';"
+                                                    onmouseout="this.style.background='#fff'; this.style.color='#ef4444';">
+                                                <i class="fa fa-trash-o" style="margin-right: 4px;"></i> Hủy đơn hàng
+                                            </button>
+                                        </form>
+                                    </c:if>
                                 </div>
                             </div>
 
@@ -178,6 +218,16 @@
                                         </c:forEach>
                                     </tbody>
                                     <tfoot>
+                                        <c:if test="${not empty orderDetail.couponCode}">
+                                            <tr style="background: #f0fdf4; font-size: 13.5px;">
+                                                <td colspan="5" style="text-align: right; color: #166534; font-weight: 600;">
+                                                    <i class="fa fa-ticket"></i> Mã giảm giá (${orderDetail.couponCode}):
+                                                </td>
+                                                <td style="text-align: right; font-weight: 700; color: #16a34a;">
+                                                    ${orderDetail.formattedDiscountAmount}
+                                                </td>
+                                            </tr>
+                                        </c:if>
                                         <tr style="background: #f8fafc; font-size: 15px;">
                                             <td colspan="5" style="text-align: right; font-weight: 700; text-transform: uppercase;">Tổng giá trị đơn hàng:</td>
                                             <td style="text-align: right; font-weight: 700; color: #f26723; font-size: 18px;">
@@ -215,8 +265,39 @@
                                             </p>
                                         </c:if>
                                     </div>
-                                </div>
                             </div>
+
+                            <!-- VietQR Payment for Pending Bank Transfer Orders -->
+                            <c:if test="${orderDetail.paymentMethod == 'BANK_TRANSFER' && orderDetail.status == 'PENDING'}">
+                                <div style="background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%); border: 2px solid #6366f1; border-radius: 8px; padding: 20px; margin-top: 15px;">
+                                    <div class="row" style="align-items: center;">
+                                        <div class="col-sm-4 text-center" style="margin-bottom: 12px;">
+                                            <img src="https://img.vietqr.io/image/${companyInfo.bankName}-${companyInfo.bankAccountNo}-compact2.png?amount=${orderDetail.totalAmount}&addInfo=${orderDetail.orderCode}&accountName=${companyInfo.bankAccountName}" 
+                                                 alt="VietQR #${orderDetail.orderCode}" 
+                                                 style="max-width: 170px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); background: #fff; padding: 4px;" />
+                                            <div style="font-size: 11px; color: #4b5563; margin-top: 6px; font-weight: 600;">
+                                                <i class="fa fa-qrcode"></i> Quét mã VietQR chuyển khoản
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <h5 style="color: #3730a3; font-weight: 700; margin-top: 0; font-size: 15px;">
+                                                <i class="fa fa-university"></i> THÔNG TIN CHUYỂN KHOẢN ĐƠN HÀNG #${orderDetail.orderCode}
+                                            </h5>
+                                            <p style="margin: 0 0 6px 0; font-size: 13px;"><strong>Ngân hàng thụ hưởng:</strong> <span style="color: #4338ca; font-weight: 700;">${companyInfo.bankName}</span></p>
+                                            <p style="margin: 0 0 6px 0; font-size: 13px;">
+                                                <strong>Số tài khoản:</strong> <span style="font-family: monospace; font-weight: 700; font-size: 14px;">${companyInfo.bankAccountNo}</span>
+                                            </p>
+                                            <p style="margin: 0 0 6px 0; font-size: 13px;"><strong>Chủ tài khoản:</strong> ${companyInfo.bankAccountName}</p>
+                                            <p style="margin: 0 0 6px 0; font-size: 13px;">
+                                                <strong>Số tiền cần thanh toán:</strong> <strong style="color: #e85b24; font-size: 15px;">${orderDetail.formattedTotalAmount}</strong>
+                                            </p>
+                                            <p style="margin: 0; font-size: 13px;">
+                                                <strong>Cú pháp chuyển khoản:</strong> <span style="font-family: monospace; font-weight: 700; color: #b91c1c; background: #fff; padding: 2px 6px; border-radius: 3px; border: 1px dashed #fca5a5;">${orderDetail.orderCode}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
                         </div>
                     </c:if>
 
@@ -298,11 +379,25 @@
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </td>
-                                                        <td style="vertical-align: middle; text-align: right;">
+                                                        <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
                                                             <a href="${pageContext.request.contextPath}/account/orders?action=detail&id=${ord.id}" 
                                                                style="display: inline-block; background: #f1f5f9; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none; border: 1px solid #cbd5e1;">
-                                                                <i class="fa fa-eye"></i> Xem hóa đơn
+                                                                <i class="fa fa-eye"></i> Xem chi tiết
                                                             </a>
+                                                            <a href="${pageContext.request.contextPath}/invoice?id=${ord.id}" target="_blank" title="In hóa đơn A4"
+                                                               style="display: inline-block; background: #f0f9ff; color: #0284c7; padding: 6px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none; border: 1px solid #bae6fd; margin-left: 4px;">
+                                                                <i class="fa fa-print"></i>
+                                                            </a>
+                                                            <c:if test="${ord.status == 'PENDING'}">
+                                                                <form action="${pageContext.request.contextPath}/account/orders" method="post" style="display: inline-block; margin: 0 0 0 4px;"
+                                                                      onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng #${ord.orderCode}?\nSản phẩm sẽ được hoàn lại kho hàng.');">
+                                                                    <input type="hidden" name="action" value="cancel-order">
+                                                                    <input type="hidden" name="orderId" value="${ord.id}">
+                                                                    <button type="submit" style="background: #fff; border: 1px solid #ef4444; color: #ef4444; padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                                                                        Hủy đơn
+                                                                    </button>
+                                                                </form>
+                                                            </c:if>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

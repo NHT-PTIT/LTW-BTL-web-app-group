@@ -42,6 +42,11 @@ public class CompanyInfoDAO {
                 info.setFacebookUrl(rs.getString("facebook_url"));
                 info.setYoutubeUrl(rs.getString("youtube_url"));
                 info.setWorkingHours(rs.getString("working_hours"));
+                try {
+                    info.setBankName(rs.getString("bank_name"));
+                    info.setBankAccountNo(rs.getString("bank_account_no"));
+                    info.setBankAccountName(rs.getString("bank_account_name"));
+                } catch (SQLException ignored) {}
                 info.setUpdatedAt(rs.getTimestamp("updated_at"));
                 return info;
             }
@@ -56,7 +61,8 @@ public class CompanyInfoDAO {
     public boolean updateCompanyInfo(CompanyInfo info) {
         String sql = "UPDATE company_info SET company_name = ?, slogan = ?, hotline = ?, email = ?, " +
                      "address = ?, about_summary = ?, about_detail = ?, vision = ?, mission = ?, " +
-                     "core_values = ?, logo_url = ?, facebook_url = ?, youtube_url = ?, working_hours = ? " +
+                     "core_values = ?, logo_url = ?, facebook_url = ?, youtube_url = ?, working_hours = ?, " +
+                     "bank_name = ?, bank_account_no = ?, bank_account_name = ? " +
                      "WHERE id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
@@ -77,7 +83,10 @@ public class CompanyInfoDAO {
             ps.setString(12, info.getFacebookUrl());
             ps.setString(13, info.getYoutubeUrl());
             ps.setString(14, info.getWorkingHours());
-            ps.setInt(15, info.getId());
+            ps.setString(15, info.getBankName());
+            ps.setString(16, info.getBankAccountNo());
+            ps.setString(17, info.getBankAccountName());
+            ps.setInt(18, info.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -183,5 +192,69 @@ public class CompanyInfoDAO {
             DBContext.close(conn, ps, null);
         }
         return false;
+    }
+
+    public List<TeamMember> getAllTeamMembers() {
+        List<TeamMember> list = new ArrayList<>();
+        String sql = "SELECT * FROM team_members ORDER BY sort_order ASC, id ASC";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                TeamMember m = new TeamMember(
+                    rs.getInt("id"),
+                    rs.getString("full_name"),
+                    rs.getString("position"),
+                    rs.getString("avatar_url"),
+                    rs.getString("bio"),
+                    rs.getString("email"),
+                    rs.getInt("sort_order"),
+                    rs.getBoolean("is_active")
+                );
+                m.setCreatedAt(rs.getTimestamp("created_at"));
+                list.add(m);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, rs);
+        }
+        return list;
+    }
+
+    public TeamMember getTeamMemberById(int id) {
+        String sql = "SELECT * FROM team_members WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                TeamMember m = new TeamMember(
+                    rs.getInt("id"),
+                    rs.getString("full_name"),
+                    rs.getString("position"),
+                    rs.getString("avatar_url"),
+                    rs.getString("bio"),
+                    rs.getString("email"),
+                    rs.getInt("sort_order"),
+                    rs.getBoolean("is_active")
+                );
+                m.setCreatedAt(rs.getTimestamp("created_at"));
+                return m;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, rs);
+        }
+        return null;
     }
 }

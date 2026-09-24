@@ -126,9 +126,12 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td style="text-align: right;">
+                                <td style="text-align: right; white-space: nowrap;">
                                     <a href="${pageContext.request.contextPath}/admin/orders?action=detail&id=${ord.id}" class="admin-btn admin-btn-sm admin-btn-primary">
                                         <i class="fa-solid fa-eye"></i> Chi Tiết
+                                    </a>
+                                    <a href="${pageContext.request.contextPath}/invoice?id=${ord.id}" target="_blank" class="admin-btn admin-btn-sm admin-btn-secondary" title="In Hóa Đơn / Xuất Kho">
+                                        <i class="fa-solid fa-print"></i>
                                     </a>
                                 </td>
                             </tr>

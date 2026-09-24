@@ -50,7 +50,7 @@ public class AdminDashboardServlet extends HttpServlet {
         // 4. Tổng số liên hệ/tư vấn mới & khách hàng
         int totalInquiries = contactDAO.countInquiries(null);
         int newInquiryCount = contactDAO.countInquiries("NEW");
-        int totalUsers = userDAO.countUsers(null, null);
+        int totalUsers = userDAO.countUsers();
 
         request.setAttribute("orderStats", orderStats);
         request.setAttribute("pendingOrderCount", pendingOrderCount);

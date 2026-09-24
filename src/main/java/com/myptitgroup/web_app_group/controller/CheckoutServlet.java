@@ -58,6 +58,8 @@ public class CheckoutServlet extends HttpServlet {
             }
         }
 
+        com.myptitgroup.web_app_group.dao.CompanyInfoDAO companyInfoDAO = new com.myptitgroup.web_app_group.dao.CompanyInfoDAO();
+        request.setAttribute("companyInfo", companyInfoDAO.getCompanyInfo());
         request.setAttribute("pageTitle", "Thanh toán & Đặt hàng - Bleezy Inverter & Solar Power");
         request.getRequestDispatcher("/checkout.jsp").forward(request, response);
     }
@@ -126,7 +128,11 @@ public class CheckoutServlet extends HttpServlet {
         order.setCustomerEmail(customerEmail != null ? customerEmail.trim() : "");
         order.setShippingAddress(fullAddress);
         order.setNote(note != null ? note.trim() : "");
-        order.setTotalAmount(cart.getTotalAmount());
+        order.setTotalAmount(cart.getFinalTotal());
+        if (cart.getAppliedCoupon() != null) {
+            order.setCouponCode(cart.getAppliedCoupon().getCode());
+            order.setDiscountAmount(cart.getDiscountAmount());
+        }
         order.setPaymentMethod(paymentMethod.trim());
         order.setStatus("PENDING");
 

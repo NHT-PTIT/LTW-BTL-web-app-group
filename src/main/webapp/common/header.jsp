@@ -42,10 +42,10 @@
                     <div class="col-md-6 col-sm-6 col-xs-6">
                         <c:choose>
                             <c:when test="${not empty sessionScope.currentUser}">
-                                <p><i class="fa fa-user"></i> <a href="${pageContext.request.contextPath}/account/profile">${sessionScope.currentUser.fullName}</a> | <a href="${pageContext.request.contextPath}/logout" style="color: #dc2626;">Đăng xuất</a></p>
+                                <p><i class="fa fa-user"></i> <a href="${pageContext.request.contextPath}/account/profile">${sessionScope.currentUser.fullName}</a> | <a href="${pageContext.request.contextPath}/account/wishlist" style="color: #e11d48;"><i class="fa fa-heart"></i> Yêu thích</a> | <a href="${pageContext.request.contextPath}/logout" style="color: #dc2626;">Đăng xuất</a></p>
                             </c:when>
                             <c:otherwise>
-                                <p><i class="fa fa-user"></i> <a href="${pageContext.request.contextPath}/register">Đăng ký</a> hoặc <a href="${pageContext.request.contextPath}/login">Đăng nhập</a></p>
+                                <p><i class="fa fa-user"></i> <a href="${pageContext.request.contextPath}/register">Đăng ký</a> hoặc <a href="${pageContext.request.contextPath}/login">Đăng nhập</a> | <a href="${pageContext.request.contextPath}/account/wishlist" style="color: #e11d48;"><i class="fa fa-heart"></i> Yêu thích</a></p>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -212,7 +212,7 @@
                                         <nav>
                                             <ul id="bleezy_navigation">
                                                 <li class="${param.activeMenu == 'home' ? 'current-page-item' : ''}"><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
-                                                <li class="${param.activeMenu == 'about' ? 'current-page-item' : ''}"><a href="${pageContext.request.contextPath}/about.jsp">Giới thiệu</a></li>
+                                                <li class="${param.activeMenu == 'about' ? 'current-page-item' : ''}"><a href="${pageContext.request.contextPath}/about">Giới thiệu</a></li>
                                                 <li class="${param.activeMenu == 'shop' ? 'current-page-item' : ''}">
                                                     <a href="${pageContext.request.contextPath}/shop">Cửa hàng</a>
                                                     <ul>
@@ -226,13 +226,13 @@
                                                     <a href="#">Tiện ích</a>
                                                     <ul>
                                                         <li><a href="${pageContext.request.contextPath}/track-order">Tra cứu đơn hàng</a></li>
-                                                        <li><a href="${pageContext.request.contextPath}/team.jsp">Đội ngũ chuyên gia</a></li>
+                                                        <li><a href="${pageContext.request.contextPath}/team">Đội ngũ chuyên gia</a></li>
                                                         <li><a href="${pageContext.request.contextPath}/404.jsp">Trang lỗi 404</a></li>
-                                                        <li><a href="${pageContext.request.contextPath}/login.jsp">Đăng nhập tài khoản</a></li>
-                                                        <li><a href="${pageContext.request.contextPath}/register.jsp">Đăng ký thành viên</a></li>
+                                                        <li><a href="${pageContext.request.contextPath}/login">Đăng nhập tài khoản</a></li>
+                                                        <li><a href="${pageContext.request.contextPath}/register">Đăng ký thành viên</a></li>
                                                     </ul>
                                                 </li>
-                                                <li class="${param.activeMenu == 'contact' ? 'current-page-item' : ''}"><a href="${pageContext.request.contextPath}/contact.jsp">Liên hệ & Tư vấn</a></li>
+                                                <li class="${param.activeMenu == 'contact' ? 'current-page-item' : ''}"><a href="${pageContext.request.contextPath}/contact">Liên hệ & Tư vấn</a></li>
                                             </ul>
                                         </nav>
                                     </div>

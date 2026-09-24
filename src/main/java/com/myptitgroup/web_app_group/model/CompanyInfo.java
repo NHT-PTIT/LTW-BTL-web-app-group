@@ -24,6 +24,9 @@ public class CompanyInfo implements Serializable {
     private String facebookUrl;
     private String youtubeUrl;
     private String workingHours;
+    private String bankName;
+    private String bankAccountNo;
+    private String bankAccountName;
     private Timestamp updatedAt;
 
     public CompanyInfo() {
@@ -147,6 +150,30 @@ public class CompanyInfo implements Serializable {
 
     public void setWorkingHours(String workingHours) {
         this.workingHours = workingHours;
+    }
+
+    public String getBankName() {
+        return bankName != null && !bankName.trim().isEmpty() ? bankName : "MBBank";
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankAccountNo() {
+        return bankAccountNo != null && !bankAccountNo.trim().isEmpty() ? bankAccountNo : "0988123456";
+    }
+
+    public void setBankAccountNo(String bankAccountNo) {
+        this.bankAccountNo = bankAccountNo;
+    }
+
+    public String getBankAccountName() {
+        return bankAccountName != null && !bankAccountName.trim().isEmpty() ? bankAccountName : "CTY TNHH BLEEZY SOLAR";
+    }
+
+    public void setBankAccountName(String bankAccountName) {
+        this.bankAccountName = bankAccountName;
     }
 
     public Timestamp getUpdatedAt() {

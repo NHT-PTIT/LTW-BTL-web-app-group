@@ -36,6 +36,14 @@ public class SecurityUtils {
     }
 
     /**
+     * Băm chuỗi bằng thuật toán SHA-256 trả về chuỗi Hex (alias tương thích)
+     * @param rawPassword Chuỗi cần băm
+     * @return Chuỗi Hex đại diện cho mã băm (64 ký tự)
+     */
+    public static String sha256Hex(String rawPassword) {
+        return hashPassword(rawPassword);
+    }
+    /**
      * Xác thực mật khẩu nhập vào với mã băm trong cơ sở dữ liệu
      * @param rawPassword Mật khẩu người dùng nhập
      * @param hashedPassword Mật khẩu đã băm trong CSDL

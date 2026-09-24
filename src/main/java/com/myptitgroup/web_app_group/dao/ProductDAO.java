@@ -758,6 +758,83 @@ public class ProductDAO {
     }
 
     /**
+     * Xóa toàn bộ thông số kỹ thuật của một sản phẩm
+     */
+    public boolean deleteSpecsByProductId(int productId) {
+        String sql = "DELETE FROM product_specs WHERE product_id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, productId);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, null);
+        }
+        return false;
+    }
+
+    /**
+     * Lưu danh sách thông số kỹ thuật cho sản phẩm
+     */
+    public boolean saveProductSpecs(int productId, List<ProductSpec> specs) {
+        deleteSpecsByProductId(productId);
+        if (specs == null || specs.isEmpty()) {
+            return true;
+        }
+        for (ProductSpec s : specs) {
+            if (s.getSpecName() != null && !s.getSpecName().trim().isEmpty() &&
+                s.getSpecValue() != null && !s.getSpecValue().trim().isEmpty()) {
+                s.setProductId(productId);
+                insertSpec(s);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Xóa toàn bộ ảnh gallery của một sản phẩm
+     */
+    public boolean deleteImagesByProductId(int productId) {
+        String sql = "DELETE FROM product_images WHERE product_id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, productId);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBContext.close(conn, ps, null);
+        }
+        return false;
+    }
+
+    /**
+     * Lưu danh sách ảnh phụ vào Gallery cho sản phẩm
+     */
+    public boolean saveProductImages(int productId, List<ProductImage> images) {
+        deleteImagesByProductId(productId);
+        if (images == null || images.isEmpty()) {
+            return true;
+        }
+        for (ProductImage img : images) {
+            if (img.getImageUrl() != null && !img.getImageUrl().trim().isEmpty()) {
+                img.setProductId(productId);
+                insertImage(img);
+            }
+        }
+        return true;
+    }
+
+    /**
      * Đếm số lượng sản phẩm sắp hết hàng (tồn kho <= threshold)
      */
     public int countLowStock(int threshold) {

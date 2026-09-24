@@ -22,6 +22,8 @@ public class Order implements Serializable {
     private String shippingAddress;
     private String note;
     private BigDecimal totalAmount;
+    private String couponCode;
+    private BigDecimal discountAmount;
     private String paymentMethod; // 'COD', 'BANK_TRANSFER'
     private String status;        // 'PENDING', 'SHIPPING', 'COMPLETED', 'CANCELLED'
     private Timestamp createdAt;
@@ -50,6 +52,12 @@ public class Order implements Serializable {
         if (totalAmount == null) return "0 đ";
         DecimalFormat df = new DecimalFormat("###,###,### đ");
         return df.format(totalAmount);
+    }
+
+    public String getFormattedDiscountAmount() {
+        if (discountAmount == null || discountAmount.compareTo(BigDecimal.ZERO) <= 0) return "0 đ";
+        DecimalFormat df = new DecimalFormat("###,###,### đ");
+        return "-" + df.format(discountAmount);
     }
 
     public String getFormattedCreatedAt() {
@@ -159,6 +167,22 @@ public class Order implements Serializable {
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getCouponCode() {
+        return couponCode;
+    }
+
+    public void setCouponCode(String couponCode) {
+        this.couponCode = couponCode;
+    }
+
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
     }
 
     public String getPaymentMethod() {

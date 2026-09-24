@@ -47,13 +47,23 @@
         request.setAttribute("keyword", keyword);
         request.setAttribute("selectedSort", sort);
 
+        com.myptitgroup.web_app_group.model.User cu = (com.myptitgroup.web_app_group.model.User) session.getAttribute("currentUser");
+        if (cu != null) {
+            com.myptitgroup.web_app_group.dao.WishlistDAO wDao = new com.myptitgroup.web_app_group.dao.WishlistDAO();
+            request.setAttribute("wishlistProductIds", wDao.getWishlistProductIds(cu.getId()));
+        }
+
         if (categoryId != null) {
-            request.setAttribute("currentCategory", cDao.getById(categoryId));
+            com.myptitgroup.web_app_group.model.Category currentCat = cDao.getById(categoryId);
+            if (currentCat != null) {
+                request.setAttribute("currentCategory", currentCat);
+                request.setAttribute("pageTitle", currentCat.getName() + " - Bleezy Inverter & Solar Power");
+            }
         }
     }
 %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="${not empty pageTitle ? pageTitle : 'Cửa hàng - Bleezy Inverter & Solar Power'}" />
+    <jsp:param name="pageTitle" value="${not empty pageTitle ? pageTitle : 'Cửa hàng sản phẩm - Bleezy Inverter & Solar Power'}" />
     <jsp:param name="activeMenu" value="shop" />
 </jsp:include>
     
@@ -64,14 +74,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="breadcromb-top-text">
-                            <h2>
-                                <c:choose>
-                                    <c:when test="${not empty currentCategory}">${currentCategory.name}</c:when>
-                                    <c:when test="${not empty keyword}">Tìm kiếm: "${keyword}"</c:when>
-                                    <c:when test="${not empty selectedBrand}">Thương hiệu: ${selectedBrand}</c:when>
-                                    <c:otherwise>Cửa hàng sản phẩm</c:otherwise>
-                                </c:choose>
-                            </h2>
+                            <h2>Cửa hàng sản phẩm</h2>
                         </div>
                     </div>
                 </div>
@@ -85,11 +88,16 @@
                             <ul>
                                 <li><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
                                 <li><a href="#"><i class="fa fa-long-arrow-right"></i></a></li>
-                                <li><a href="${pageContext.request.contextPath}/shop">Cửa hàng</a></li>
-                                <c:if test="${not empty currentCategory}">
-                                    <li><a href="#"><i class="fa fa-long-arrow-right"></i></a></li>
-                                    <li>${currentCategory.name}</li>
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${not empty currentCategory}">
+                                        <li><a href="${pageContext.request.contextPath}/shop">Cửa hàng</a></li>
+                                        <li><a href="#"><i class="fa fa-long-arrow-right"></i></a></li>
+                                        <li>${currentCategory.name}</li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li>Tất cả sản phẩm</li>
+                                    </c:otherwise>
+                                </c:choose>
                             </ul>
                         </div>
                     </div>
@@ -103,9 +111,10 @@
     <section class="bleezy-shop-page-area section_100">
         <div class="container">
             <div class="row">
-                <!-- Sidebar -->
-                <div class="col-md-3">
+                <!-- Shop Left Sidebar -->
+                <div class="col-md-3 col-sm-4">
                     <div class="shop-left-sidebar">
+                        
                         <!-- Search Widget -->
                         <div class="shop-sidebar-widget">
                             <form action="${pageContext.request.contextPath}/shop" method="get">
@@ -187,45 +196,40 @@
                         </div>
                     </div>
                 </div>
-                <!-- Main Products Grid -->
-                <div class="col-md-9">
-                    <div class="bleezy-shop-left margin-top">
-                        <!-- Shorting Bar -->
-                        <div class="shorting">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <p>
-                                        <c:choose>
-                                            <c:when test="${totalCount > 0}">
-                                                Hiển thị ${(currentPage - 1) * pageSize + 1}–${(currentPage * pageSize) > totalCount ? totalCount : (currentPage * pageSize)} trên ${totalCount} sản phẩm
-                                            </c:when>
-                                            <c:otherwise>
-                                                Không có sản phẩm nào
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </p>
-                                </div>
-                                <div class="col-sm-6">
-                                    <form method="get" action="${pageContext.request.contextPath}/shop">
-                                        <c:if test="${not empty selectedCategoryId}">
-                                            <input type="hidden" name="categoryId" value="${selectedCategoryId}">
-                                        </c:if>
-                                        <c:if test="${not empty selectedBrand}">
-                                            <input type="hidden" name="brand" value="${selectedBrand}">
-                                        </c:if>
-                                        <c:if test="${not empty keyword}">
-                                            <input type="hidden" name="keyword" value="${keyword}">
-                                        </c:if>
-                                        <label>
-                                            <select name="sort" onchange="this.form.submit()">
-                                                <option value="newest" ${selectedSort == 'newest' ? 'selected' : ''}>Mới nhất</option>
-                                                <option value="price_asc" ${selectedSort == 'price_asc' ? 'selected' : ''}>Giá: Từ thấp đến cao</option>
-                                                <option value="price_desc" ${selectedSort == 'price_desc' ? 'selected' : ''}>Giá: Từ cao đến thấp</option>
-                                                <option value="name_asc" ${selectedSort == 'name_asc' ? 'selected' : ''}>Tên: A đến Z</option>
-                                            </select>
-                                        </label>
-                                    </form>
-                                </div>
+                
+                <!-- Shop Right / Main Content -->
+                <div class="col-md-9 col-sm-8">
+                    <div class="shop-page-right">
+                        
+                        <!-- Top Bar: Result count & Sort Dropdown -->
+                        <div class="shop-top-bar" style="margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <div class="shop-results-count">
+                                <p style="margin: 0; color: #666;">
+                                    Hiển thị <strong>${productList.size()}</strong> trên tổng số <strong>${totalCount}</strong> sản phẩm
+                                    <c:if test="${not empty keyword}">
+                                        cho từ khóa "<em>${keyword}</em>"
+                                    </c:if>
+                                </p>
+                            </div>
+                            <div class="shop-sorting" style="display: flex; align-items: center; gap: 10px;">
+                                <label for="shopSortSelect" style="margin: 0; font-weight: normal; color: #555;">Sắp xếp theo:</label>
+                                <form id="sortForm" action="${pageContext.request.contextPath}/shop" method="get" style="display: inline-block;">
+                                    <c:if test="${not empty selectedCategoryId}">
+                                        <input type="hidden" name="categoryId" value="${selectedCategoryId}">
+                                    </c:if>
+                                    <c:if test="${not empty selectedBrand}">
+                                        <input type="hidden" name="brand" value="${selectedBrand}">
+                                    </c:if>
+                                    <c:if test="${not empty keyword}">
+                                        <input type="hidden" name="keyword" value="${keyword}">
+                                    </c:if>
+                                    <select id="shopSortSelect" name="sort" class="form-control" style="width: auto; display: inline-block;" onchange="document.getElementById('sortForm').submit();">
+                                        <option value="newest" ${selectedSort == 'newest' ? 'selected' : ''}>Mới nhất</option>
+                                        <option value="price_asc" ${selectedSort == 'price_asc' ? 'selected' : ''}>Giá: Tăng dần</option>
+                                        <option value="price_desc" ${selectedSort == 'price_desc' ? 'selected' : ''}>Giá: Giảm dần</option>
+                                        <option value="name_asc" ${selectedSort == 'name_asc' ? 'selected' : ''}>Tên: A-Z</option>
+                                    </select>
+                                </form>
                             </div>
                         </div>
 
@@ -242,6 +246,14 @@
                                                         -${p.discountPercent}%
                                                     </span>
                                                 </c:if>
+
+                                                <!-- Floating Wishlist Heart Button -->
+                                                <a href="${pageContext.request.contextPath}/wishlist-action?action=toggle&productId=${p.id}&redirect=shop" 
+                                                   title="${not empty wishlistProductIds && wishlistProductIds.contains(p.id) ? 'Bỏ khỏi yêu thích' : 'Lưu vào yêu thích'}" 
+                                                   style="position: absolute; top: 10px; right: 10px; z-index: 3; background: rgba(255,255,255,0.9); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.15); color: ${not empty wishlistProductIds && wishlistProductIds.contains(p.id) ? '#e11d48' : '#94a3b8'}; text-decoration: none;">
+                                                    <i class="fa ${not empty wishlistProductIds && wishlistProductIds.contains(p.id) ? 'fa-heart' : 'fa-heart-o'}" style="font-size: 15px;"></i>
+                                                </a>
+
                                                 <div class="single-product-image">
                                                     <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}">
                                                         <img src="${pageContext.request.contextPath}/assets/img/product-${pImgIdx}.jpg" alt="${p.name}" style="height: 220px; object-fit: contain; width: 100%; padding: 10px; background: #fff;" />
@@ -268,6 +280,9 @@
                                                         <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}">Chi tiết</a>
                                                         <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}" title="Xem chi tiết"><i class="fa fa-eye"></i></a>
                                                         <a href="${pageContext.request.contextPath}/cart-action?action=add&productId=${p.id}&quantity=1" title="Thêm vào giỏ hàng"><i class="fa fa-shopping-cart"></i></a>
+                                                        <a href="${pageContext.request.contextPath}/wishlist-action?action=toggle&productId=${p.id}&redirect=shop" title="Yêu thích" style="${not empty wishlistProductIds && wishlistProductIds.contains(p.id) ? 'color: #e11d48;' : ''}">
+                                                            <i class="fa ${not empty wishlistProductIds && wishlistProductIds.contains(p.id) ? 'fa-heart' : 'fa-heart-o'}"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -300,16 +315,16 @@
                                         <c:if test="${currentPage > 1}">
                                             <li>
                                                 <a href="${pageContext.request.contextPath}/shop?page=${currentPage - 1}${not empty selectedCategoryId ? '&categoryId='.concat(selectedCategoryId) : ''}${not empty selectedBrand ? '&brand='.concat(selectedBrand) : ''}${not empty keyword ? '&keyword='.concat(keyword) : ''}${not empty selectedSort ? '&sort='.concat(selectedSort) : ''}">
-                                                    <i class="fa fa-angle-double-left"></i>
+                                                    <i class="fa fa-angle-left"></i>
                                                 </a>
                                             </li>
                                         </c:if>
 
                                         <!-- Page Numbers -->
-                                        <c:forEach begin="1" end="${totalPages}" var="i">
-                                            <li class="${currentPage == i ? 'active' : ''}">
-                                                <a href="${pageContext.request.contextPath}/shop?page=${i}${not empty selectedCategoryId ? '&categoryId='.concat(selectedCategoryId) : ''}${not empty selectedBrand ? '&brand='.concat(selectedBrand) : ''}${not empty keyword ? '&keyword='.concat(keyword) : ''}${not empty selectedSort ? '&sort='.concat(selectedSort) : ''}">
-                                                    ${i}
+                                        <c:forEach begin="1" end="${totalPages}" var="pageIndex">
+                                            <li class="${currentPage == pageIndex ? 'active' : ''}">
+                                                <a href="${pageContext.request.contextPath}/shop?page=${pageIndex}${not empty selectedCategoryId ? '&categoryId='.concat(selectedCategoryId) : ''}${not empty selectedBrand ? '&brand='.concat(selectedBrand) : ''}${not empty keyword ? '&keyword='.concat(keyword) : ''}${not empty selectedSort ? '&sort='.concat(selectedSort) : ''}">
+                                                    ${pageIndex}
                                                 </a>
                                             </li>
                                         </c:forEach>
@@ -318,7 +333,7 @@
                                         <c:if test="${currentPage < totalPages}">
                                             <li>
                                                 <a href="${pageContext.request.contextPath}/shop?page=${currentPage + 1}${not empty selectedCategoryId ? '&categoryId='.concat(selectedCategoryId) : ''}${not empty selectedBrand ? '&brand='.concat(selectedBrand) : ''}${not empty keyword ? '&keyword='.concat(keyword) : ''}${not empty selectedSort ? '&sort='.concat(selectedSort) : ''}">
-                                                    <i class="fa fa-angle-double-right"></i>
+                                                    <i class="fa fa-angle-right"></i>
                                                 </a>
                                             </li>
                                         </c:if>
@@ -334,4 +349,4 @@
     </section>
     <!-- Shop Page Area End -->
     
-    <jsp:include page="/common/footer.jsp" />
+<jsp:include page="/common/footer.jsp" />

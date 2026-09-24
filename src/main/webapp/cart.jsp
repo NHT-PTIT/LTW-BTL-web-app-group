@@ -174,6 +174,43 @@
                                 <h3 style="font-size: 20px; font-weight: bold; border-bottom: 2px solid #e85b24; padding-bottom: 12px; margin-bottom: 15px;">
                                     Cộng giỏ hàng
                                 </h3>
+
+                                <!-- Voucher Input Form -->
+                                <div style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #e5e7eb;">
+                                    <label style="font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; display: block;">
+                                        <i class="fa fa-ticket" style="color: #e85b24;"></i> Mã giảm giá / Voucher:
+                                    </label>
+                                    <c:choose>
+                                        <c:when test="${not empty sessionScope.cart.appliedCoupon}">
+                                            <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;">
+                                                <div>
+                                                    <span style="font-weight: 700; color: #166534; font-family: monospace; font-size: 14px;">
+                                                        <i class="fa fa-check-circle"></i> ${sessionScope.cart.appliedCoupon.code}
+                                                    </span>
+                                                    <small style="display: block; color: #15803d; font-size: 11.5px;">${sessionScope.cart.appliedCoupon.description}</small>
+                                                </div>
+                                                <a href="${pageContext.request.contextPath}/cart-action?action=remove-coupon" 
+                                                   class="btn btn-default btn-xs" style="color: #dc2626; border-color: #fca5a5;" title="Hủy mã này">
+                                                    <i class="fa fa-times"></i> Hủy
+                                                </a>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form action="${pageContext.request.contextPath}/cart-action" method="post" style="display: flex; gap: 6px;">
+                                                <input type="hidden" name="action" value="apply-coupon">
+                                                <input type="text" name="couponCode" placeholder="Nhập mã (vd: SOLAR2026)" required 
+                                                       style="text-transform: uppercase; flex: 1; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px;">
+                                                <button type="submit" class="btn btn-primary" style="background: #e85b24; border-color: #e85b24; padding: 7px 14px; font-weight: 600; font-size: 13px;">
+                                                    Áp dụng
+                                                </button>
+                                            </form>
+                                            <small style="color: #64748b; font-size: 11.5px; display: block; margin-top: 5px;">
+                                                Gợi ý: <span style="font-family: monospace; font-weight: 600; color: #e85b24;">SOLAR2026</span> (giảm 10%), <span style="font-family: monospace; font-weight: 600; color: #e85b24;">GIAM500K</span>
+                                            </small>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+
                                 <table class="table" style="margin-bottom: 20px;">
                                     <tbody>
                                         <tr>
@@ -181,20 +218,30 @@
                                             <td style="border-top: none; text-align: right; font-weight: 600;">${sessionScope.cart.totalQuantity} chiếc</td>
                                         </tr>
                                         <tr>
-                                            <td style="color: #666;">Tạm tính:</td>
+                                            <td style="color: #666;">Tạm tính ban đầu:</td>
                                             <td style="text-align: right; font-weight: bold; color: #222;">${sessionScope.cart.formattedTotalAmount}</td>
                                         </tr>
+                                        <c:if test="${not empty sessionScope.cart.appliedCoupon}">
+                                            <tr style="background: #f0fdf4;">
+                                                <td style="color: #15803d; font-weight: 600;">
+                                                    <i class="fa fa-tag"></i> Giảm giá (${sessionScope.cart.appliedCoupon.code}):
+                                                </td>
+                                                <td style="text-align: right; font-weight: bold; color: #16a34a;">
+                                                    ${sessionScope.cart.formattedDiscountAmount}
+                                                </td>
+                                            </tr>
+                                        </c:if>
                                         <tr>
                                             <td style="color: #666;">Vận chuyển:</td>
                                             <td style="text-align: right;"><span style="color: #16a34a; font-weight: bold;"><i class="fa fa-truck"></i> Miễn phí toàn quốc</span></td>
                                         </tr>
                                         <tr>
-                                            <td style="color: #666;">Hóa đơn VAT (8%):</td>
+                                            <td style="color: #666;">Hóa đơn VAT:</td>
                                             <td style="text-align: right; color: #666;">Đã bao gồm VAT</td>
                                         </tr>
                                         <tr style="border-top: 2px solid #eee;">
                                             <td style="font-size: 16px; font-weight: bold; color: #111;">Tổng thanh toán:</td>
-                                            <td style="text-align: right;"><strong style="color: #e85b24; font-size: 22px;">${sessionScope.cart.formattedTotalAmount}</strong></td>
+                                            <td style="text-align: right;"><strong style="color: #e85b24; font-size: 22px;">${sessionScope.cart.formattedFinalTotal}</strong></td>
                                         </tr>
                                     </tbody>
                                 </table>

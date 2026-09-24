@@ -6,9 +6,12 @@ import com.myptitgroup.web_app_group.dao.OrderDAO;
 import com.myptitgroup.web_app_group.dao.ProductDAO;
 import com.myptitgroup.web_app_group.model.Category;
 import com.myptitgroup.web_app_group.model.Product;
+import com.myptitgroup.web_app_group.model.ProductImage;
+import com.myptitgroup.web_app_group.model.ProductSpec;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -246,6 +249,36 @@ public class AdminProductServlet extends HttpServlet {
             }
 
             if (success) {
+                int productId = p.getId();
+
+                // 1. Lưu danh sách Thông số kỹ thuật (Specs)
+                String[] specNames = request.getParameterValues("specName");
+                String[] specValues = request.getParameterValues("specValue");
+                List<ProductSpec> specList = new ArrayList<>();
+                if (specNames != null && specValues != null) {
+                    for (int i = 0; i < Math.min(specNames.length, specValues.length); i++) {
+                        String sName = specNames[i] != null ? specNames[i].trim() : "";
+                        String sVal = specValues[i] != null ? specValues[i].trim() : "";
+                        if (!sName.isEmpty() && !sVal.isEmpty()) {
+                            specList.add(new ProductSpec(0, productId, sName, sVal, i + 1));
+                        }
+                    }
+                }
+                productDAO.saveProductSpecs(productId, specList);
+
+                // 2. Lưu danh sách Thư viện ảnh phụ (Gallery)
+                String[] galleryUrls = request.getParameterValues("galleryImageUrl");
+                List<ProductImage> imageList = new ArrayList<>();
+                if (galleryUrls != null) {
+                    int order = 1;
+                    for (String gUrl : galleryUrls) {
+                        if (gUrl != null && !gUrl.trim().isEmpty()) {
+                            imageList.add(new ProductImage(0, productId, gUrl.trim(), false, order++));
+                        }
+                    }
+                }
+                productDAO.saveProductImages(productId, imageList);
+
                 response.sendRedirect(request.getContextPath() + "/admin/products?msg=saved");
             } else {
                 response.sendRedirect(request.getContextPath() + "/admin/products?err=save_failed");

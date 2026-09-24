@@ -44,12 +44,12 @@
                         <div class="single-footer-widget">
                             <h3>Liên kết nhanh</h3>
                             <ul>
-                                <li><a href="${pageContext.request.contextPath}/about.jsp">Về chúng tôi</a></li>
-                                <li><a href="${pageContext.request.contextPath}/shop.jsp">Cửa hàng sản phẩm</a></li>
-                                <li><a href="${pageContext.request.contextPath}/team.jsp">Đội ngũ kỹ thuật</a></li>
-                                <li><a href="${pageContext.request.contextPath}/contact.jsp">Liên hệ & Hỗ trợ</a></li>
-                                <li><a href="${pageContext.request.contextPath}/cart.jsp">Giỏ hàng</a></li>
-                                <li><a href="${pageContext.request.contextPath}/checkout.jsp">Thanh toán</a></li>
+                                <li><a href="${pageContext.request.contextPath}/about">Về chúng tôi</a></li>
+                                <li><a href="${pageContext.request.contextPath}/shop">Cửa hàng sản phẩm</a></li>
+                                <li><a href="${pageContext.request.contextPath}/team">Đội ngũ kỹ thuật</a></li>
+                                <li><a href="${pageContext.request.contextPath}/contact">Liên hệ & Hỗ trợ</a></li>
+                                <li><a href="${pageContext.request.contextPath}/cart">Giỏ hàng</a></li>
+                                <li><a href="${pageContext.request.contextPath}/checkout">Thanh toán</a></li>
                             </ul>
                         </div>
                     </div>

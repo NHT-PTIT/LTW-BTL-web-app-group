@@ -69,6 +69,7 @@ public class AccountServlet extends HttpServlet {
                 request.setAttribute("orders", orders);
             }
 
+            request.setAttribute("companyInfo", new com.myptitgroup.web_app_group.dao.CompanyInfoDAO().getCompanyInfo());
             request.setAttribute("activeTab", "orders");
             request.setAttribute("pageTitle", "Đơn hàng của tôi - Bleezy Inverter & Solar");
             request.getRequestDispatcher("/account-orders.jsp").forward(request, response);
@@ -160,6 +161,23 @@ public class AccountServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/account/profile?err=pwd_failed#pwdSection");
             }
             return;
+        }
+
+        // Action 3: Khách hàng hủy đơn hàng (chỉ khi đơn đang ở trạng thái PENDING)
+        if ("cancel-order".equalsIgnoreCase(action)) {
+            try {
+                int orderId = Integer.parseInt(request.getParameter("orderId"));
+                boolean ok = orderDAO.cancelOrder(orderId, currentUser.getId());
+                if (ok) {
+                    response.sendRedirect(request.getContextPath() + "/account/orders?action=detail&id=" + orderId + "&msg=cancel_success");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/account/orders?action=detail&id=" + orderId + "&err=cancel_failed");
+                }
+                return;
+            } catch (Exception e) {
+                response.sendRedirect(request.getContextPath() + "/account/orders?err=invalid_id");
+                return;
+            }
         }
 
         response.sendRedirect(request.getContextPath() + "/account/profile");
