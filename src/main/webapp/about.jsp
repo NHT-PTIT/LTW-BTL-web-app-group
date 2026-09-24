@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="breadcromb-top-text">
-                            <h2>Về chúng tôi</h2>
+                            <h2>Về chúng ta</h2>
                         </div>
                     </div>
                 </div>
