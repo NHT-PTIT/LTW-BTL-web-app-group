@@ -63,7 +63,7 @@
                                 <div class="admin-form-group">
                                     <label class="admin-form-label">SLOGAN / KHẨU HIỆU</label>
                                     <input type="text" name="slogan" value="<c:out value='${company.slogan}' />" class="admin-input" 
-                                           placeholder="Ví dụ: Giải pháp năng lượng tái tạo thông minh">
+                                           placeholder="Ví dụ: Giải pháp an ninh và kiểm soát thông minh toàn diện">
                                 </div>
                             </div>
 
@@ -151,13 +151,13 @@
                             <div class="admin-form-group">
                                 <label class="admin-form-label">FACEBOOK FANPAGE (URL)</label>
                                 <input type="url" name="facebookUrl" value="<c:out value='${company.facebookUrl}' />" class="admin-input" 
-                                       placeholder="https://facebook.com/bleezysolar">
+                                       placeholder="https://facebook.com/bleezysecurity">
                             </div>
 
                             <div class="admin-form-group" style="margin-bottom: 0;">
                                 <label class="admin-form-label">KÊNH YOUTUBE / VIDEO (URL)</label>
                                 <input type="url" name="youtubeUrl" value="<c:out value='${company.youtubeUrl}' />" class="admin-input" 
-                                       placeholder="https://youtube.com/@bleezysolar">
+                                       placeholder="https://youtube.com/@bleezysecurity">
                             </div>
                         </div>
                     </div>
@@ -186,7 +186,7 @@
                             <div class="admin-form-group" style="margin-bottom: 0;">
                                 <label class="admin-form-label">TÊN CHỦ TÀI KHOẢN (IN HOA) <span class="required">*</span></label>
                                 <input type="text" name="bankAccountName" value="<c:out value='${company.bankAccountName}' />" class="admin-input" 
-                                       placeholder="CTY TNHH BLEEZY SOLAR" required style="text-transform: uppercase;">
+                                       placeholder="CTY TNHH BLEEZY SECURITY" required style="text-transform: uppercase;">
                             </div>
                         </div>
                     </div>

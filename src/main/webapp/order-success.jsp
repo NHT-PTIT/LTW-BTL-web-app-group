@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="Đặt hàng thành công - Bleezy Inverter & Solar Power" />
+    <jsp:param name="pageTitle" value="Đặt hàng thành công - Bleezy Security" />
     <jsp:param name="activeMenu" value="shop" />
 </jsp:include>
     
@@ -52,7 +52,7 @@
                             ĐẶT HÀNG THÀNH CÔNG!
                         </h2>
                         <p style="color: #555; font-size: 15px; margin-bottom: 25px; line-height: 24px;">
-                            Cảm ơn quý khách đã tin tưởng đặt mua thiết bị tại <strong>Bleezy Inverter & Solar Power</strong>.<br>
+                            Cảm ơn quý khách đã tin tưởng đặt mua thiết bị tại <strong>Bleezy Security</strong>.<br>
                             Bộ phận điều phối kỹ thuật sẽ liên hệ qua số điện thoại để xác nhận lịch giao hàng trong vòng 15-30 phút.
                         </p>
                         

@@ -50,7 +50,7 @@
                                 <div class="admin-form-group">
                                     <label class="admin-form-label">VỊ TRÍ / CHỨC DANH <span class="required">*</span></label>
                                     <input type="text" name="position" value="<c:out value='${member.position}' />" class="admin-input" 
-                                           placeholder="Ví dụ: Giám đốc Kỹ thuật / Kỹ sư Điện mặt trời" required>
+                                           placeholder="Ví dụ: Trưởng phòng Kỹ thuật An ninh & CCTV" required>
                                 </div>
                             </div>
 
@@ -58,7 +58,7 @@
                                 <div class="admin-form-group">
                                     <label class="admin-form-label">EMAIL LIÊN HỆ</label>
                                     <input type="email" name="email" value="<c:out value='${member.email}' />" class="admin-input" 
-                                           placeholder="engineer@bleezysolar.vn">
+                                           placeholder="engineer@bleezysecurity.vn">
                                 </div>
                                 <div class="admin-form-group">
                                     <label class="admin-form-label">THỨ TỰ HIỂN THỊ (Ưu tiên nhỏ hơn đứng trước)</label>
@@ -70,7 +70,7 @@
                             <div class="admin-form-group" style="margin-bottom: 0;">
                                 <label class="admin-form-label">TIỂU SỬ / BẰNG CẤP CHUYÊN MÔN</label>
                                 <textarea name="bio" class="admin-textarea" rows="4" 
-                                          placeholder="Tóm tắt kinh nghiệm: 10 năm kinh nghiệm thiết kế trạm biến áp, chứng chỉ hòa lưới quốc tế...">${member.bio}</textarea>
+                                          placeholder="Tóm tắt kinh nghiệm: Chuyên gia an ninh hệ thống CCTV và kiểm soát ra vào sinh trắc học với hơn 10 năm kinh nghiệm...">${member.bio}</textarea>
                             </div>
                         </div>
                     </div>

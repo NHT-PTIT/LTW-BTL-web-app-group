@@ -30,7 +30,7 @@ public class ContactServlet extends HttpServlet {
 
         CompanyInfo companyInfo = companyInfoDAO.getCompanyInfo();
         request.setAttribute("companyInfo", companyInfo);
-        request.setAttribute("pageTitle", "Liên hệ & Hỗ trợ kỹ thuật - Bleezy Inverter & Solar Power");
+        request.setAttribute("pageTitle", "Liên hệ & Tư vấn an ninh - Bleezy Security");
         request.setAttribute("activeMenu", "contact");
 
         request.getRequestDispatcher("/contact.jsp").forward(request, response);

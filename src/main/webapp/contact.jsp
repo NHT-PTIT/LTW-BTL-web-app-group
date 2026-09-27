@@ -8,7 +8,7 @@
     }
 %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="Liên hệ & Hỗ trợ kỹ thuật - Bleezy Inverter & Solar Power" />
+    <jsp:param name="pageTitle" value="Liên hệ & Hỗ trợ kỹ thuật - Bleezy Security" />
     <jsp:param name="activeMenu" value="contact" />
 </jsp:include>
     
@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="breadcromb-top-text">
-                            <h2>Liên hệ & Tư vấn kỹ thuật</h2>
+                            <h2>Liên hệ & Tư vấn giải pháp an ninh</h2>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                 <!-- Branch 1 (Trụ sở chính) -->
                 <div class="col-md-4 col-sm-4">
                     <div class="single-contact-address">
-                        <h3>Trụ sở chính</h3>
+                        <h3>Trụ sở chính Hà Nội</h3>
                         <ul>
                             <li>
                                 <i class="fa fa-map-marker"></i>
@@ -62,7 +62,7 @@
                             </li>
                             <li>
                                 <i class="fa fa-envelope-o"></i>
-                                <p>${not empty companyInfo.email ? companyInfo.email : 'contact@ptittech.vn'}</p>
+                                <p>${not empty companyInfo.email ? companyInfo.email : 'contact@bleezysecurity.vn'}</p>
                             </li>
                         </ul>
                     </div>
@@ -82,7 +82,7 @@
                             </li>
                             <li>
                                 <i class="fa fa-envelope-o"></i>
-                                <p>danang@ptittech.vn</p>
+                                <p>danang@bleezysecurity.vn</p>
                             </li>
                         </ul>
                     </div>
@@ -102,7 +102,7 @@
                             </li>
                             <li>
                                 <i class="fa fa-envelope-o"></i>
-                                <p>hcm@ptittech.vn</p>
+                                <p>hcm@bleezysecurity.vn</p>
                             </li>
                         </ul>
                     </div>
@@ -120,14 +120,14 @@
                     <div class="contact-form">
                         <div class="contact-heading">
                             <h3>Gửi yêu cầu khảo sát & Tư vấn báo giá</h3>
-                            <p>Đội ngũ kỹ sư năng lượng và tự động hóa Bleezy sẽ phản hồi và liên hệ lại quý khách trong vòng 30 phút.</p>
+                            <p>Đội ngũ kỹ sư chuyên ngành an ninh & giám sát Bleezy Security sẽ phản hồi và liên hệ lại quý khách trong vòng 30 phút.</p>
                         </div>
 
                         <!-- Thông báo thành công -->
                         <c:if test="${param.msg == 'sent_success'}">
                             <div class="alert alert-success" role="alert" style="padding: 16px; margin-bottom: 24px; border-radius: 6px; font-size: 15px; background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46;">
                                 <i class="fa fa-check-circle" style="font-size: 18px; margin-right: 8px;"></i>
-                                <strong>Cảm ơn quý khách!</strong> Yêu cầu tư vấn của quý khách đã được tiếp nhận thành công. Kỹ sư chuyên môn sẽ liên hệ lại qua số điện thoại hoặc email sớm nhất.
+                                <strong>Cảm ơn quý khách!</strong> Yêu cầu tư vấn an ninh của quý khách đã được tiếp nhận thành công. Kỹ sư chuyên môn sẽ liên hệ lại qua số điện thoại hoặc email sớm nhất.
                             </div>
                         </c:if>
 
@@ -160,14 +160,14 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <p>
-                                        <input type="text" name="subject" placeholder="Chủ đề yêu cầu (Ví dụ: Báo giá biến tần Schneider 22kW, Tư vấn điện mặt trời áp mái...)" value="<c:out value='${not empty formSubject ? formSubject : ""}' />">
+                                        <input type="text" name="subject" placeholder="Chủ đề yêu cầu (Ví dụ: Tư vấn hệ thống Camera Hikvision 4K nhà xưởng, Khóa thông minh căn hộ...)" value="<c:out value='${not empty formSubject ? formSubject : ""}' />">
                                     </p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <p>
-                                        <textarea name="message" placeholder="Nội dung cần tư vấn (Nhu cầu công suất Inverter, vị trí lắp mái, hệ thống hòa lưới hay lưu trữ Hybrid)..." required><c:out value='${not empty formMessage ? formMessage : ""}' /></textarea>
+                                        <textarea name="message" placeholder="Nội dung cần tư vấn (Số lượng mắt camera cần lắp, diện tích mặt bằng, hệ thống kiểm soát ra vào vân tay/Face ID)..." required><c:out value='${not empty formMessage ? formMessage : ""}' /></textarea>
                                     </p>
                                 </div>
                             </div>

@@ -72,10 +72,10 @@ public class InvoiceServlet extends HttpServlet {
         CompanyInfo companyInfo = companyInfoDAO.getCompanyInfo();
         if (companyInfo == null) {
             companyInfo = new CompanyInfo();
-            companyInfo.setCompanyName("BLEEZY SOLAR & INVERTER");
+            companyInfo.setCompanyName("BLEEZY SECURITY & CCTV");
             companyInfo.setHotline("1900 6868 - 0988 123 456");
-            companyInfo.setEmail("contact@bleezysolar.vn");
-            companyInfo.setAddress("Km10, Đường Nguyễn Trãi, Q. Thanh Xuân, TP. Hà Nội");
+            companyInfo.setEmail("contact@bleezysecurity.vn");
+            companyInfo.setAddress("Km10, Đường Nguyễn Trãi, Q. Hà Đông, TP. Hà Nội");
         }
 
         request.setAttribute("order", order);

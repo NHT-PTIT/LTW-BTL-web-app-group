@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isErrorPage="true" %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="404 - Không tìm thấy trang - Bleezy Inverter & Solar Power" />
+    <jsp:param name="pageTitle" value="404 - Không tìm thấy trang - Bleezy Security" />
     <jsp:param name="activeMenu" value="pages" />
 </jsp:include>
     

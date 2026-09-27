@@ -24,12 +24,12 @@
             request.setAttribute("relatedProducts", pDao.getRelatedProducts(p.getCategoryId(), p.getId(), 4));
             request.setAttribute("reviews", rDao.getApprovedReviewsByProductId(p.getId()));
             request.setAttribute("reviewStats", rDao.getReviewStats(p.getId()));
-            request.setAttribute("pageTitle", p.getName() + " - Bleezy Inverter & Solar Power");
+            request.setAttribute("pageTitle", p.getName() + " - Bleezy Security");
         }
     }
 %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="${not empty pageTitle ? pageTitle : 'Chi tiết sản phẩm - Bleezy'}" />
+    <jsp:param name="pageTitle" value="${not empty pageTitle ? pageTitle : 'Chi tiết sản phẩm - Bleezy Security'}" />
     <jsp:param name="activeMenu" value="shop" />
 </jsp:include>
     
@@ -168,7 +168,7 @@
                             <p style="margin-top: 10px; font-size: 14px;">
                                 <strong>Mã SKU:</strong> <code><c:out value="${product.sku}"/></code> 
                                 <c:if test="${not empty product.powerStr}">
-                                    | <strong>Công suất:</strong> <span class="badge" style="background: #27ae60;">${product.powerStr}</span>
+                                    | <strong>Thông số / Độ phân giải:</strong> <span class="badge" style="background: #27ae60;">${product.powerStr}</span>
                                 </c:if>
                                 <br>
                                 <strong>Tình trạng:</strong> 
@@ -269,10 +269,10 @@
                                         <tr><th style="width: 30%;">Tên sản phẩm</th><td><c:out value="${product.name}"/></td></tr>
                                         <tr><th>Mã SKU</th><td><c:out value="${product.sku}"/></td></tr>
                                         <tr><th>Thương hiệu sản xuất</th><td><c:out value="${product.brand}"/></td></tr>
-                                        <tr><th>Dải công suất định mức</th><td><c:out value="${product.powerStr}"/></td></tr>
-                                        <tr><th>Danh mục phân loại</th><td>${not empty category ? category.name : 'Biến tần & Thiết bị điện'}</td></tr>
+                                        <tr><th>Thông số nổi bật / Độ phân giải</th><td><c:out value="${product.powerStr}"/></td></tr>
+                                        <tr><th>Danh mục phân loại</th><td>${not empty category ? category.name : 'Thiết bị an ninh & CCTV'}</td></tr>
                                         <c:choose>
-                                            <c:when test="${not empty product.specifications}">
+                                             <c:when test="${not empty product.specifications}">
                                                 <c:forEach items="${product.specifications}" var="s">
                                                     <tr>
                                                         <th><c:out value="${s.specName}"/></th>
@@ -281,10 +281,10 @@
                                                 </c:forEach>
                                             </c:when>
                                             <c:otherwise>
-                                                <tr><th>Điện áp định mức</th><td>3 Pha 380V - 480V / 50-60Hz</td></tr>
-                                                <tr><th>Khả năng quá tải</th><td>150% trong 60 giây, 200% trong 0.5 giây</td></tr>
-                                                <tr><th>Cổng giao tiếp</th><td>RS-485 Modbus-RTU, Smart WiFi giám sát từ xa</td></tr>
-                                                <tr><th>Cấp bảo vệ</th><td>IP20 / IP65 (Tùy phiên bản lắp đặt trong tủ hoặc ngoài trời)</td></tr>
+                                                <tr><th>Nguồn điện hoạt động</th><td>12V DC / PoE (Power over Ethernet) tiêu chuẩn 802.3af</td></tr>
+                                                <tr><th>Cảm biến hình ảnh</th><td>CMOS quét lũy tiến, chuẩn nén H.265+ tiết kiệm băng thông</td></tr>
+                                                <tr><th>Tầm xa hồng ngoại</th><td>Smart IR 30m - 50m (Tự động chuyển chế độ ngày/đêm ICR)</td></tr>
+                                                <tr><th>Cấp độ bảo vệ</th><td>IP67 / IK10 (Chống nước bụi ngoài trời và chống va đập)</td></tr>
                                                 <tr><th>Chính sách bảo hành</th><td>24 tháng chính hãng (Hỗ trợ 1 đổi 1 trong 30 ngày)</td></tr>
                                             </c:otherwise>
                                         </c:choose>
@@ -302,7 +302,7 @@
                                         </c:when>
                                         <c:otherwise>
                                             <p><c:out value="${product.shortDescription}"/></p>
-                                            <p>Thiết bị được phân phối chính hãng bởi <strong>PTIT Tech & Bleezy Solar</strong>, đầy đủ chứng nhận xuất xứ CO, chứng nhận chất lượng CQ và catalog kỹ thuật đi kèm.</p>
+                                            <p>Thiết bị được phân phối chính hãng bởi <strong>Bleezy Security Solutions</strong>, đầy đủ chứng nhận xuất xứ CO, chứng nhận chất lượng CQ và catalog kỹ thuật đi kèm.</p>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
@@ -314,11 +314,11 @@
                                 <div class="review-list" style="margin-top: 15px;">
                                     <div style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
                                         <strong><i class="fa fa-shield" style="color: #27ae60;"></i> Bảo hành chính hãng:</strong>
-                                        <p style="margin-top: 5px;">Tất cả thiết bị biến tần và giải pháp năng lượng đều được cam kết bảo hành tiêu chuẩn 24 tháng theo đúng quy định của nhà sản xuất (${product.brand}).</p>
+                                        <p style="margin-top: 5px;">Tất cả thiết bị an ninh, camera giám sát CCTV và khóa thông minh đều được cam kết bảo hành tiêu chuẩn 24 tháng theo đúng quy định của nhà sản xuất (${product.brand}).</p>
                                     </div>
                                     <div style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
                                         <strong><i class="fa fa-wrench" style="color: #2980b9;"></i> Hỗ trợ kỹ thuật 24/7:</strong>
-                                        <p style="margin-top: 5px;">Đội ngũ kỹ sư cơ điện PTIT Tech trực tiếp tư vấn giải pháp, hỗ trợ cài đặt thông số qua hotline <strong>1900 6868</strong> hoặc Zalo kỹ thuật.</p>
+                                        <p style="margin-top: 5px;">Đội ngũ kỹ sư an ninh Bleezy Security trực tiếp tư vấn giải pháp, hỗ trợ cài đặt cấu hình qua hotline <strong>1900 6868</strong> hoặc Zalo kỹ thuật.</p>
                                     </div>
                                     <div>
                                         <strong><i class="fa fa-truck" style="color: #e67e22;"></i> Giao hàng & Lắp đặt:</strong>
@@ -376,7 +376,7 @@
 
                                                 <div class="form-group" style="margin-bottom: 15px;">
                                                     <label style="font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 4px;">Nhận xét chi tiết *</label>
-                                                    <textarea name="comment" rows="4" class="form-control" placeholder="Chia sẻ cảm nhận về hiệu suất, độ êm và hỗ trợ kỹ thuật..." required style="font-size: 13px;"></textarea>
+                                                    <textarea name="comment" rows="4" class="form-control" placeholder="Chia sẻ cảm nhận về độ nét, độ ổn định, tính năng thông minh và hỗ trợ kỹ thuật..." required style="font-size: 13px;"></textarea>
                                                 </div>
 
                                                 <button type="submit" class="btn btn-primary" style="width: 100%; background: #e85b24; border-color: #e85b24; font-weight: 600; padding: 10px 0;">

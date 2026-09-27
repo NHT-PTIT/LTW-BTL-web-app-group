@@ -9,7 +9,7 @@
     }
 %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="Về chúng tôi - Bleezy Inverter & Solar Power" />
+    <jsp:param name="pageTitle" value="Về chúng tôi - Bleezy Security" />
     <jsp:param name="activeMenu" value="about" />
 </jsp:include>
     
@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="breadcromb-top-text">
-                            <h2>Về chúng ta</h2>
+                            <h2>Về chúng tôi</h2>
                         </div>
                     </div>
                 </div>
@@ -50,14 +50,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="about-left">
-                        <h2>${not empty companyInfo.companyName ? companyInfo.companyName : 'Bleezy Inverter & Solar Power'}</h2>
+                        <h2>${not empty companyInfo.companyName ? companyInfo.companyName : 'Bleezy Security Solutions'}</h2>
                         <c:choose>
                             <c:when test="${not empty companyInfo.aboutDetail}">
                                 ${companyInfo.aboutDetail}
                             </c:when>
                             <c:otherwise>
-                                <p>Chào mừng bạn đến với Bleezy — đơn vị tiên phong trong lĩnh vực cung cấp giải pháp biến tần Inverter, điện mặt trời hòa lưới và lưu trữ năng lượng sạch tại Việt Nam. Với nhiều năm hoạt động, chúng tôi luôn cam kết đem lại các sản phẩm đạt tiêu chuẩn chất lượng châu Âu, an toàn và tối ưu chi phí đầu tư.</p>
-                                <p>Hệ thống sản phẩm của chúng tôi được nhập khẩu chính hãng từ các thương hiệu hàng đầu thế giới như Deye, Huawei, Growatt, Longi, Canadian Solar,... kèm chính sách bảo hành uy tín và dịch vụ hỗ trợ kỹ thuật 24/7.</p>
+                                <p>Chào mừng bạn đến với Bleezy Security — đơn vị tiên phong trong lĩnh vực cung cấp giải pháp an ninh toàn diện, thiết bị camera giám sát CCTV, khóa cửa thông minh Face ID, kiểm soát ra vào sinh trắc học và hệ thống báo động chống trộm tại Việt Nam. Với nhiều năm hoạt động, chúng tôi luôn cam kết đem lại các sản phẩm đạt tiêu chuẩn chất lượng châu Âu, an toàn và tối ưu chi phí đầu tư.</p>
+                                <p>Hệ thống sản phẩm của chúng tôi được nhập khẩu chính hãng từ các thương hiệu an ninh hàng đầu thế giới như Hikvision, Dahua, Ezviz, Imou, Uniview, Bosch, Panasonic, Philips, Kaadas,... kèm chính sách bảo hành uy tín và dịch vụ hỗ trợ kỹ thuật 24/7.</p>
                             </c:otherwise>
                         </c:choose>
                         <div style="margin-top: 25px;">
@@ -85,7 +85,7 @@
                         <div style="font-size: 28px; color: #f26723; margin-bottom: 12px;"><i class="fa fa-bullseye"></i></div>
                         <h3 style="font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Sứ mệnh của chúng tôi</h3>
                         <p style="color: #64748b; line-height: 24px;">
-                            ${not empty companyInfo.mission ? companyInfo.mission : 'Cung cấp thiết bị chất lượng cao, tối ưu hóa năng lượng tiêu thụ cho doanh nghiệp sản xuất và đồng hành cùng tiến trình chuyển đổi số của các nhà máy.'}
+                            ${not empty companyInfo.mission ? companyInfo.mission : 'Cung cấp thiết bị và giải pháp an ninh chất lượng cao, bảo vệ tối đa an toàn tính mạng và tài sản cho hộ gia đình, cơ quan, tòa nhà và nhà máy sản xuất.'}
                         </p>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                         <div style="font-size: 28px; color: #f26723; margin-bottom: 12px;"><i class="fa fa-eye"></i></div>
                         <h3 style="font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Tầm nhìn chiến lược</h3>
                         <p style="color: #64748b; line-height: 24px;">
-                            ${not empty companyInfo.vision ? companyInfo.vision : 'Trở thành nhà cung cấp giải pháp tự động hóa công nghiệp và thiết bị điện thông minh uy tín số 1 Việt Nam đến năm 2030.'}
+                            ${not empty companyInfo.vision ? companyInfo.vision : 'Trở thành nhà cung cấp giải pháp an ninh thông minh và thiết bị giám sát công nghệ AI uy tín số 1 Việt Nam đến năm 2030.'}
                         </p>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                         <div style="font-size: 28px; color: #f26723; margin-bottom: 12px;"><i class="fa fa-diamond"></i></div>
                         <h3 style="font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Giá trị cốt lõi</h3>
                         <p style="color: #64748b; line-height: 24px;">
-                            ${not empty companyInfo.coreValues ? companyInfo.coreValues : 'Chất lượng chuẩn mực - Tận tâm chuyên nghiệp - Đổi mới sáng tạo - Bền vững cùng khách hàng.'}
+                            ${not empty companyInfo.coreValues ? companyInfo.coreValues : 'An toàn tuyệt đối - Công nghệ tiên phong - Tận tâm chuyên nghiệp - Đồng hành bền vững.'}
                         </p>
                     </div>
                 </div>

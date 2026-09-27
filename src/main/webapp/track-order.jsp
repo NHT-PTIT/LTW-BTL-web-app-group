@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="Tra cứu đơn hàng - Bleezy Inverter & Solar Power" />
+    <jsp:param name="pageTitle" value="Tra cứu đơn hàng - Bleezy Security" />
     <jsp:param name="activeMenu" value="pages" />
 </jsp:include>
 

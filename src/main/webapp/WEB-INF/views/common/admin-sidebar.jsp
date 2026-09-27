@@ -7,9 +7,9 @@
         <a href="${pageContext.request.contextPath}/admin/dashboard" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
             <img src="${pageContext.request.contextPath}/assets/img/site-logo.png" alt="Bleezy Logo" class="admin-brand-logo" 
                  onerror="this.style.display='none'; document.getElementById('brand-fallback').style.display='inline-flex';">
-            <span id="brand-fallback" style="display:none; color: #f26723; font-size: 22px; font-weight: 800;"><i class="fa-solid fa-solar-panel"></i></span>
+            <span id="brand-fallback" style="display:none; color: #f26723; font-size: 22px; font-weight: 800;"><i class="fa-solid fa-shield-halved"></i></span>
             <div>
-                <div class="admin-brand-title">BLEEZY SOLAR</div>
+                <div class="admin-brand-title">BLEEZY SECURITY</div>
                 <span class="admin-brand-badge">ADMIN PORTAL</span>
             </div>
         </a>

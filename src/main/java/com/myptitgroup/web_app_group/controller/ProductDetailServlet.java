@@ -76,7 +76,7 @@ public class ProductDetailServlet extends HttpServlet {
         request.setAttribute("product", product);
         request.setAttribute("category", category);
         request.setAttribute("relatedProducts", relatedProducts);
-        request.setAttribute("pageTitle", product.getName() + " - Bleezy Inverter & Solar Power");
+        request.setAttribute("pageTitle", product.getName() + " - Bleezy Security");
         request.setAttribute("isProductDetailLoaded", true);
 
         // 7. Forward sang View product-detail.jsp

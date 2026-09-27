@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="Giỏ hàng - Bleezy Inverter & Solar Power" />
+    <jsp:param name="pageTitle" value="Giỏ hàng - Bleezy Security" />
     <jsp:param name="activeMenu" value="shop" />
 </jsp:include>
     
@@ -73,7 +73,7 @@
                                 Giỏ hàng của bạn đang trống!
                             </h3>
                             <p style="color: #666; font-size: 15px; margin-bottom: 30px;">
-                                Hãy khám phá danh mục thiết bị điện công nghiệp, biến tần và giải pháp năng lượng mặt trời chính hãng tại Bleezy.
+                                Hãy khám phá danh mục camera giám sát CCTV, khóa cửa thông minh và thiết bị an ninh chính hãng tại Bleezy Security.
                             </p>
                             <a href="${pageContext.request.contextPath}/shop" class="bleezy-btn" style="padding: 12px 30px; font-size: 15px;">
                                 <i class="fa fa-shopping-bag"></i> Tiếp tục mua sắm ngay
@@ -198,14 +198,14 @@
                                         <c:otherwise>
                                             <form action="${pageContext.request.contextPath}/cart-action" method="post" style="display: flex; gap: 6px;">
                                                 <input type="hidden" name="action" value="apply-coupon">
-                                                <input type="text" name="couponCode" placeholder="Nhập mã (vd: SOLAR2026)" required 
+                                                <input type="text" name="couponCode" placeholder="Nhập mã (vd: SECURITY2026)" required 
                                                        style="text-transform: uppercase; flex: 1; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px;">
                                                 <button type="submit" class="btn btn-primary" style="background: #e85b24; border-color: #e85b24; padding: 7px 14px; font-weight: 600; font-size: 13px;">
                                                     Áp dụng
                                                 </button>
                                             </form>
                                             <small style="color: #64748b; font-size: 11.5px; display: block; margin-top: 5px;">
-                                                Gợi ý: <span style="font-family: monospace; font-weight: 600; color: #e85b24;">SOLAR2026</span> (giảm 10%), <span style="font-family: monospace; font-weight: 600; color: #e85b24;">GIAM500K</span>
+                                                Gợi ý: <span style="font-family: monospace; font-weight: 600; color: #e85b24;">SECURITY2026</span> (giảm 10%), <span style="font-family: monospace; font-weight: 600; color: #e85b24;">CAMERAPRO</span>
                                             </small>
                                         </c:otherwise>
                                     </c:choose>

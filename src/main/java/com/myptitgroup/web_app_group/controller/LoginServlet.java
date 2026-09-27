@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        request.setAttribute("pageTitle", "Đăng nhập tài khoản - Bleezy Inverter & Solar Power");
+        request.setAttribute("pageTitle", "Đăng nhập tài khoản - Bleezy Security");
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 

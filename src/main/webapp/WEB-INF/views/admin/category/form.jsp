@@ -16,7 +16,7 @@
                 <p style="font-size: 13px; color: var(--admin-muted); margin-top: 2px;">
                     <c:choose>
                         <c:when test="${isEdit}">Chỉnh sửa thông tin danh mục: <c:out value="${category.name}"/></c:when>
-                        <c:otherwise>Thiết lập danh mục mới để phân loại thiết bị biến tần & năng lượng mặt trời.</c:otherwise>
+                        <c:otherwise>Thiết lập danh mục mới để phân loại thiết bị an ninh, camera CCTV & khóa thông minh.</c:otherwise>
                     </c:choose>
                 </p>
             </div>
@@ -41,7 +41,7 @@
                     <div class="admin-form-group">
                         <label class="admin-form-label">TÊN DANH MỤC <span class="required">*</span></label>
                         <input type="text" name="name" value="${category.name}" class="admin-input" 
-                               placeholder="Ví dụ: Biến tần Hybrid 1 Pha, Tấm pin Mono Perc..." required>
+                               placeholder="Ví dụ: Camera IP Wifi, Khóa cửa Face ID, Máy chấm công..." required>
                     </div>
 
                     <div class="form-grid-2">
@@ -64,7 +64,7 @@
                         <div class="admin-form-group">
                             <label class="admin-form-label">ĐƯỜNG DẪN URL SLUG (Tùy chọn)</label>
                             <input type="text" name="slug" value="${category.slug}" class="admin-input" 
-                                   placeholder="bien-tan-hybrid-1-pha (để trống tự sinh)">
+                                   placeholder="camera-ip-wifi (để trống tự sinh)">
                         </div>
                     </div>
 

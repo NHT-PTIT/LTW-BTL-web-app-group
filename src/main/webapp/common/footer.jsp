@@ -12,29 +12,29 @@
                                 </a>
                             </div>
                             <div class="footer-widget-text">
-                                <p>Nhà phân phối chính hãng các giải pháp năng lượng mặt trời, bộ biến tần Inverter chất lượng cao hàng đầu.</p>
-                                <p>Cam kết chất lượng, bảo hành uy tín chính hãng từ 5 - 10 năm.</p>
+                                <p>Nhà phân phối chính hãng các giải pháp thiết bị an ninh, camera giám sát CCTV, khóa thông minh và kiểm soát ra vào hàng đầu.</p>
+                                <p>Cam kết chất lượng chuẩn quốc tế, bảo hành uy tín chính hãng 12 - 24 tháng, hỗ trợ kỹ thuật 24/7.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-3">
                         <div class="single-footer-widget">
-                            <h3>Kiến thức ngành điện</h3>
+                            <h3>Kiến thức an ninh</h3>
                             <div class="latest-post-footer clearfix">
                                 <div class="latest-post-footer-left">
-                                    <i class="fa fa-bolt"></i>
+                                    <i class="fa fa-video-camera"></i>
                                 </div>
                                 <div class="latest-post-footer-right">
-                                    <h4><a href="#">Cách lựa chọn biến tần Inverter chuẩn công suất</a></h4>
+                                    <h4><a href="${pageContext.request.contextPath}/about">Hướng dẫn chọn Camera quan sát cho gia đình & nhà xưởng</a></h4>
                                     <p>2026</p>
                                 </div>
                             </div>
                             <div class="latest-post-footer clearfix">
                                 <div class="latest-post-footer-left">
-                                    <i class="fa fa-sun-o"></i>
+                                    <i class="fa fa-shield"></i>
                                 </div>
                                 <div class="latest-post-footer-right">
-                                    <h4><a href="#">Tối ưu hóa hiệu suất tấm pin trong mùa mưa</a></h4>
+                                    <h4><a href="${pageContext.request.contextPath}/about">Giải pháp kiểm soát ra vào bằng sinh trắc học Face ID</a></h4>
                                     <p>2026</p>
                                 </div>
                             </div>
@@ -55,8 +55,8 @@
                     </div>
                     <div class="col-md-3 col-sm-3">
                         <div class="single-footer-widget">
-                            <h3>Nhận bản tin khuyến mãi</h3>
-                            <p>Đăng ký email để nhận thông tin ưu đãi và bảng giá vật tư năng lượng mới nhất.</p>
+                            <h3>Nhận bản tin an ninh</h3>
+                            <p>Đăng ký email để nhận thông tin giải pháp an ninh mới nhất và bảng giá thiết bị ưu đãi.</p>
                             <form>
                                 <input type="email" placeholder="Email của bạn..." >
                                 <button type="submit"><i class="fa fa-envelope-open-o"></i></button>
@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="copyright-right">
-                            <p>&copy; Copyright 2026 Bleezy Solar Inverter Group. All rights reserved.</p>
+                            <p>&copy; Copyright 2026 Bleezy Security Solutions Group. All rights reserved.</p>
                         </div>
                     </div>
                 </div>

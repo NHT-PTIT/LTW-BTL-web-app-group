@@ -66,7 +66,7 @@ CREATE TABLE `company_info` (
     `working_hours` VARCHAR(100) NULL DEFAULT 'Thứ 2 - Thứ 7: 08:00 - 17:30',
     `bank_name` VARCHAR(100) NULL DEFAULT 'MBBank' COMMENT 'Tên ngân hàng thụ hưởng (VietQR)',
     `bank_account_no` VARCHAR(50) NULL DEFAULT '0988123456' COMMENT 'Số tài khoản ngân hàng (VietQR)',
-    `bank_account_name` VARCHAR(100) NULL DEFAULT 'CTY TNHH BLEEZY SOLAR' COMMENT 'Tên chủ tài khoản thụ hưởng (VietQR)',
+    `bank_account_name` VARCHAR(100) NULL DEFAULT 'CTY TNHH BLEEZY SECURITY' COMMENT 'Tên chủ tài khoản thụ hưởng (VietQR)',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -229,7 +229,7 @@ CREATE TABLE `contact_inquiries` (
 -- ------------------------------------------------------------------------------
 CREATE TABLE `coupons` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `code` VARCHAR(50) NOT NULL UNIQUE COMMENT 'Mã voucher (VD: SOLAR2026, GIAM500K)',
+    `code` VARCHAR(50) NOT NULL UNIQUE COMMENT 'Mã voucher (VD: SECURITY2026, GIAM500K)',
     `description` VARCHAR(255) NULL COMMENT 'Mô tả chi tiết chương trình ưu đãi',
     `discount_type` VARCHAR(20) NOT NULL DEFAULT 'PERCENT' COMMENT 'PERCENT (giảm theo %) hoặc FIXED (giảm số tiền)',
     `discount_value` DECIMAL(12,2) NOT NULL COMMENT 'Giá trị giảm (VD: 10% hoặc 500,000đ)',
@@ -303,87 +303,87 @@ INSERT INTO `admins` (`id`, `username`, `password_hash`, `full_name`, `email`, `
 -- 2. Dữ liệu thông tin công ty (CMS)
 INSERT INTO `company_info` (`id`, `company_name`, `slogan`, `hotline`, `email`, `address`, `about_summary`, `about_detail`, `vision`, `mission`, `core_values`, `logo_url`, `bank_name`, `bank_account_no`, `bank_account_name`) VALUES
 (1, 
- 'Công Ty TNHH Giải Pháp Cơ Điện PTIT Tech', 
- 'Giải pháp truyền động & Tự động hóa công nghiệp hàng đầu', 
+ 'Công Ty TNHH Giải Pháp Công Nghệ & Thiết Bị An Ninh Bleezy', 
+ 'Giải pháp giám sát thông minh & Thiết bị an ninh toàn diện hàng đầu', 
  '1900 6868 - 0988 123 456', 
- 'contact@ptittech.vn', 
+ 'contact@bleezysecurity.vn', 
  'Km10 Đường Nguyễn Trãi, Q. Hà Đông, TP. Hà Nội',
- 'PTIT Tech là đơn vị tiên phong phân phối thiết bị điện công nghiệp, biến tần, động cơ và giải pháp tự động hóa thông minh cho các nhà máy tại Việt Nam.',
- '<p>Được thành lập bởi đội ngũ kỹ sư tâm huyết từ Học viện Công nghệ Bưu chính Viễn thông, PTIT Tech tự hào mang đến các sản phẩm thiết bị truyền động, biến tần, PLC và khí cụ điện chính hãng từ các thương hiệu hàng đầu thế giới như Schneider Electric, Mitsubishi Electric, ABB, Siemens.</p><p>Chúng tôi cam kết chất lượng chuẩn quốc tế, bảo hành tận tâm 12-24 tháng và hỗ trợ kỹ thuật 24/7.</p>',
- 'Trở thành nhà cung cấp giải pháp tự động hóa công nghiệp và thiết bị điện thông minh uy tín số 1 Việt Nam đến năm 2030.',
- 'Cung cấp thiết bị chất lượng cao, tối ưu hóa năng lượng tiêu thụ cho doanh nghiệp sản xuất và đồng hành cùng tiến trình chuyển đổi số của các nhà máy.',
- 'Chất lượng chuẩn mực - Tận tâm chuyên nghiệp - Đổi mới sáng tạo - Bền vững cùng khách hàng',
+ 'Bleezy Security là đơn vị tiên phong phân phối camera giám sát, khóa thông minh, hệ thống kiểm soát ra vào và giải pháp an ninh công nghệ cao tại Việt Nam.',
+ '<p>Được thành lập bởi đội ngũ kỹ sư tâm huyết từ Học viện Công nghệ Bưu chính Viễn thông, Bleezy Security tự hào mang đến các sản phẩm camera giám sát CCTV, khóa cửa điện tử Face ID, hệ thống kiểm soát ra vào sinh trắc học và cảnh báo chống trộm thông minh từ các thương hiệu hàng đầu thế giới như Hikvision, Dahua, Ezviz, Imou, Uniview, Bosch, Panasonic, Philips, Kaadas.</p><p>Chúng tôi cam kết chất lượng chuẩn quốc tế, bảo hành tận tâm 12-24 tháng và hỗ trợ kỹ thuật 24/7.</p>',
+ 'Trở thành nhà cung cấp giải pháp an ninh thông minh và thiết bị giám sát công nghệ AI uy tín số 1 Việt Nam đến năm 2030.',
+ 'Cung cấp thiết bị an ninh chất lượng cao, bảo vệ tối đa an toàn tính mạng và tài sản cho hộ gia đình, cơ quan, tòa nhà và nhà máy sản xuất.',
+ 'An toàn tuyệt đối - Công nghệ tiên phong - Tận tâm chuyên nghiệp - Đồng hành bền vững',
  'assets/img/site-logo.png',
  'MBBank',
  '0988123456',
- 'CTY TNHH BLEEZY SOLAR'
+ 'CTY TNHH BLEEZY SECURITY'
 );
 
 -- 3. Đội ngũ nhân sự công ty (Team Members)
 INSERT INTO `team_members` (`full_name`, `position`, `avatar_url`, `bio`, `email`, `sort_order`, `is_active`) VALUES
-('TS. Nguyễn Văn An', 'Tổng Giám Đốc (CEO)', 'assets/img/team-1.jpg', 'Hơn 15 năm kinh nghiệm trong lĩnh vực Tự động hóa và Năng lượng tái tạo.', 'an.nguyen@ptittech.vn', 1, 1),
-('ThS. Trần Thị Mai', 'Giám Đốc Kỹ Thuật (CTO)', 'assets/img/team-2.jpg', 'Chuyên gia tư vấn giải pháp truyền động biến tần công suất lớn cho nhà máy xi măng, dệt may.', 'mai.tran@ptittech.vn', 2, 1),
-('Kỹ sư Lê Hoàng Nam', 'Trưởng Phòng Dịch Vụ Khách Hàng', 'assets/img/team-3.jpg', 'Chuyên gia đào tạo vận hành thiết bị Schneider, ABB và bảo trì hệ thống 24/7.', 'nam.le@ptittech.vn', 3, 1),
-('Kỹ sư Phạm Quốc Huy', 'Chuyên Viên Tư Vấn Kỹ Thuật', 'assets/img/team-1.jpg', 'Hỗ trợ khách hàng lựa chọn thiết bị, tính toán tải động cơ và lập trình tích hợp.', 'huy.pham@ptittech.vn', 4, 1);
+('TS. Nguyễn Văn An', 'Tổng Giám Đốc (CEO)', 'assets/img/team-1.jpg', 'Hơn 15 năm kinh nghiệm trong lĩnh vực Hệ thống Viễn thông & Giải pháp An ninh Thông minh.', 'an.nguyen@bleezysecurity.vn', 1, 1),
+('ThS. Trần Thị Mai', 'Giám Đốc Kỹ Thuật (CTO)', 'assets/img/team-2.jpg', 'Chuyên gia tư vấn giải pháp Camera AI nhận diện khuôn mặt và an ninh tòa nhà thông minh.', 'mai.tran@bleezysecurity.vn', 2, 1),
+('Kỹ sư Lê Hoàng Nam', 'Trưởng Phòng Dịch Vụ Khách Hàng', 'assets/img/team-3.jpg', 'Chuyên gia đào tạo triển khai thiết bị Hikvision, Dahua, Bosch và hỗ trợ kỹ thuật 24/7.', 'nam.le@bleezysecurity.vn', 3, 1),
+('Kỹ sư Phạm Quốc Huy', 'Chuyên Viên Giải Pháp An Ninh', 'assets/img/team-1.jpg', 'Hỗ trợ khảo sát hiện trường, thiết kế giải pháp kiểm soát ra vào sinh trắc học và báo động.', 'huy.pham@bleezysecurity.vn', 4, 1);
 
 -- 4. Cây danh mục đa cấp (Categories: Cấp 1 và Cấp 2)
 -- Danh mục cấp 1:
 INSERT INTO `categories` (`id`, `parent_id`, `name`, `slug`, `description`, `image_url`, `sort_order`, `is_active`) VALUES
-(1, NULL, 'Biến tần - Biến tốc', 'bien-tan-bien-toc', 'Thiết bị điều khiển tốc độ và tiết kiệm năng lượng động cơ', 'assets/img/product-1.jpg', 1, 1),
-(2, NULL, 'Động cơ điện & Hộp số', 'dong-co-dien-hop-so', 'Động cơ 1 pha, 3 pha và động cơ servo công nghiệp', 'assets/img/product-2.jpg', 2, 1),
-(3, NULL, 'Khí cụ điện & Đóng cắt', 'khi-cu-dien-dong-cat', 'Aptomat, Contactor, Rơ le nhiệt, Khởi động từ bảo vệ hệ thống', 'assets/img/product-3.jpg', 3, 1);
+(1, NULL, 'Camera Giám Sát & CCTV', 'camera-giam-sat-cctv', 'Camera IP, Camera Analog HD, Camera AI thông minh và đầu ghi hình', 'assets/img/product-1.jpg', 1, 1),
+(2, NULL, 'Khóa Cửa Thông Minh & Smart Lock', 'khoa-cua-thong-minh', 'Khóa vân tay, thẻ từ, mã số, nhận diện khuôn mặt 3D Face ID', 'assets/img/product-2.jpg', 2, 1),
+(3, NULL, 'Kiểm Soát Ra Vào & Báo Động', 'kiem-soat-ra-vao-bao-dong', 'Máy chấm công, chuông cửa có hình, cảm biến chống trộm, báo cháy', 'assets/img/product-3.jpg', 3, 1);
 
--- Danh mục cấp 2 (con của Biến tần):
+-- Danh mục cấp 2 (con của Camera Giám Sát):
 INSERT INTO `categories` (`id`, `parent_id`, `name`, `slug`, `description`, `image_url`, `sort_order`, `is_active`) VALUES
-(4, 1, 'Biến tần hạ thế (0.4kW - 15kW)', 'bien-tan-ha-the', 'Dành cho tải nhẹ và trung bình: băng tải, bơm, quạt nhỏ', NULL, 1, 1),
-(5, 1, 'Biến tần công nghiệp nặng (>15kW)', 'bien-tan-cong-nghiep-nang', 'Dành cho cẩu trục, máy nén khí, máy đùn, máy nghiền', NULL, 2, 1),
-(6, 1, 'Biến tần chuyên dụng Bơm/Quạt', 'bien-tan-chuyen-dung-bom-quat', 'Tích hợp chức năng điều khiển đa bơm và tối ưu điện năng', NULL, 3, 1);
+(4, 1, 'Camera IP & Wifi Không Dây', 'camera-ip-wifi', 'Dành cho gia đình, cửa hàng: xoay 360 độ, đàm thoại 2 chiều, xem qua điện thoại', NULL, 1, 1),
+(5, 1, 'Camera PTZ & Dự Án Ngoài Trời', 'camera-ptz-ngoai-troi', 'Dành cho biệt thự, nhà xưởng, giao thông: zoom quang học, chuẩn IP67', NULL, 2, 1),
+(6, 1, 'Đầu Ghi Hình NVR / DVR 4K', 'dau-ghi-hinh-nvr-dvr', 'Đầu ghi 4/8/16/32 kênh chuẩn nén H.265+, hỗ trợ ổ cứng lưu trữ dài ngày', NULL, 3, 1);
 
--- Danh mục cấp 2 (con của Đóng cắt):
+-- Danh mục cấp 2 (con của Khóa cửa thông minh):
 INSERT INTO `categories` (`id`, `parent_id`, `name`, `slug`, `description`, `image_url`, `sort_order`, `is_active`) VALUES
-(7, 3, 'Aptomat khối MCCB', 'aptomat-khoi-mccb', 'Thiết bị đóng cắt bảo vệ quá tải và ngắn mạch', NULL, 1, 1),
-(8, 3, 'Contactor - Khởi động từ', 'contactor-khoi-dong-tu', 'Thiết bị đóng ngắt mạch điện từ xa với độ bền cơ học cao', NULL, 2, 1);
+(7, 2, 'Khóa Cửa Nhận Diện Khuôn Mặt Face ID', 'khoa-face-id', 'Khóa thông minh nhận diện khuôn mặt 3D không chạm, camera chuông hình', NULL, 1, 1),
+(8, 3, 'Máy Chấm Công & Kiểm Soát Cửa', 'may-cham-cong-kiem-soat-cua', 'Máy quét vân tay, khuôn mặt và thẻ cảm ứng kiểm soát an ninh cửa', NULL, 2, 1);
 
 -- 5. Danh sách Sản phẩm mẫu (Products)
 INSERT INTO `products` (`id`, `category_id`, `sku`, `name`, `slug`, `brand`, `power_str`, `power_val`, `price`, `sale_price`, `stock_quantity`, `short_description`, `detail_description`, `main_image_url`, `is_featured`, `is_active`) VALUES
-(1, 4, 'FR-D740-0.75K', 'Biến tần Mitsubishi FR-D740-0.75K-CHT (0.75kW 3P 380V)', 'bien-tan-mitsubishi-fr-d740-075k', 'Mitsubishi', '0.75 kW', 0.75, 4200000, 3850000, 25, 
- 'Biến tần Mitsubishi dòng D700 kích thước siêu nhỏ gọn, độ tin cậy cao, phù hợp băng tải, máy đóng gói.', 
- '<p>Biến tần <strong>Mitsubishi FR-D740-0.75K</strong> là dòng biến tần tiêu chuẩn, tiết kiệm chi phí nhưng mang lại hiệu suất vận hành bền bỉ. Trang bị khả năng chịu quá tải 150% trong 60s, tích hợp sẵn cổng giao tiếp RS-485 và bộ điều khiển PID.</p>', 
+(1, 4, 'DS-2CD2043G2-I', 'Camera IP Thân Trụ Hikvision DS-2CD2043G2-I (4MP, WDR 120dB, IP67)', 'camera-ip-hikvision-ds-2cd2043g2-i', 'Hikvision', '4.0 MP 2K', 4.00, 1850000, 1650000, 35, 
+ 'Camera IP thân trụ 4MP AcuSense lọc báo động giả người và phương tiện, chuẩn chống nước IP67 chuyên dụng ngoài trời.', 
+ '<p>Camera IP <strong>Hikvision DS-2CD2043G2-I</strong> sở hữu cảm biến CMOS 1/3 inch độ phân giải 4.0 Megapixel (2560 &times; 1440), công nghệ chống ngược sáng thực WDR 120dB cho hình ảnh rõ nét trong mọi điều kiện ánh sáng.</p><p>Trang bị thuật toán Deep Learning AcuSense phân loại đối tượng chính xác, tầm xa hồng ngoại ban đêm 30m, hỗ trợ thẻ nhớ micro SD lên đến 256GB và chuẩn nén siêu tiết kiệm băng thông H.265+.</p>', 
  'assets/img/product-1.jpg', 1, 1),
 
-(2, 4, 'ATV310HU22N4E', 'Biến tần Schneider ATV310 2.2kW 3 Pha 380V (3HP)', 'bien-tan-schneider-atv310-2-2kw', 'Schneider', '2.2 kW', 2.20, 5600000, 5200000, 18, 
- 'Dòng Easy Altivar 310 của Schneider Electric được thiết kế tối ưu cho môi trường khắc nghiệt và phụ tải phổ thông.', 
- '<p>Biến tần <strong>Schneider ATV310HU22N4E</strong> có dải công suất 2.2kW (3HP), khả năng tản nhiệt vượt trội, phủ lớp bo mạch chống bụi bẩn, phù hợp cho máy dệt, máy chế biến gỗ, máy trộn công nghiệp.</p>', 
+(2, 5, 'DH-SD49225XA-HNR', 'Camera PTZ Quay Quét Dahua DH-SD49225XA-HNR (2MP, Zoom Quang 25X, AI)', 'camera-ptz-dahua-dh-sd49225xa-hnr', 'Dahua', 'Zoom 25X 2MP', 2.00, 8900000, 8200000, 12, 
+ 'Camera PTZ tốc độ cao tích hợp AI Starlight giám sát tầm xa lên tới 100m, bảo vệ chu vi thông minh.', 
+ '<p>Camera PTZ <strong>Dahua DH-SD49225XA-HNR</strong> là dòng camera chuyên dụng cho khu đô thị, nhà xưởng và công trình lớn. Ống kính zoom quang học 25X (4.8 mm–120 mm) cho phép phóng to chi tiết biển số xe và khuôn mặt ở khoảng cách xa.</p><p>Hỗ trợ công nghệ Starlight cho độ nhạy sáng cực thấp, tính năng Auto Tracking bám theo mục tiêu và phát hiện xâm nhập hàng rào ảo thông minh.</p>', 
  'assets/img/product-2.jpg', 1, 1),
 
-(3, 4, 'ACS355-03E-08A8-4', 'Biến tần ABB ACS355 4kW 3 Pha 380V (5.5HP)', 'bien-tan-abb-acs355-4kw', 'ABB', '4.0 kW', 4.00, 8900000, 8400000, 12, 
- 'Biến tần cho máy chế tạo OEM chất lượng Thụy Sĩ, điều khiển sensorless vector chính xác.', 
- '<p>Biến tần <strong>ABB ACS355</strong> được ứng dụng rộng rãi trong các hệ thống đòi hỏi độ chính xác cao như cẩu trục nhỏ, máy cắt CNC, máy in bao bì. Hỗ trợ đầy đủ các module giao tiếp Modbus, Profibus, EtherCAT.</p>', 
+(3, 4, 'EZVIZ-C6N-PRO-3MP', 'Camera Wifi Không Dây Ezviz C6N Pro (3MP 2K, Xoay 360°, Đàm Thoại 2 Chiều)', 'camera-wifi-ezviz-c6n-pro-3mp', 'Ezviz', '3.0 MP 2K', 3.00, 850000, 690000, 50, 
+ 'Camera wifi thông minh trong nhà xoay 360 độ, độ phân giải 2K sắc nét, đàm thoại 2 chiều và cảnh báo chuyển động.', 
+ '<p>Camera không dây <strong>Ezviz C6N Pro 3MP</strong> mang lại khả năng bao quát toàn cảnh không góc chết với góc xoay ngang 350° và dọc 55°. Tích hợp AI phát hiện dáng người thông minh, tự động theo dõi chuyển động và gửi thông báo tức thời về điện thoại.</p><p>Chế độ riêng tư một chạm và hỗ trợ đàm thoại hai chiều rõ ràng với mic lọc tiếng ồn.</p>', 
  'assets/img/product-3.jpg', 1, 1),
 
-(4, 5, 'FR-A840-15K', 'Biến tần Mitsubishi FR-A840-15K-1 (15kW 3P 380V)', 'bien-tan-mitsubishi-fr-a840-15k', 'Mitsubishi', '15.0 kW', 15.00, 29500000, 27900000, 8, 
- 'Dòng cao cấp nhất của Mitsubishi, điều khiển vector từ thông tiên tiến, chịu tải nặng xuất sắc.', 
- '<p>Biến tần công nghiệp <strong>Mitsubishi FR-A840-15K</strong> sở hữu độ phân giải tốc độ siêu cao, kiểm soát lực kéo moment ở tốc độ 0 rpm, độ bền thiết kế linh kiện trên 10 năm vận hành liên tục.</p>', 
+(4, 6, 'DS-7616NI-K2', 'Đầu Ghi Hình NVR 16 Kênh Hikvision DS-7616NI-K2 (Hỗ Trợ 2 Ổ Cứng 4K)', 'dau-ghi-hinh-nvr-hikvision-ds-7616ni-k2', 'Hikvision', '16 Kênh 4K', 16.00, 3600000, 3250000, 15, 
+ 'Đầu ghi hình mạng 16 kênh chuẩn nén H.265+, xuất hình cổng HDMI độ phân giải 4K Ultra HD.', 
+ '<p>Đầu ghi NVR <strong>Hikvision DS-7616NI-K2</strong> hỗ trợ kết nối tối đa 16 camera IP độ phân giải lên đến 8MP (4K). Băng thông đầu vào 160Mbps, hỗ trợ 2 ổ cứng dung lượng lên tới 8TB mỗi ổ.</p><p>Tương thích giao thức ONVIF tiêu chuẩn, hỗ trợ dịch vụ đám mây Hik-Connect xem trực tiếp và xem lại mượt mà từ mọi nơi.</p>', 
  'assets/img/product-4.jpg', 1, 1),
 
-(5, 5, 'ATV630D22N4', 'Biến tần Schneider ATV630 22kW 3 Pha 380V Process', 'bien-tan-schneider-atv630-22kw', 'Schneider', '22.0 kW', 22.00, 42000000, 39500000, 5, 
- 'Biến tần thông minh kết nối IoT Schneider Altivar Process, tích hợp đo lường điện năng chính xác.', 
- '<p><strong>Schneider Altivar Process ATV630</strong> chuyên dụng quản lý tối ưu hiệu suất bơm quạt và xử lý nước, giám sát qua Ethernet tích hợp sẵn cổng Web server theo dõi thời gian thực.</p>', 
- 'assets/img/product-5.jpg', 0, 1),
+(5, 7, 'PHILIPS-DDL702-FVP', 'Khóa Cửa Thông Minh Face ID Philips DDL702-FVP (Nhận Diện Khuôn Mặt 3D)', 'khoa-cua-thong-minh-philips-ddl702-fvp', 'Philips', '3D Face ID', 1.00, 16500000, 14800000, 8, 
+ 'Khóa thông minh cao cấp mở khóa khuôn mặt 3D Face ID không chạm, tích hợp camera chuông hình quan sát qua App.', 
+ '<p><strong>Philips DDL702-FVP</strong> là dòng khóa cửa thông minh cao cấp nhất của thương hiệu Philips. Ứng dụng công nghệ quét gương mặt 3D mô phỏng ánh sáng cấu trúc, nhận diện chính xác kể cả trong bóng tối và chống giả mạo bằng ảnh chụp/video.</p><p>Màn hình IPS 3.5 inch trong nhà hiển thị khách bấm chuông, kết nối Wifi xem trực tiếp và mở cửa từ xa qua điện thoại.</p>', 
+ 'assets/img/product-5.jpg', 1, 1),
 
-(6, 5, 'ACS580-01-073A-4', 'Biến tần ABB ACS580 37kW 3 Pha 380V (50HP)', 'bien-tan-abb-acs580-37kw', 'ABB', '37.0 kW', 37.00, 68000000, 65000000, 4, 
- 'Biến tần vạn năng đa năng của ABB, tích hợp bộ cuộn kháng giảm sóng hài bậc cao.', 
- '<p><strong>ABB ACS580</strong> mang lại sự tin cậy tuyệt đối, bảng điều khiển phụ trợ thông minh đa ngôn ngữ, hỗ trợ chức năng tự chuẩn đoán lỗi và lập lịch bảo trì định kỳ.</p>', 
- 'assets/img/product-6.jpg', 1, 1),
+(6, 7, 'KAADAS-S500-C', 'Khóa Vân Tay Cao Cấp Kaadas S500-C (Vân Tay FPC Thụy Điển, Thẻ Từ)', 'khoa-van-tay-kaadas-s500-c', 'Kaadas', 'FPC Thụy Điển', 1.00, 5200000, 4650000, 20, 
+ 'Khóa cửa vân tay công nghệ bảo mật Đức, cảm biến FPC Thụy Điển nhận diện siêu tốc 0.5s trên tay nắm.', 
+ '<p>Khóa điện tử <strong>Kaadas S500-C</strong> hỗ trợ đa dạng phương thức mở khóa: Vân tay, Mã số, Thẻ từ, Chìa cơ và Bluetooth. Chức năng mã số ảo chống nhìn trộm, thân khóa bằng hợp kim nguyên khối chống cắt phá và tính năng cảnh báo cạy cửa an toàn.</p>', 
+ 'assets/img/product-6.jpg', 0, 1),
 
-(7, 7, 'EZC100N3100', 'Aptomat khối Schneider MCCB EZC100N 3P 100A 18kA', 'mccb-schneider-ezc100n-3p-100a', 'Schneider', 'N/A', NULL, 1250000, 1150000, 40, 
- 'Aptomat đúc 3 pha dòng định mức 100A, dòng cắt ngắn mạch 18kA bảo vệ mạng điện phân phối.', 
- '<p>MCCB Schneider EasyPact EZC100N là sự lựa chọn tiêu chuẩn cho tủ điện phân phối hạ thế nhà xưởng và tòa nhà, tuân thủ tiêu chuẩn IEC 60947-2.</p>', 
+(7, 8, 'RONALD-JACK-FA210', 'Máy Chấm Công & Kiểm Soát Khuôn Mặt Ronald Jack FA210 (Khuôn Mặt + Vân Tay)', 'may-cham-cong-ronald-jack-fa210', 'Ronald Jack', '1500 Face', 1.00, 3800000, 3450000, 25, 
+ 'Thiết bị chấm công kiểm soát cửa đa năng: 1.500 khuôn mặt, 2.000 vân tay, cổng TCP/IP xuất báo cáo tự động.', 
+ '<p><strong>Ronald Jack FA210</strong> tích hợp chip xử lý thế hệ mới cho tốc độ nhận diện dưới 1 giây. Màn hình màu cảm ứng TFT 2.8 inch giao diện tiếng Việt thân thiện, tích hợp relay kết nối khóa từ kiểm soát cửa ra vào văn phòng.</p>', 
  'assets/img/product-7.jpg', 0, 1),
 
-(8, 8, 'S-T20-AC220V', 'Contactor Khởi động từ Mitsubishi S-T20 (20A Coil 220VAC)', 'contactor-mitsubishi-s-t20-220v', 'Mitsubishi', 'N/A', NULL, 480000, 420000, 60, 
- 'Khởi động từ điều khiển động cơ 3 pha công suất tới 7.5kW, cuộn hút 220VAC hoạt động ổn định.', 
- '<p>Contactor Mitsubishi S-T20 với thiết kế tiếp điểm bạc chống hàn dính, kích thước thon gọn, tuổi thọ đóng cắt lên tới 1.5 triệu lần.</p>', 
+(8, 8, 'PANASONIC-VL-SV74VN', 'Chuông Cửa Có Hình Màn Hình 7 Inch Panasonic VL-SV74VN (Camera Góc Rộng)', 'chuong-cua-co-hinh-panasonic-vl-sv74vn', 'Panasonic', '7 Inch LCD', 7.00, 4850000, 4350000, 18, 
+ 'Bộ chuông hình Panasonic màn hình màu 7 inch, camera nút bấm chống nước IP54 và lưu hình ảnh khách ghé thăm.', 
+ '<p>Bộ chuông cửa <strong>Panasonic VL-SV74VN</strong> gồm màn hình chính 7 inch chất lượng Nhật Bản và nút chuông camera góc nhìn siêu rộng 1.3MP. Tự động chụp và lưu 400 hình ảnh khách bấm chuông, hỗ trợ đổi giọng nói bảo vệ người già và trẻ nhỏ.</p>', 
  'assets/img/product-1.jpg', 0, 1);
 
 -- 6. Thư viện ảnh chi tiết sản phẩm (Product Images Gallery)
@@ -404,67 +404,67 @@ INSERT INTO `product_images` (`product_id`, `image_url`, `is_primary`, `sort_ord
 
 -- 7. Thông số kỹ thuật chi tiết của sản phẩm (Product Specifications)
 INSERT INTO `product_specs` (`product_id`, `spec_name`, `spec_value`, `sort_order`) VALUES
-(1, 'Công suất định mức', '0.75 kW (1.0 HP)', 1),
-(1, 'Điện áp vào', '3 Pha 380 - 480 V, 50/60 Hz', 2),
-(1, 'Dòng điện định mức', '2.2 A', 3),
-(1, 'Khả năng quá tải', '150% trong 60 giây, 200% trong 0.5 giây', 4),
-(1, 'Cấp độ bảo vệ', 'IP20', 5),
-(1, 'Xuất xứ', 'Mitsubishi Electric - Nhật Bản / Lắp ráp Trung Quốc', 6),
-(1, 'Thời gian bảo hành', '12 Tháng chính hãng', 7),
+(1, 'Độ phân giải hình ảnh', '4.0 Megapixel (2560 x 1440 @ 25fps)', 1),
+(1, 'Cảm biến hình ảnh', '1/3 inch Progressive Scan CMOS', 2),
+(1, 'Tầm xa hồng ngoại ban đêm', '30 mét Smart IR', 3),
+(1, 'Công nghệ xử lý hình ảnh', 'Chống ngược sáng thực WDR 120dB, 3D DNR, BLC', 4),
+(1, 'Tính năng AI AcuSense', 'Phân loại người & phương tiện, giảm báo động giả 95%', 5),
+(1, 'Cấp bảo vệ chống nước', 'IP67 chống bụi nước ngoài trời', 6),
+(1, 'Thời gian bảo hành', '24 Tháng chính hãng', 7),
 
-(2, 'Công suất định mức', '2.2 kW (3.0 HP)', 1),
-(2, 'Điện áp vào', '3 Pha 380 - 460 V AC', 2),
-(2, 'Dòng định mức ra', '5.5 A', 3),
-(2, 'Giao thức truyền thông', 'Modbus RTU (RJ45)', 4),
-(2, 'Xuất xứ', 'Schneider Electric - Pháp / Indonesia', 5),
-(2, 'Thời gian bảo hành', '18 Tháng chính hãng', 6),
+(2, 'Độ phân giải & Zoom', '2.0 Megapixel Full HD 1080P, Zoom quang học 25X', 1),
+(2, 'Tầm nhìn ban đêm Starlight', 'Hồng ngoại thông minh lên tới 100 mét', 2),
+(2, 'Tốc độ quay quét', 'Ngang 360° vô tận (tốc độ 240°/s), Dọc -15° đến 90°', 3),
+(2, 'Tính năng thông minh AI', 'Auto Tracking bám đối tượng, Nhận diện khuôn mặt', 4),
+(2, 'Chuẩn nén video', 'H.265+ / H.265 / H.264+ tiết kiệm 80% lưu trữ', 5),
+(2, 'Thời gian bảo hành', '24 Tháng chính hãng', 6),
 
-(4, 'Công suất định mức', '15.0 kW (20.0 HP)', 1),
-(4, 'Điện áp vào', '3 Pha 380 - 500 V, 50/60 Hz', 2),
-(4, 'Dải tần số điều khiển', '0.2 Hz đến 590 Hz', 3),
-(4, 'Chế độ điều khiển', 'V/F, Advanced Magnetic Flux, Real Sensorless Vector', 4),
-(4, 'Khối lượng', '14.5 kg', 5),
-(4, 'Thời gian bảo hành', '24 Tháng chính hãng', 6);
+(5, 'Phương thức mở khóa', '3D Face ID, Vân tay, Mã số, Thẻ từ, Chìa cơ, App Mobile', 1),
+(5, 'Công nghệ nhận diện mặt', 'Cảm biến gương mặt 3D cấu trúc ánh sáng (Khoảng cách 0.4 - 1.0m)', 2),
+(5, 'Màn hình quan sát', 'IPS 3.5 inch màu sắc nét bên trong cửa', 3),
+(5, 'Dung lượng lưu trữ', '20 Khuôn mặt, 100 Vân tay, 100 Mã số, 100 Thẻ từ', 4),
+(5, 'Nguồn điện sử dụng', 'Pin sạc Lithium 5000mAh (Dùng 4-6 tháng / lần sạc)', 5),
+(5, 'Thời gian bảo hành', '24 Tháng chính hãng Philips', 6);
 
 -- 7.1. Danh sách Khách hàng mẫu (Users - Mật khẩu mặc định: 123456)
 -- Mật khẩu băm SHA-256 của '123456': ba3253876aed6bc22d4a6ff53d8406e6ad92442c8de3563e0516ec0626ed514c
 INSERT INTO `users` (`id`, `username`, `password_hash`, `full_name`, `email`, `phone`, `address`, `is_active`, `created_at`) VALUES
 (1, 'thang.nd', 'ba3253876aed6bc22d4a6ff53d8406e6ad92442c8de3563e0516ec0626ed514c', 'Nguyễn Đức Thắng', 'thang.nd@gmail.com', '0912345678', 'Số 45 Lê Văn Lương, Trung Hòa, Cầu Giấy, Hà Nội', 1, '2026-09-15 08:30:00'),
-(2, 'hoanggia_mech', 'ba3253876aed6bc22d4a6ff53d8406e6ad92442c8de3563e0516ec0626ed514c', 'Công ty Cơ Khí Hoàng Gia', 'hoanggia.mech@outlook.com', '0983112233', 'KCN Biên Hòa 2, TP. Biên Hòa, Đồng Nai', 1, '2026-09-16 11:20:00'),
+(2, 'hoanggia_mech', 'ba3253876aed6bc22d4a6ff53d8406e6ad92442c8de3563e0516ec0626ed514c', 'Công ty Xây Dựng Hoàng Gia', 'hoanggia.sec@outlook.com', '0983112233', 'KCN Biên Hòa 2, TP. Biên Hòa, Đồng Nai', 1, '2026-09-16 11:20:00'),
 (3, 'tuan.ptit', 'ba3253876aed6bc22d4a6ff53d8406e6ad92442c8de3563e0516ec0626ed514c', 'Vũ Minh Tuấn', 'tuanvm.ptit@gmail.com', '0977889900', 'Tòa nhà A2, Học viện Công nghệ BCVT, Hà Đông, Hà Nội', 1, '2026-09-17 15:45:00');
 
 -- 8. Đơn hàng mẫu (Orders - Có đơn của thành viên và đơn khách vãng lai)
 INSERT INTO `orders` (`id`, `order_code`, `user_id`, `customer_name`, `customer_phone`, `customer_email`, `shipping_address`, `note`, `total_amount`, `coupon_code`, `discount_amount`, `payment_method`, `status`, `created_at`) VALUES
-(1, 'ORD-20260918-9102', 1, 'Nguyễn Đức Thắng', '0912345678', 'thang.nd@gmail.com', 'Số 45 Lê Văn Lương, Trung Hòa, Cầu Giấy, Hà Nội', 'Giao giờ hành chính, gọi trước khi giao 30 phút.', 3850000.00, NULL, 0.00, 'COD', 'COMPLETED', '2026-09-18 10:15:00'),
-(2, 'ORD-20260919-4821', 2, 'Công ty Cơ Khí Hoàng Gia (Anh Hùng)', '0983112233', 'hoanggia.mech@outlook.com', 'KCN Biên Hòa 2, TP. Biên Hòa, Đồng Nai', 'Xuất hóa đơn VAT cho công ty.', 26900000.00, 'GIAM1TR', 1000000.00, 'BANK_TRANSFER', 'SHIPPING', '2026-09-19 14:30:00'),
-(3, 'ORD-20260920-7734', 3, 'Vũ Minh Tuấn', '0977889900', 'tuanvm.ptit@gmail.com', 'Tòa nhà A2, Học viện Công nghệ BCVT, Hà Đông, Hà Nội', 'Cần tư vấn hỗ trợ kỹ thuật cài đặt tham số ban đầu.', 10400000.00, NULL, 0.00, 'COD', 'PENDING', '2026-09-20 20:45:00');
+(1, 'ORD-20260918-9102', 1, 'Nguyễn Đức Thắng', '0912345678', 'thang.nd@gmail.com', 'Số 45 Lê Văn Lương, Trung Hòa, Cầu Giấy, Hà Nội', 'Giao giờ hành chính, gọi trước khi giao 30 phút.', 1650000.00, NULL, 0.00, 'COD', 'COMPLETED', '2026-09-18 10:15:00'),
+(2, 'ORD-20260919-4821', 2, 'Công ty Xây Dựng Hoàng Gia (Anh Hùng)', '0983112233', 'hoanggia.sec@outlook.com', 'KCN Biên Hòa 2, TP. Biên Hòa, Đồng Nai', 'Xuất hóa đơn VAT cho công ty kèm biên bản bàn giao.', 13800000.00, 'GIAM1TR', 1000000.00, 'BANK_TRANSFER', 'SHIPPING', '2026-09-19 14:30:00'),
+(3, 'ORD-20260920-7734', 3, 'Vũ Minh Tuấn', '0977889900', 'tuanvm.ptit@gmail.com', 'Tòa nhà A2, Học viện Công nghệ BCVT, Hà Đông, Hà Nội', 'Cần kỹ thuật hỗ trợ hướng dẫn kết nối camera vào app điện thoại.', 3250000.00, NULL, 0.00, 'COD', 'PENDING', '2026-09-20 20:45:00');
 
 -- 9. Chi tiết đơn hàng mẫu (Order Items)
 INSERT INTO `order_items` (`order_id`, `product_id`, `product_sku`, `product_name`, `product_image`, `unit_price`, `quantity`, `subtotal`) VALUES
-(1, 1, 'FR-D740-0.75K', 'Biến tần Mitsubishi FR-D740-0.75K-CHT (0.75kW 3P 380V)', 'assets/images/products/mit-d740-075.jpg', 3850000.00, 1, 3850000.00),
-(2, 4, 'FR-A840-15K', 'Biến tần Mitsubishi FR-A840-15K-1 (15kW 3P 380V)', 'assets/images/products/mit-a840-15k.jpg', 27900000.00, 1, 27900000.00),
-(3, 2, 'ATV310HU22N4E', 'Biến tần Schneider ATV310 2.2kW 3 Pha 380V (3HP)', 'assets/images/products/schneider-atv310-22.jpg', 5200000.00, 2, 10400000.00);
+(1, 1, 'DS-2CD2043G2-I', 'Camera IP Thân Trụ Hikvision DS-2CD2043G2-I (4MP, WDR 120dB, IP67)', 'assets/img/product-1.jpg', 1650000.00, 1, 1650000.00),
+(2, 5, 'PHILIPS-DDL702-FVP', 'Khóa Cửa Thông Minh Face ID Philips DDL702-FVP (Nhận Diện Khuôn Mặt 3D)', 'assets/img/product-5.jpg', 14800000.00, 1, 14800000.00),
+(3, 4, 'DS-7616NI-K2', 'Đầu Ghi Hình NVR 16 Kênh Hikvision DS-7616NI-K2 (Hỗ Trợ 2 Ổ Cứng 4K)', 'assets/img/product-4.jpg', 3250000.00, 1, 3250000.00);
 
 -- 10. Dữ liệu Liên hệ & Yêu cầu tư vấn mẫu (Contact Inquiries)
 INSERT INTO `contact_inquiries` (`full_name`, `email`, `phone`, `subject`, `message`, `status`, `admin_notes`, `created_at`) VALUES
-('Lê Đình Trọng', 'trong.ld@diencongnghiep.vn', '0903456789', 'Báo giá biến tần Schneider 22kW số lượng lớn', 'Chào công ty, chúng tôi đang chuẩn bị dự án nâng cấp trạm bơm xử lý nước, cần mua 05 bộ biến tần ATV630 22kW. Vui lòng gửi bảng báo giá và chiết khấu đại lý.', 'PROCESSING', 'Đã gọi điện tư vấn lần 1 lúc 09h sáng, hẹn gửi file báo giá qua email trong ngày.', '2026-09-19 08:30:00'),
-('Phạm Thu Hà', 'thuha.nguyen@vinamech.com', '0944556677', 'Hỗ trợ kỹ thuật lỗi E.OV3 biến tần Mitsubishi', 'Biến tần bên em đang chạy máy dệt bị báo lỗi quá áp khi dừng máy (E.OV3). Nhờ các anh kỹ sư tư vấn giúp nguyên nhân và hướng xử lý.', 'NEW', NULL, '2026-09-20 16:10:00');
+('Lê Đình Trọng', 'trong.ld@diennhe.vn', '0903456789', 'Báo giá trọn gói 16 Camera Hikvision 4MP cho nhà xưởng', 'Chào công ty, chúng tôi đang chuẩn bị dự án nâng cấp hệ thống an ninh nhà xưởng 2000m2 tại KCN Quế Võ. Vui lòng gửi bảng báo giá thiết bị và chi phí nhân công lắp đặt.', 'PROCESSING', 'Đã gọi điện tư vấn lần 1 lúc 09h sáng, hẹn gửi file báo giá thiết kế chi tiết qua email trong ngày.', '2026-09-19 08:30:00'),
+('Phạm Thu Hà', 'thuha.nguyen@vinasmart.com', '0944556677', 'Tư vấn lắp đặt khóa cửa Face ID Philips cho biệt thự', 'Tôi muốn lắp 3 bộ khóa nhận diện khuôn mặt Philips cho biệt thự tại Vinhomes Riverside. Nhờ kỹ thuật tư vấn dòng khóa phù hợp với cửa gỗ lim.', 'NEW', NULL, '2026-09-20 16:10:00');
 
 -- 11. Dữ liệu Mã giảm giá / Voucher mẫu (Coupons)
 INSERT INTO `coupons` (`id`, `code`, `description`, `discount_type`, `discount_value`, `min_order_amount`, `max_discount_amount`, `usage_limit`, `used_count`, `start_date`, `end_date`, `is_active`) VALUES
-(1, 'SOLAR2026', 'Ưu đãi kích hoạt đầu tư xanh - Giảm 10% tối đa 2.000.000đ cho đơn từ 5.000.000đ', 'PERCENT', 10.00, 5000000.00, 2000000.00, 200, 15, '2026-01-01 00:00:00', '2026-12-31 23:59:59', 1),
-(2, 'GIAM500K', 'Tri ân khách hàng thân thiết - Giảm ngay 500.000đ trực tiếp cho đơn từ 8.000.000đ', 'FIXED', 500000.00, 8000000.00, NULL, 100, 8, '2026-01-01 00:00:00', '2026-12-31 23:59:59', 1),
-(3, 'PTITVIP', 'Chiết khấu đặc quyền đối tác kỹ thuật PTIT - Giảm 15% tối đa 5.000.000đ', 'PERCENT', 15.00, 15000000.00, 5000000.00, 50, 4, '2026-01-01 00:00:00', '2026-12-31 23:59:59', 1);
+(1, 'SECURITY2026', 'Ưu đãi giải pháp an ninh gia đình - Giảm 10% tối đa 2.000.000đ cho đơn từ 3.000.000đ', 'PERCENT', 10.00, 3000000.00, 2000000.00, 200, 15, '2026-01-01 00:00:00', '2026-12-31 23:59:59', 1),
+(2, 'GIAM500K', 'Tri ân khách hàng thân thiết - Giảm ngay 500.000đ trực tiếp cho đơn từ 5.000.000đ', 'FIXED', 500000.00, 5000000.00, NULL, 100, 8, '2026-01-01 00:00:00', '2026-12-31 23:59:59', 1),
+(3, 'CAMERAPRO', 'Chiết khấu đặc quyền đối tác dự án camera - Giảm 15% tối đa 5.000.000đ', 'PERCENT', 15.00, 10000000.00, 5000000.00, 50, 4, '2026-01-01 00:00:00', '2026-12-31 23:59:59', 1);
 
 -- 12. Dữ liệu Đánh giá & Nhận xét sản phẩm mẫu (Product Reviews)
 INSERT INTO `product_reviews` (`product_id`, `user_id`, `customer_name`, `customer_email`, `rating`, `comment`, `is_approved`, `created_at`) VALUES
-(1, 1, 'Nguyễn Đức Thắng (Kỹ sư Nhà máy)', 'thang.nd@gmail.com', 5, 'Biến tần Mitsubishi dòng D740 chạy cực kỳ êm và bền bỉ. Đã lắp cho hệ thống băng tải 2 tháng nay hoạt động ổn định, tài liệu catalog tiếng Việt đi kèm rất rõ ràng.', 1, '2026-09-18 14:20:00'),
-(1, 2, 'Hoàng Văn Hùng (Cơ điện)', 'hung.hoang@hoanggia.vn', 5, 'Hàng chính hãng full VAT, tem bảo hành đầy đủ. Đội ngũ kỹ sư PTIT Tech hỗ trợ setup thông số qua Zalo rất nhiệt tình!', 1, '2026-09-19 09:15:00'),
-(2, 3, 'Vũ Minh Tuấn', 'tuanvm.ptit@gmail.com', 4, 'Dòng ATV310 của Schneider dễ cài đặt phím xoay, tản nhiệt tốt. Giá cả rất cạnh tranh so với các đại lý khác tại Hà Nội.', 1, '2026-09-21 10:00:00'),
-(4, NULL, 'Trần Quốc Đạt (Nhà thầu MEP)', 'dat.tran@mepelectric.com', 5, 'Biến tần công suất 15kW đáp ứng hoàn hảo cho trạm bơm nước sạch, dòng khởi động êm không sụt áp lưới. Rất hài lòng!', 1, '2026-09-22 16:30:00');
+(1, 1, 'Nguyễn Đức Thắng (Quản lý tòa nhà)', 'thang.nd@gmail.com', 5, 'Camera Hikvision 4MP độ nét cực cao, tính năng AI AcuSense lọc báo động chuẩn xác không bị báo ảo khi lá cây rung hay mưa gió. Hàng chính hãng bảo hành uy tín.', 1, '2026-09-18 14:20:00'),
+(1, 2, 'Hoàng Văn Hùng (Kỹ sư MEP)', 'hung.hoang@hoanggia.vn', 5, 'Hàng full CO/CQ, tem hãng chuẩn chỉ. Kỹ thuật Bleezy hỗ trợ cấu hình qua Ultraviewer rất nhiệt tình và chuyên nghiệp!', 1, '2026-09-19 09:15:00'),
+(3, 3, 'Vũ Minh Tuấn', 'tuanvm.ptit@gmail.com', 5, 'Camera Ezviz C6N Pro góc xoay 360 rất tiện theo dõi con nhỏ và người già ở nhà, loa đàm thoại to rõ không bị rè. Đáng đồng tiền!', 1, '2026-09-21 10:00:00'),
+(5, NULL, 'Trần Quốc Đạt (Chủ biệt thự)', 'dat.tran@vinahome.com', 5, 'Khóa Philips Face ID mở cực nhạy, đứng trước cửa chưa tới 1s là đã mở, camera chuông hình gửi ảnh về điện thoại siêu nét. Rất hài lòng!', 1, '2026-09-22 16:30:00');
 
 -- 13. Dữ liệu Danh sách Yêu thích mẫu (Wishlists)
 INSERT INTO `wishlists` (`user_id`, `product_id`, `created_at`) VALUES
 (1, 2, '2026-09-18 10:20:00'),
-(1, 4, '2026-09-18 10:25:00'),
+(1, 5, '2026-09-18 10:25:00'),
 (2, 1, '2026-09-19 14:35:00');

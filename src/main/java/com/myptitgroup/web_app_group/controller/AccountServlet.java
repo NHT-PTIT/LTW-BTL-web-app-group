@@ -71,14 +71,14 @@ public class AccountServlet extends HttpServlet {
 
             request.setAttribute("companyInfo", new com.myptitgroup.web_app_group.dao.CompanyInfoDAO().getCompanyInfo());
             request.setAttribute("activeTab", "orders");
-            request.setAttribute("pageTitle", "Đơn hàng của tôi - Bleezy Inverter & Solar");
+            request.setAttribute("pageTitle", "Đơn hàng của tôi - Bleezy Security");
             request.getRequestDispatcher("/account-orders.jsp").forward(request, response);
             return;
         }
 
         // 2. Mặc định: Phân hệ Hồ sơ cá nhân (/account hoặc /account/profile)
         request.setAttribute("activeTab", "profile");
-        request.setAttribute("pageTitle", "Hồ sơ tài khoản - Bleezy Inverter & Solar");
+        request.setAttribute("pageTitle", "Hồ sơ tài khoản - Bleezy Security");
         request.getRequestDispatcher("/account-profile.jsp").forward(request, response);
     }
 

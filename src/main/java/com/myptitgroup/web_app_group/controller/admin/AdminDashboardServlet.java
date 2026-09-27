@@ -65,7 +65,7 @@ public class AdminDashboardServlet extends HttpServlet {
         request.setAttribute("totalUsers", totalUsers);
 
         request.setAttribute("activeMenu", "dashboard");
-        request.setAttribute("pageTitle", "Bảng Điều Khiển Quản Trị - Bleezy Solar Admin");
+        request.setAttribute("pageTitle", "Bảng Điều Khiển Quản Trị - Bleezy Security Admin");
 
         request.getRequestDispatcher("/WEB-INF/views/admin/dashboard.jsp").forward(request, response);
     }

@@ -11,7 +11,7 @@
     }
 %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="Bleezy - Thiết bị Điện Mặt Trời & Biến Tần Inverter" />
+    <jsp:param name="pageTitle" value="Bleezy Security - Thiết bị An Ninh & Camera Giám Sát Thông Minh" />
     <jsp:param name="activeMenu" value="home" />
 </jsp:include>
     
@@ -25,9 +25,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="slider-text">
-                                        <h2>the most successfull security <span>agency</span></h2>
-                                        <p>Nunc accumsan metus quis metus. Sed luctus. Mauris eu enim quisque dignissim nequesudm consectetuer dapibus wn eu leo integer varius erat.</p>
-                                        <a href="#" class="bleezy-btn">start a project</a>
+                                        <h2>Giải Pháp An Ninh <span>Toàn Diện & Tin Cậy</span></h2>
+                                        <p>Cung cấp và lắp đặt hệ thống Camera giám sát CCTV, Khóa cửa thông minh Face ID, Thiết bị kiểm soát ra vào và Báo động chống trộm chính hãng.</p>
+                                        <a href="${pageContext.request.contextPath}/shop" class="bleezy-btn">Khám phá sản phẩm</a>
                                     </div>
                                 </div>
                             </div>
@@ -42,9 +42,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="slider-text">
-                                        <h2>Premium Security Services Trusted <span> by Millions</span></h2>
-                                        <p>Nunc accumsan metus quis metus. Sed luctus. Mauris eu enim quisque dignissim nequesudm consectetuer dapibus wn eu leo integer varius erat.</p>
-                                        <a href="#" class="bleezy-btn">learn more</a>
+                                        <h2>Camera AI Thông Minh <span>Giám Sát 24/7</span></h2>
+                                        <p>Công nghệ nhận diện khuôn mặt, cảnh báo xâm nhập thời gian thực và đàm thoại hai chiều từ xa qua điện thoại với chất lượng hình ảnh sắc nét Ultra HD.</p>
+                                        <a href="${pageContext.request.contextPath}/shop?categoryId=1" class="bleezy-btn">Xem Camera Giám Sát</a>
                                     </div>
                                 </div>
                             </div>
@@ -59,9 +59,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="slider-text">
-                                        <h2>Premium Security Services Trusted<span> by Millions</span></h2>
-                                        <p>Nunc accumsan metus quis metus. Sed luctus. Mauris eu enim quisque dignissim nequesudm consectetuer dapibus wn eu leo integer varius erat.</p>
-                                        <a href="#" class="bleezy-btn">learn more</a>
+                                        <h2>Khóa Cửa Điện Tử <span>Bảo Mật Cao Cấp</span></h2>
+                                        <p>Mở khóa Face ID 3D không chạm, vân tay sinh trắc học chuẩn FPC Thụy Điển kết hợp chuông hình màn hình IPS hiện đại cho ngôi nhà của bạn.</p>
+                                        <a href="${pageContext.request.contextPath}/shop?categoryId=2" class="bleezy-btn">Xem Khóa Thông Minh</a>
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="promo-heading">
-                        <h2>We always try to Provide Cost Effective <span>Security Solutions</span></h2>
+                        <h2>Cam Kết Cung Cấp <span>Giải Pháp An Ninh Hiệu Quả & Tối Ưu Chi Phí</span></h2>
                     </div>
                 </div>
             </div>
@@ -87,36 +87,36 @@
                 <div class="col-md-4 col-sm-4">
                     <div class="single-promo">
                         <div class="promo-image">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/assets/img/promo-1.jpg" alt="promo" />
+                            <a href="${pageContext.request.contextPath}/about">
+                                <img src="${pageContext.request.contextPath}/assets/img/promo-1.jpg" alt="Kinh nghiệm triển khai" />
                             </a>
                         </div>
                         <div class="promo-text">
-                            <h2><a href="#">Our Experience</a></h2>
+                            <h2><a href="${pageContext.request.contextPath}/about">Kinh Nghiệm Chuyên Sâu</a></h2>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="single-promo">
                         <div class="promo-image">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/assets/img/promo-2.jpg" alt="promo" />
+                            <a href="${pageContext.request.contextPath}/about">
+                                <img src="${pageContext.request.contextPath}/assets/img/promo-2.jpg" alt="Lịch sử phát triển" />
                             </a>
                         </div>
                         <div class="promo-text">
-                            <h2><a href="#">bleezy History</a></h2>
+                            <h2><a href="${pageContext.request.contextPath}/about">Hành Trình Bleezy</a></h2>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="single-promo">
                         <div class="promo-image">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/assets/img/promo-4.jpg" alt="promo" />
+                            <a href="${pageContext.request.contextPath}/about">
+                                <img src="${pageContext.request.contextPath}/assets/img/promo-4.jpg" alt="Sứ mệnh an toàn" />
                             </a>
                         </div>
                         <div class="promo-text">
-                            <h2><a href="#">Our Mission</a></h2>
+                            <h2><a href="${pageContext.request.contextPath}/about">Sứ Mệnh Bảo Vệ</a></h2>
                         </div>
                     </div>
                 </div>
@@ -131,8 +131,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="site-heading">
-                        <h3>What We Offer</h3>
-                        <h2>our services</h2>
+                        <h3>Dịch Vụ Của Chúng Tôi</h3>
+                        <h2>Giải Pháp An Ninh Nổi Bật</h2>
                     </div>
                 </div>
             </div>
@@ -142,8 +142,8 @@
                         <div class="service-icon">
                             <i class="flaticon-house-security"></i>
                         </div>
-                        <h3><a href="#">Home Secutity</a></h3>
-                        <p>Enim ad minim veniam quis nostrud exercitation ullamco laboris aliquip dolor in velit esse cillum.</p>
+                        <h3><a href="${pageContext.request.contextPath}/shop">An Ninh Gia Đình</a></h3>
+                        <p>Hệ thống cảm biến chống trộm, chuông cửa có hình và khóa thông minh bảo vệ ngôi nhà toàn diện.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
@@ -151,8 +151,8 @@
                         <div class="service-icon">
                             <i class="flaticon-security-camera"></i>
                         </div>
-                        <h3><a href="#">cctv system</a></h3>
-                        <p>Enim ad minim veniam quis nostrud exercitation ullamco laboris aliquip dolor in velit esse cillum.</p>
+                        <h3><a href="${pageContext.request.contextPath}/shop?categoryId=1">Camera Quan Sát CCTV</a></h3>
+                        <p>Camera IP độ nét cao 4K, hồng ngoại ban đêm có màu, lưu trữ đám mây và xem từ xa qua smartphone.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
@@ -160,8 +160,8 @@
                         <div class="service-icon">
                             <i class="flaticon-locked-internet-security-padlock"></i>
                         </div>
-                        <h3><a href="#">cloud Security</a></h3>
-                        <p>Enim ad minim veniam quis nostrud exercitation ullamco laboris aliquip dolor in velit esse cillum.</p>
+                        <h3><a href="${pageContext.request.contextPath}/shop?categoryId=2">Khóa Cửa Thông Minh</a></h3>
+                        <p>Khóa vân tay, nhận diện khuôn mặt Face ID 3D, mã số ảo và thẻ từ chuẩn bảo mật quốc tế.</p>
                     </div>
                 </div>
             </div>
@@ -171,8 +171,8 @@
                         <div class="service-icon">
                             <i class="flaticon-computer"></i>
                         </div>
-                        <h3><a href="#">computer Secutity</a></h3>
-                        <p>Enim ad minim veniam quis nostrud exercitation ullamco laboris aliquip dolor in velit esse cillum.</p>
+                        <h3><a href="${pageContext.request.contextPath}/shop">Giám Sát Trung Tâm</a></h3>
+                        <p>Hệ thống máy chủ đầu ghi NVR đa kênh quản lý tập trung cho tòa nhà, nhà máy và khu đô thị.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
@@ -180,8 +180,8 @@
                         <div class="service-icon">
                             <i class="flaticon-policeman"></i>
                         </div>
-                        <h3><a href="#">Bodyguard</a></h3>
-                        <p>Enim ad minim veniam quis nostrud exercitation ullamco laboris aliquip dolor in velit esse cillum.</p>
+                        <h3><a href="${pageContext.request.contextPath}/contact">Báo Động Khẩn Cấp</a></h3>
+                        <p>Còi hú công suất lớn, cảnh báo rò rỉ gas, cảm biến khói báo cháy và tự động quay số khẩn cấp.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
@@ -189,8 +189,8 @@
                         <div class="service-icon">
                             <i class="flaticon-fingerprint"></i>
                         </div>
-                        <h3><a href="#">Biometric</a></h3>
-                        <p>Enim ad minim veniam quis nostrud exercitation ullamco laboris aliquip dolor in velit esse cillum.</p>
+                        <h3><a href="${pageContext.request.contextPath}/shop?categoryId=3">Kiểm Soát Sinh Trắc Học</a></h3>
+                        <p>Máy chấm công vân tay, máy quét khuôn mặt và cổng kiểm soát phân quyền ra vào doanh nghiệp.</p>
                     </div>
                 </div>
             </div>
@@ -204,8 +204,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="site-heading">
-                        <h3>Giải Pháp Tối Ưu Năng Lượng</h3>
-                        <h2>Sản Phẩm Nổi Bật</h2>
+                        <h3>Giải Pháp An Ninh & Giám Sát Toàn Diện</h3>
+                        <h2>Sản Phẩm An Ninh Nổi Bật</h2>
                     </div>
                 </div>
             </div>
@@ -266,7 +266,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="counts-text">
-                        <h3>We are ready to provide security in resonable price and guarantee your safety in any situation in your life </h3>
+                        <h3>Bảo vệ an toàn không gian sống và cơ sở sản xuất của bạn với các giải pháp an ninh chất lượng cao nhất</h3>
                     </div>
                 </div>
             </div>
@@ -274,25 +274,25 @@
                 <div class="col-md-3 col-sm-3">
                     <div class="count-box">
                         <h3 class="counter">2800</h3>
-                        <h4>Project <span>Done</span></h4>
+                        <h4>Dự án <span>Hoàn thành</span></h4>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3">
                     <div class="count-box">
-                        <h3 class="counter">1200</h3>
-                        <h4>Qualified <span>Employee</span></h4>
+                        <h3 class="counter">120</h3>
+                        <h4>Kỹ sư <span>Chuyên gia</span></h4>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3">
                     <div class="count-box">
                         <h3 class="counter">3100</h3>
-                        <h4>Deal <span>Assigned</span></h4>
+                        <h4>Hệ thống <span>Triển khai</span></h4>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3">
                     <div class="count-box">
                         <h3 class="counter">2700</h3>
-                        <h4>Satisfied <span>Clients</span></h4>
+                        <h4>Khách hàng <span>Hài lòng</span></h4>
                     </div>
                 </div>
             </div>
@@ -306,21 +306,21 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="site-heading">
-                        <h3>See Our Experience</h3>
-                        <h2>Photo Gallery</h2>
+                        <h3>Dự Án Đã Thực Hiện</h3>
+                        <h2>Hình Ảnh Hoạt Động & Lắp Đặt</h2>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 col-sm-4">
                     <div class="single-gallery-img">
-                        <img src="${pageContext.request.contextPath}/assets/img/gallery-1.jpg" alt="ignition" />
+                        <img src="${pageContext.request.contextPath}/assets/img/gallery-1.jpg" alt="Lắp đặt camera nhà xưởng" />
                         <div class="gallery-caption">
                             <p>
                                 <a href="${pageContext.request.contextPath}/assets/img/gallery-1.jpg" class="more gallery2">
                                     <i class="fa fa-fw fa-search-plus"></i>
                                 </a>
-                                <a href="#">
+                                <a href="${pageContext.request.contextPath}/shop">
                                     <i class="fa fa-fw fa-link"></i>
                                 </a>
                             </p>
@@ -329,13 +329,13 @@
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="single-gallery-img">
-                        <img src="${pageContext.request.contextPath}/assets/img/gallery-2.jpg" alt="ignition" />
+                        <img src="${pageContext.request.contextPath}/assets/img/gallery-2.jpg" alt="Hệ thống an ninh tòa nhà" />
                         <div class="gallery-caption">
                             <p>
                                 <a href="${pageContext.request.contextPath}/assets/img/gallery-2.jpg" class="more gallery2">
                                     <i class="fa fa-fw fa-search-plus"></i>
                                 </a>
-                                <a href="#">
+                                <a href="${pageContext.request.contextPath}/shop">
                                     <i class="fa fa-fw fa-link"></i>
                                 </a>
                             </p>
@@ -344,13 +344,13 @@
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="single-gallery-img">
-                        <img src="${pageContext.request.contextPath}/assets/img/gallery-3.jpg" alt="ignition" />
+                        <img src="${pageContext.request.contextPath}/assets/img/gallery-3.jpg" alt="Trung tâm điều hành CCTV" />
                         <div class="gallery-caption">
                             <p>
                                 <a href="${pageContext.request.contextPath}/assets/img/gallery-3.jpg" class="more gallery2">
                                     <i class="fa fa-fw fa-search-plus"></i>
                                 </a>
-                                <a href="#">
+                                <a href="${pageContext.request.contextPath}/shop">
                                     <i class="fa fa-fw fa-link"></i>
                                 </a>
                             </p>
@@ -361,13 +361,13 @@
             <div class="row">
                 <div class="col-md-4 col-sm-4">
                     <div class="single-gallery-img">
-                        <img src="${pageContext.request.contextPath}/assets/img/gallery-4.jpg" alt="ignition" />
+                        <img src="${pageContext.request.contextPath}/assets/img/gallery-4.jpg" alt="Kiểm soát ra vào vân tay" />
                         <div class="gallery-caption">
                             <p>
                                 <a href="${pageContext.request.contextPath}/assets/img/gallery-4.jpg" class="more gallery2">
                                     <i class="fa fa-fw fa-search-plus"></i>
                                 </a>
-                                <a href="#">
+                                <a href="${pageContext.request.contextPath}/shop">
                                     <i class="fa fa-fw fa-link"></i>
                                 </a>
                             </p>
@@ -376,13 +376,13 @@
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="single-gallery-img">
-                        <img src="${pageContext.request.contextPath}/assets/img/gallery-6.jpg" alt="ignition" />
+                        <img src="${pageContext.request.contextPath}/assets/img/gallery-6.jpg" alt="Khóa cửa thông minh biệt thự" />
                         <div class="gallery-caption">
                             <p>
                                 <a href="${pageContext.request.contextPath}/assets/img/gallery-6.jpg" class="more gallery2">
                                     <i class="fa fa-fw fa-search-plus"></i>
                                 </a>
-                                <a href="#">
+                                <a href="${pageContext.request.contextPath}/shop">
                                     <i class="fa fa-fw fa-link"></i>
                                 </a>
                             </p>
@@ -391,13 +391,13 @@
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="single-gallery-img">
-                        <img src="${pageContext.request.contextPath}/assets/img/gallery-5.jpg" alt="ignition" />
+                        <img src="${pageContext.request.contextPath}/assets/img/gallery-5.jpg" alt="Báo động chống trộm" />
                         <div class="gallery-caption">
                             <p>
                                 <a href="${pageContext.request.contextPath}/assets/img/gallery-5.jpg" class="more gallery2">
                                     <i class="fa fa-fw fa-search-plus"></i>
                                 </a>
-                                <a href="#">
+                                <a href="${pageContext.request.contextPath}/shop">
                                     <i class="fa fa-fw fa-link"></i>
                                 </a>
                             </p>
@@ -415,8 +415,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="site-heading-black">
-                        <h3>What They Say</h3>
-                        <h2>Testimonials</h2>
+                        <h3>Đánh Giá Thực Tế</h3>
+                        <h2>Khách Hàng Nói Về Bleezy</h2>
                     </div>
                 </div>
             </div>
@@ -425,43 +425,29 @@
                     <div class="testimonial-slide">
                         <div class="single-testimonial">
                             <div class="testimonial-text">
-                                <p>Esse cillum fugiat nulla pariatur excepteur ipsum dolor sit amconsectetur adipisicing elit sedaup eiusmod tempor incididunt labore et dolore magna aliqua lorem ipsum dolor sit ametes etur adipisicing elit usmod tempor incididunt eiusmod tempor incididunt ut labore.</p>
+                                <p>"Hệ thống 16 Camera Hikvision AcuSense do Bleezy triển khai tại nhà xưởng hoạt động cực kỳ ổn định. Hình ảnh ban đêm rõ nét, tính năng nhận diện người giúp chúng tôi quản lý ra vào rất tiện lợi."</p>
                             </div>
                             <div class="testimonial-info">
                                 <div class="info-img">
                                     <img src="${pageContext.request.contextPath}/assets/img/client1.jpg" alt="client" />
                                 </div>
                                 <div class="info-name">
-                                    <h4>Mike Hussy</h4>
-                                    <p>Business Owner, Spain</p>
+                                    <h4>Nguyễn Văn Hưng</h4>
+                                    <p>Giám đốc điều hành, KCN Tiên Sơn</p>
                                 </div>
                             </div>
                         </div>
                         <div class="single-testimonial">
                             <div class="testimonial-text">
-                                <p>Esse cillum fugiat nulla pariatur excepteur ipsum dolor sit amconsectetur adipisicing elit sedaup eiusmod tempor incididunt labore et dolore magna aliqua lorem ipsum dolor sit ametes etur adipisicing elit usmod tempor incididunt eiusmod tempor incididunt ut labore.</p>
+                                <p>"Khóa cửa Face ID Philips lắp đặt cho căn hộ tại Times City rất sang trọng và an toàn. Đội ngũ kỹ thuật hỗ trợ lắp đặt nhanh trong 2 giờ, bàn giao hướng dẫn tận tình!"</p>
                             </div>
                             <div class="testimonial-info">
                                 <div class="info-img">
                                     <img src="${pageContext.request.contextPath}/assets/img/client2.jpg" alt="client" />
                                 </div>
                                 <div class="info-name">
-                                    <h4>Zenifar Lopez</h4>
-                                    <p>Business Owner, Spain</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-testimonial">
-                            <div class="testimonial-text">
-                                <p>Esse cillum fugiat nulla pariatur excepteur ipsum dolor sit amconsectetur adipisicing elit sedaup eiusmod tempor incididunt labore et dolore magna aliqua lorem ipsum dolor sit ametes etur adipisicing elit usmod tempor incididunt eiusmod tempor incididunt ut labore.</p>
-                            </div>
-                            <div class="testimonial-info">
-                                <div class="info-img">
-                                    <img src="${pageContext.request.contextPath}/assets/img/client2.jpg" alt="client" />
-                                </div>
-                                <div class="info-name">
-                                    <h4>Zenifar Lopez</h4>
-                                    <p>Business Owner, Spain</p>
+                                    <h4>Trần Thu Thảo</h4>
+                                    <p>Chủ sở hữu căn hộ, Hà Nội</p>
                                 </div>
                             </div>
                         </div>
@@ -478,8 +464,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="site-heading">
-                        <h3>security Information</h3>
-                        <h2>Our Latest News</h2>
+                        <h3>Cẩm Nang & Kinh Nghiệm</h3>
+                        <h2>Tin Tức & Giải Pháp An Ninh</h2>
                     </div>
                 </div>
             </div>
@@ -487,14 +473,14 @@
                 <div class="col-md-4 col-sm-4">
                     <div class="single-blog">
                         <div class="blog-image">
-                            <a href="#">
+                            <a href="${pageContext.request.contextPath}/about">
                                 <img src="${pageContext.request.contextPath}/assets/img/blog-1.jpg" alt="blog" />
                             </a>
                         </div>
                         <div class="blog-text">
-                            <h2><a href="#">Security System Of Any Building</a></h2>
+                            <h2><a href="${pageContext.request.contextPath}/about">Giải Pháp An Ninh Toàn Diện Cho Tòa Nhà & Chung Cư</a></h2>
                             <div class="blog-meta">
-                                <p>-: Jan 20, 2018   /   Admin   /   6 Likes</p>
+                                <p>-: 2026   /   Bleezy Security   /   18 Lượt xem</p>
                             </div>
                         </div>
                     </div>
@@ -502,14 +488,14 @@
                 <div class="col-md-4 col-sm-4">
                     <div class="single-blog">
                         <div class="blog-image">
-                            <a href="#">
+                            <a href="${pageContext.request.contextPath}/about">
                                 <img src="${pageContext.request.contextPath}/assets/img/blog-2.jpg" alt="blog" />
                             </a>
                         </div>
                         <div class="blog-text">
-                            <h2><a href="#">Don’t Worry Your Data is Safe</a></h2>
+                            <h2><a href="${pageContext.request.contextPath}/about">Bảo Mật Dữ Liệu Camera Giám Sát Chống Hack Từ Xa</a></h2>
                             <div class="blog-meta">
-                                <p>-: Jan 20, 2018   /   Admin   /   6 Likes</p>
+                                <p>-: 2026   /   Bleezy Security   /   25 Lượt xem</p>
                             </div>
                         </div>
                     </div>
@@ -517,14 +503,14 @@
                 <div class="col-md-4 col-sm-4">
                     <div class="single-blog">
                         <div class="blog-image">
-                            <a href="#">
+                            <a href="${pageContext.request.contextPath}/about">
                                 <img src="${pageContext.request.contextPath}/assets/img/blog-3.jpg" alt="blog" />
                             </a>
                         </div>
                         <div class="blog-text">
-                            <h2><a href="#">Go next we are always with you</a></h2>
+                            <h2><a href="${pageContext.request.contextPath}/about">Hướng Dẫn Lựa Chọn Khóa Cửa Thông Minh Đúng Nhu Cầu</a></h2>
                             <div class="blog-meta">
-                                <p>-: Jan 20, 2018   /   Admin   /   6 Likes</p>
+                                <p>-: 2026   /   Bleezy Security   /   32 Lượt xem</p>
                             </div>
                         </div>
                     </div>
@@ -541,13 +527,13 @@
             <div class="row">
                 <div class="col-md-9 col-sm-8">
                     <div class="broucher-left">
-                        <h3>Download our corporate brochure</h3>
+                        <h3>Tải Catalog Sản Phẩm & Bảng Giá Thiết Bị An Ninh Mới Nhất</h3>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-4">
                     <div class="broucher-right">
                         <div class="download-btn">
-                            <a href="#">Download.Pdf <span class="fa fa-arrow-circle-o-down"></span></a>
+                            <a href="${pageContext.request.contextPath}/contact">Tải Catalog.Pdf <span class="fa fa-arrow-circle-o-down"></span></a>
                             <i class="fa fa-file-pdf-o"></i>
                         </div>
                     </div>

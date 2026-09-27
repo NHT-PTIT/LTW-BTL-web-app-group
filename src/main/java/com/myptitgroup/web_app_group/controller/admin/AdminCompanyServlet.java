@@ -47,9 +47,9 @@ public class AdminCompanyServlet extends HttpServlet {
         if (info == null) {
             info = new CompanyInfo();
             info.setId(1);
-            info.setCompanyName("Bleezy Inverter & Solar Power");
+            info.setCompanyName("Bleezy Security Solutions");
             info.setHotline("1900 6868");
-            info.setEmail("contact@bleezysolar.vn");
+            info.setEmail("contact@bleezysecurity.vn");
             info.setAddress("Hà Nội, Việt Nam");
         }
 

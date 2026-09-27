@@ -57,13 +57,13 @@
             com.myptitgroup.web_app_group.model.Category currentCat = cDao.getById(categoryId);
             if (currentCat != null) {
                 request.setAttribute("currentCategory", currentCat);
-                request.setAttribute("pageTitle", currentCat.getName() + " - Bleezy Inverter & Solar Power");
+                request.setAttribute("pageTitle", currentCat.getName() + " - Bleezy Security");
             }
         }
     }
 %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="${not empty pageTitle ? pageTitle : 'Cửa hàng sản phẩm - Bleezy Inverter & Solar Power'}" />
+    <jsp:param name="pageTitle" value="${not empty pageTitle ? pageTitle : 'Cửa hàng thiết bị an ninh - Bleezy Security'}" />
     <jsp:param name="activeMenu" value="shop" />
 </jsp:include>
     

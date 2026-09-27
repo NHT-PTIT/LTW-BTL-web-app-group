@@ -59,7 +59,7 @@ public class TrackOrderServlet extends HttpServlet {
             request.setAttribute("hasSearched", true);
         }
 
-        request.setAttribute("pageTitle", "Tra cứu đơn hàng - Bleezy Inverter & Solar Power");
+        request.setAttribute("pageTitle", "Tra cứu đơn hàng - Bleezy Security");
         request.getRequestDispatcher("/track-order.jsp").forward(request, response);
     }
 

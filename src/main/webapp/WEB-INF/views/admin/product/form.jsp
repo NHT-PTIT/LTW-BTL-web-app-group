@@ -45,14 +45,14 @@
                             <div class="admin-form-group">
                                 <label class="admin-form-label">TÊN THIẾT BỊ / SẢN PHẨM <span class="required">*</span></label>
                                 <input type="text" name="name" value="${product.name}" class="admin-input" 
-                                       placeholder="Ví dụ: Biến tần Hybrid Solar Deye 5kW 1 Pha SUN-5K-SG03LP1" required>
+                                       placeholder="Ví dụ: Camera IP Thân Trụ Hikvision DS-2CD2043G2-I 4MP AcuSense" required>
                             </div>
 
                             <div class="form-grid-2">
                                 <div class="admin-form-group">
                                     <label class="admin-form-label">MÃ SKU SẢN PHẨM <span class="required">*</span></label>
                                     <input type="text" name="sku" value="${product.sku}" class="admin-input" 
-                                           placeholder="Ví dụ: INV-DEYE-5K" required style="text-transform: uppercase;">
+                                           placeholder="Ví dụ: CAM-HIK-4MP" required style="text-transform: uppercase;">
                                 </div>
                                 <div class="admin-form-group">
                                     <label class="admin-form-label">DANH MỤC THIẾT BỊ <span class="required">*</span></label>
@@ -71,19 +71,19 @@
                                 <div class="admin-form-group">
                                     <label class="admin-form-label">THƯƠNG HIỆU / HÃNG SẢN XUẤT</label>
                                     <input type="text" name="brand" value="${product.brand}" class="admin-input" 
-                                           placeholder="Deye, Mitsubishi, Schneider, ABB...">
+                                           placeholder="Hikvision, Dahua, Ezviz, Philips, Kaadas, Ronald Jack...">
                                 </div>
                                 <div class="admin-form-group">
-                                    <label class="admin-form-label">CÔNG SUẤT HIỂN THỊ</label>
+                                    <label class="admin-form-label">THÔNG SỐ / ĐỘ PHÂN GIẢI NỔI BẬT</label>
                                     <input type="text" name="powerStr" value="${product.powerStr}" class="admin-input" 
-                                           placeholder="Ví dụ: 5kW / 6.8HP, 10kW...">
+                                           placeholder="Ví dụ: 4.0 MP 2K, Zoom 25X, 3D Face ID, 1500 Face...">
                                 </div>
                             </div>
 
                             <div class="admin-form-group">
-                                <label class="admin-form-label">GIÁ TRỊ CÔNG SUẤT (SỐ THỰC kW)</label>
+                                <label class="admin-form-label">THÔNG SỐ ĐỊNH LƯỢNG (Độ phân giải MP / Dung lượng)</label>
                                 <input type="number" step="0.1" name="powerVal" value="${product.powerVal}" class="admin-input" 
-                                       placeholder="5.0, 8.0, 10.5 (dùng cho bộ lọc công suất)">
+                                       placeholder="4.0, 8.0, 16.0 (dùng cho bộ lọc thông số)">
                             </div>
                         </div>
                     </div>
@@ -99,13 +99,13 @@
                             <div class="admin-form-group">
                                 <label class="admin-form-label">MÔ TẢ TÓM TẮT (Hiển thị đầu trang chi tiết & thẻ sản phẩm)</label>
                                 <textarea name="shortDescription" class="admin-textarea" rows="3" 
-                                          placeholder="Tóm tắt tính năng nổi bật: Hiệu suất 97.6%, tích hợp cổng MPPT kép, bảo hành chính hãng 5 năm...">${product.shortDescription}</textarea>
+                                          placeholder="Tóm tắt tính năng nổi bật: Cảm biến 4MP 2K siêu nét, chuẩn nén H.265+, chống bụi nước IP67, tích hợp AI phát hiện người/xe...">${product.shortDescription}</textarea>
                             </div>
 
                             <div class="admin-form-group">
                                 <label class="admin-form-label">CHI TIẾT KỸ THUẬT & ĐẶC TÍNH (Hỗ trợ HTML)</label>
                                 <textarea name="detailDescription" class="admin-textarea" rows="6" 
-                                          placeholder="Chi tiết cấu hình, ứng dụng, tiêu chuẩn an toàn IP65...">${product.detailDescription}</textarea>
+                                          placeholder="Chi tiết cấu hình, tầm xa hồng ngoại 30m, công nghệ ban đêm có màu, tiêu chuẩn bảo vệ IP67...">${product.detailDescription}</textarea>
                             </div>
                         </div>
                     </div>
@@ -151,10 +151,10 @@
                                             <c:otherwise>
                                                 <tr>
                                                     <td>
-                                                        <input type="text" name="specName" value="Điện áp định mức" class="admin-input admin-input-sm" placeholder="Tên thông số">
+                                                        <input type="text" name="specName" value="Cảm biến hình ảnh" class="admin-input admin-input-sm" placeholder="Tên thông số">
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="specValue" value="3 Pha 380V / 50Hz" class="admin-input admin-input-sm" placeholder="Giá trị thông số">
+                                                        <input type="text" name="specValue" value="1/3 inch Progressive Scan CMOS 4.0 Megapixel" class="admin-input admin-input-sm" placeholder="Giá trị thông số">
                                                     </td>
                                                     <td style="text-align: center;">
                                                         <button type="button" class="admin-btn admin-btn-sm admin-btn-danger" onclick="removeRow(this)" title="Xóa thông số">
@@ -164,10 +164,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="text" name="specName" value="Cấp bảo vệ" class="admin-input admin-input-sm" placeholder="Tên thông số">
+                                                        <input type="text" name="specName" value="Cấp độ bảo vệ" class="admin-input admin-input-sm" placeholder="Tên thông số">
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="specValue" value="IP65 (Kháng nước & bụi)" class="admin-input admin-input-sm" placeholder="Giá trị thông số">
+                                                        <input type="text" name="specValue" value="IP67 (Kháng nước & bụi ngoài trời)" class="admin-input admin-input-sm" placeholder="Giá trị thông số">
                                                     </td>
                                                     <td style="text-align: center;">
                                                         <button type="button" class="admin-btn admin-btn-sm admin-btn-danger" onclick="removeRow(this)" title="Xóa thông số">
@@ -322,8 +322,8 @@
 function addSpecRow() {
     var tbody = document.getElementById('specsBody');
     var tr = document.createElement('tr');
-    tr.innerHTML = '<td><input type="text" name="specName" class="admin-input admin-input-sm" placeholder="Tên thông số (VD: Hiệu suất)"></td>' +
-                   '<td><input type="text" name="specValue" class="admin-input admin-input-sm" placeholder="Giá trị (VD: 98.4%)"></td>' +
+    tr.innerHTML = '<td><input type="text" name="specName" class="admin-input admin-input-sm" placeholder="Tên thông số (VD: Độ phân giải)"></td>' +
+                   '<td><input type="text" name="specValue" class="admin-input admin-input-sm" placeholder="Giá trị (VD: 4.0 Megapixel 2K)"></td>' +
                    '<td style="text-align: center;"><button type="button" class="admin-btn admin-btn-sm admin-btn-danger" onclick="removeRow(this)" title="Xóa thông số"><i class="fa-solid fa-trash-can"></i></button></td>';
     tbody.appendChild(tr);
 }

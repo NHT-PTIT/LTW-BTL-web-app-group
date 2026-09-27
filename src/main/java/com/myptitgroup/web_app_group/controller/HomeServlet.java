@@ -48,7 +48,7 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("latestProducts", latestProducts);
         request.setAttribute("categoryTree", categoryTree);
         request.setAttribute("companyInfo", companyInfo);
-        request.setAttribute("pageTitle", "Bleezy - Thiết bị Điện Mặt Trời & Biến Tần Inverter Hàng Đầu");
+        request.setAttribute("pageTitle", "Bleezy Security - Thiết Bị & Giải Pháp An Ninh Hàng Đầu");
         request.setAttribute("isHomeDataLoaded", true);
 
         // 6. Forward tới View index.jsp

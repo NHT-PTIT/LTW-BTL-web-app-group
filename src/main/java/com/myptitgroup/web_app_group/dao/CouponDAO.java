@@ -37,7 +37,7 @@ public class CouponDAO {
 
     /**
      * Tra cứu và kiểm tra tính hợp lệ của mã giảm giá cho giỏ hàng
-     * @param code Mã coupon nhập vào (vd: SOLAR2026)
+     * @param code Mã coupon nhập vào (vd: SECURITY2026)
      * @param orderTotal Tổng tiền giỏ hàng hiện tại
      * @return Coupon nếu hợp lệ, null nếu không tìm thấy hoặc không thỏa mãn điều kiện
      */

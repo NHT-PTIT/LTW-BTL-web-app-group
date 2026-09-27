@@ -415,7 +415,7 @@
         <div class="invoice-header">
             <div class="company-brand">
                 <div class="brand-logo-text">
-                    ${companyInfo.companyName != null ? companyInfo.companyName : 'BLEEZY'} <span>SOLAR</span>
+                    ${companyInfo.companyName != null ? companyInfo.companyName : 'BLEEZY'} <span>SECURITY</span>
                 </div>
                 <div class="company-meta">
                     <p><strong>Địa chỉ:</strong> ${companyInfo.address}</p>
@@ -500,7 +500,7 @@
             <thead>
                 <tr>
                     <th style="width: 40px;" class="col-center">STT</th>
-                    <th>Tên Thiết Bị / Linh Kiện Điện Mặt Trời</th>
+                    <th>Tên Thiết Bị / Sản Phẩm An Ninh & CCTV</th>
                     <th style="width: 80px;" class="col-center">ĐVT</th>
                     <th style="width: 70px;" class="col-center">Số lượng</th>
                     <th style="width: 120px;" class="col-right">Đơn giá</th>
@@ -595,7 +595,7 @@
         <div class="invoice-footer-note">
             <p>Quý khách vui lòng kiểm tra kỹ số lượng, tem niêm phong và ngoại quan thiết bị trước khi ký nhận hàng.</p>
             <p>Hóa đơn kiêm phiếu xuất kho có giá trị bảo hành chính hãng theo thời hạn quy định trên phiếu bảo hành kèm theo.</p>
-            <p>Hotline Hỗ Trợ Kỹ Thuật 24/7: <strong>${companyInfo.hotline}</strong> | Website: <strong>bleezysolar.vn</strong></p>
+            <p>Hotline Hỗ Trợ Kỹ Thuật 24/7: <strong>${companyInfo.hotline}</strong> | Website: <strong>bleezysecurity.vn</strong></p>
         </div>
 
     </div>

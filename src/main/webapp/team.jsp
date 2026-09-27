@@ -9,7 +9,7 @@
     }
 %>
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="Đội ngũ kỹ thuật - Bleezy Inverter & Solar Power" />
+    <jsp:param name="pageTitle" value="Đội ngũ kỹ thuật - Bleezy Security" />
     <jsp:param name="activeMenu" value="pages" />
 </jsp:include>
     
@@ -51,9 +51,9 @@
             <div class="row">
                 <div class="col-md-12 text-center" style="margin-bottom: 50px;">
                     <span style="color: #f26723; font-weight: 700; text-transform: uppercase; font-size: 13px; letter-spacing: 1.5px;">Nhân sự nòng cốt</span>
-                    <h2 style="font-size: 32px; font-weight: 800; color: #0f172a; margin-top: 8px;">Kỹ sư & Chuyên gia hàng đầu</h2>
+                    <h2 style="font-size: 32px; font-weight: 800; color: #0f172a; margin-top: 8px;">Kỹ sư & Chuyên gia An Ninh Hàng Đầu</h2>
                     <p style="color: #64748b; max-width: 650px; margin: 12px auto 0 auto; line-height: 24px;">
-                        Đội ngũ kỹ sư năng lượng và tự động hóa giàu kinh nghiệm từ Học viện Công nghệ Bưu chính Viễn thông (PTIT), luôn sẵn sàng tư vấn và hỗ trợ kỹ thuật 24/7.
+                        Đội ngũ kỹ sư an ninh, viễn thông và hệ thống giám sát CCTV giàu kinh nghiệm từ Học viện Công nghệ Bưu chính Viễn thông (PTIT), luôn sẵn sàng tư vấn, khảo sát và hỗ trợ kỹ thuật 24/7.
                     </p>
                 </div>
             </div>

@@ -49,7 +49,7 @@
                             </label>
                             <input type="text" id="code" name="code" class="admin-form-control" 
                                    value="<c:out value="${coupon.code}"/>" 
-                                   placeholder="Ví dụ: SOLAR2026, GIAM500K..." required 
+                                   placeholder="Ví dụ: SECURITY2026, CAMERAPRO, GIAM500K..." required 
                                    style="text-transform: uppercase; font-family: monospace; font-size: 16px; font-weight: 700; letter-spacing: 1px;">
                             <small style="color: var(--admin-muted); font-size: 12px; margin-top: 4px; display: block;">
                                 Mã không dấu, viết hoa, không chứa khoảng trắng. Khách hàng sẽ nhập mã này tại giỏ hàng.

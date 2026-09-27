@@ -169,7 +169,7 @@ public class CompanyInfo implements Serializable {
     }
 
     public String getBankAccountName() {
-        return bankAccountName != null && !bankAccountName.trim().isEmpty() ? bankAccountName : "CTY TNHH BLEEZY SOLAR";
+        return bankAccountName != null && !bankAccountName.trim().isEmpty() ? bankAccountName : "CTY TNHH BLEEZY SECURITY";
     }
 
     public void setBankAccountName(String bankAccountName) {

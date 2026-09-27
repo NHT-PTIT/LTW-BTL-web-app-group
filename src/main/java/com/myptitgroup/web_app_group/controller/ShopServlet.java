@@ -129,7 +129,7 @@ public class ShopServlet extends HttpServlet {
         request.setAttribute("isShopDataLoaded", true);
 
         // Tiêu đề động
-        String pageTitle = "Cửa hàng sản phẩm - Bleezy Inverter & Solar Power";
+        String pageTitle = "Cửa hàng thiết bị an ninh - Bleezy Security";
         if (categoryId != null) {
             Category currentCat = categoryDAO.getById(categoryId);
             if (currentCat != null) {

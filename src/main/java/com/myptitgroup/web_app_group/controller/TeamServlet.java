@@ -36,7 +36,7 @@ public class TeamServlet extends HttpServlet {
         // 3. Đưa dữ liệu vào Request Attributes
         request.setAttribute("teamMembers", teamMembers);
         request.setAttribute("companyInfo", companyInfo);
-        request.setAttribute("pageTitle", "Đội ngũ chuyên gia kỹ thuật - Bleezy Inverter & Solar Power");
+        request.setAttribute("pageTitle", "Đội ngũ kỹ thuật & Chuyên gia an ninh - Bleezy Security");
         request.setAttribute("activeMenu", "pages");
 
         // 4. Forward sang View team.jsp

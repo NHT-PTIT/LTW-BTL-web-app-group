@@ -78,7 +78,7 @@ public class WishlistServlet extends HttpServlet {
         List<Product> wishlist = wishlistDAO.getWishlistProducts(currentUser.getId());
         request.setAttribute("wishlistProducts", wishlist);
         request.setAttribute("activeTab", "wishlist");
-        request.setAttribute("pageTitle", "Sản phẩm yêu thích - Bleezy Inverter & Solar");
+        request.setAttribute("pageTitle", "Sản phẩm yêu thích - Bleezy Security");
         request.getRequestDispatcher("/account-wishlist.jsp").forward(request, response);
     }
 

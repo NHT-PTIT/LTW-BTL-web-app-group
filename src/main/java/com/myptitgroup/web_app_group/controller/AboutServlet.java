@@ -36,7 +36,7 @@ public class AboutServlet extends HttpServlet {
         // 3. Đưa dữ liệu vào Request Attributes
         request.setAttribute("companyInfo", companyInfo);
         request.setAttribute("teamMembers", teamMembers);
-        request.setAttribute("pageTitle", "Về chúng tôi - Bleezy Inverter & Solar Power");
+        request.setAttribute("pageTitle", "Về chúng tôi - Bleezy Security");
         request.setAttribute("activeMenu", "about");
 
         // 4. Forward sang View about.jsp

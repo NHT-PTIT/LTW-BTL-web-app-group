@@ -414,9 +414,16 @@ ul.pagination li.active a, ul.pagination li > a:hover, ul.pagination li.active a
 }
 .single-top-right > p {
     display: inline-block;
+    margin-bottom: 0;
 }
 .header-right-top {
     position: relative;
+    height: 50px;
+}
+.header-right-top .row {
+    display: flex;
+    align-items: center;
+    height: 50px;
 }
 .header-right-overlay:before {
     border-color: #f26723 transparent;
@@ -430,11 +437,25 @@ ul.pagination li.active a, ul.pagination li > a:hover, ul.pagination li.active a
 }
 .single-top-right {
     color: #fff;
-    margin-top: 11px;
     text-align: center;
+}
+.single-top-right.header-top-right-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    text-align: right;
+}
+.single-top-right.header-top-right-group .cart-top-menu {
+    float: none;
+    display: inline-flex;
+    align-items: center;
 }
 .cart-top-menu {
     float: right;
+}
+.cart-icon {
+    color: #fff;
 }
 .dropdown-menu.cart-dropdown {
     border-radius: 0;
@@ -443,7 +464,7 @@ ul.pagination li.active a, ul.pagination li > a:hover, ul.pagination li.active a
     min-width: 320px;
     padding: 20px;
     right: 0;
-    top: 40px;
+    top: 36px;
     color: #333;
     z-index: 99999999
 }

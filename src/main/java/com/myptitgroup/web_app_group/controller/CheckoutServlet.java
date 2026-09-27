@@ -60,7 +60,7 @@ public class CheckoutServlet extends HttpServlet {
 
         com.myptitgroup.web_app_group.dao.CompanyInfoDAO companyInfoDAO = new com.myptitgroup.web_app_group.dao.CompanyInfoDAO();
         request.setAttribute("companyInfo", companyInfoDAO.getCompanyInfo());
-        request.setAttribute("pageTitle", "Thanh toán & Đặt hàng - Bleezy Inverter & Solar Power");
+        request.setAttribute("pageTitle", "Thanh toán & Đặt hàng - Bleezy Security");
         request.getRequestDispatcher("/checkout.jsp").forward(request, response);
     }
 

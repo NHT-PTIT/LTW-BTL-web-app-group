@@ -7,7 +7,7 @@
         <div>
             <i class="fa-solid fa-phone me-1"></i> Hotline: <strong>${companyInfo != null ? companyInfo.hotline : '1900 6868'}</strong>
             <span style="margin: 0 10px; opacity: 0.4;">|</span>
-            <i class="fa-solid fa-envelope me-1"></i> ${companyInfo != null ? companyInfo.email : 'contact@ptittech.vn'}
+            <i class="fa-solid fa-envelope me-1"></i> ${companyInfo != null ? companyInfo.email : 'contact@bleezysecurity.vn'}
         </div>
         <div>
             <!-- Khu vực thông tin liên hệ -->
@@ -21,13 +21,13 @@
         <div class="navbar-inner">
             <!-- Brand Logo -->
             <a href="${pageContext.request.contextPath}/" class="logo-brand">
-                <i class="fa-solid fa-bolt" style="color: #2563eb;"></i>
-                PTIT<span>TECH</span>
+                <i class="fa-solid fa-shield-halved" style="color: #2563eb;"></i>
+                BLEEZY<span>SECURITY</span>
             </a>
 
             <!-- Search Form -->
             <form action="${pageContext.request.contextPath}/products" method="GET" class="search-form">
-                <input type="text" name="keyword" value="${param.keyword}" placeholder="Tìm kiếm biến tần, aptomat, thương hiệu, công suất...">
+                <input type="text" name="keyword" value="${param.keyword}" placeholder="Tìm kiếm camera CCTV, khóa thông minh, máy chấm công...">
                 <button type="submit">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>

@@ -6,7 +6,7 @@
 </c:if>
 
 <jsp:include page="/common/header.jsp">
-    <jsp:param name="pageTitle" value="Sản phẩm yêu thích - Bleezy Inverter & Solar" />
+    <jsp:param name="pageTitle" value="Sản phẩm yêu thích - Bleezy Security" />
     <jsp:param name="activeMenu" value="shop" />
 </jsp:include>
 

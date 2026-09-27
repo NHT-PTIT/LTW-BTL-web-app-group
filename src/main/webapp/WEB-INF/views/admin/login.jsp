@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập Quản Trị - Bleezy Solar Admin Portal</title>
+    <title>Đăng Nhập Quản Trị - Bleezy Security Admin Portal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,9 +122,9 @@
     <div class="brand-header">
         <img src="${pageContext.request.contextPath}/assets/img/site-logo.png" alt="Bleezy Logo" class="brand-logo"
              onerror="this.style.display='none'; document.getElementById('login-fallback-icon').style.display='block';">
-        <i id="login-fallback-icon" class="fa-solid fa-solar-panel" style="display:none; font-size: 36px; color: #f26723; margin-bottom: 8px;"></i>
-        <h2>BLEEZY SOLAR ADMIN</h2>
-        <p>Hệ thống Quản trị Biến tần & Năng lượng Mặt trời</p>
+        <i id="login-fallback-icon" class="fa-solid fa-shield-halved" style="display:none; font-size: 36px; color: #f26723; margin-bottom: 8px;"></i>
+        <h2>BLEEZY SECURITY ADMIN</h2>
+        <p>Hệ thống Quản trị Thiết bị An Ninh & Giám sát CCTV</p>
     </div>
 
     <c:if test="${not empty errorMessage}">

@@ -63,7 +63,7 @@ public class CartServlet extends HttpServlet {
             request.setAttribute("alertInfo", "Đã hủy áp dụng mã giảm giá.");
         }
 
-        request.setAttribute("pageTitle", "Giỏ hàng của bạn - Bleezy Inverter & Solar Power");
+        request.setAttribute("pageTitle", "Giỏ hàng của bạn - Bleezy Security");
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
     }
 

@@ -29,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        request.setAttribute("pageTitle", "Đăng ký tài khoản - Bleezy Inverter & Solar Power");
+        request.setAttribute("pageTitle", "Đăng ký tài khoản - Bleezy Security");
         request.getRequestDispatcher("/register.jsp").forward(request, response);
     }
 

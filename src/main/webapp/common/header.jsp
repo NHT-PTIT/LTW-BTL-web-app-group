@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>${not empty param.pageTitle ? param.pageTitle : 'Bleezy - Inverter & Solar Power'}</title>
+    <title>${not empty param.pageTitle ? param.pageTitle : 'Bleezy Security - Thiết Bị & Giải Pháp An Ninh Toàn Diện'}</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/assets/img/site-logo.png">
@@ -111,51 +111,58 @@
                 <div class="col-md-9">
                     <div class="header-right">
                         <div class="header-right-top">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="single-top-right">
-                                        <p>Hotline: <a href="tel:19006868">1900 6868 - 0988 123 456</a></p>
+                            <div class="row" style="display: flex; align-items: center; height: 50px; margin: 0;">
+                                <div class="col-md-4 col-sm-4" style="padding-left: 0;">
+                                    <div class="single-top-right" style="text-align: left; margin-top: 0;">
+                                        <p style="margin: 0; font-size: 13px; color: #ffffff; white-space: nowrap;">Hotline: <a href="tel:19006868" style="color: #ffffff; font-weight: 600; text-decoration: none;">1900 6868 - 0988 123 456</a></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="single-top-right">
-                                        <ul>
-                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                <div class="col-md-2 col-sm-2" style="padding: 0;">
+                                    <div class="single-top-right" style="text-align: center; margin-top: 0;">
+                                        <ul style="margin: 0; padding: 0; list-style: none;">
+                                            <li><a href="#" style="color: #ffffff;"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="#" style="color: #ffffff;"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="#" style="color: #ffffff;"><i class="fa fa-linkedin"></i></a></li>
+                                            <li><a href="#" style="color: #ffffff;"><i class="fa fa-google-plus"></i></a></li>
+                                            <li><a href="#" style="color: #ffffff;"><i class="fa fa-skype"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="single-top-right">
-                                        <p>
+                                <div class="col-md-6 col-sm-6" style="padding-right: 0;">
+                                    <div class="single-top-right header-top-right-group" style="display: flex; align-items: center; justify-content: flex-end; gap: 16px; margin-top: 0; text-align: right;">
+                                        <div class="header-user-menu" style="display: inline-flex; align-items: center;">
                                             <c:choose>
                                                 <c:when test="${not empty sessionScope.currentUser and empty sessionScope.currentAdmin}">
-                                                    <span class="dropdown" style="display: inline-block;">
-                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #0f172a; font-weight: 600;">
-                                                            <i class="fa fa-user-circle" style="color: #f26723;"></i> Xin chào, <strong>${sessionScope.currentUser.fullName}</strong> <i class="fa fa-angle-down"></i>
+                                                    <span class="dropdown" style="display: inline-block; position: relative;">
+                                                        <a href="${pageContext.request.contextPath}/account/profile" style="color: #ffffff; font-weight: 600; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Truy cập trang Quản lý tài khoản">
+                                                            <i class="fa fa-user-circle" style="color: #ffffff; font-size: 14px;"></i>
+                                                            <span>Xin chào, <strong style="max-width: 150px; display: inline-block; vertical-align: bottom; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><c:out value="${sessionScope.currentUser.fullName}"/></strong></span>
                                                         </a>
-                                                        <ul class="dropdown-menu" style="left: auto; right: 0; min-width: 180px; padding: 6px 0; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);">
-                                                            <li><a href="${pageContext.request.contextPath}/account/profile" style="padding: 8px 16px; font-size: 13px;"><i class="fa fa-id-card-o" style="margin-right: 8px; color: #f26723;"></i> Hồ sơ cá nhân</a></li>
-                                                            <li><a href="${pageContext.request.contextPath}/account/orders" style="padding: 8px 16px; font-size: 13px;"><i class="fa fa-shopping-basket" style="margin-right: 8px; color: #f26723;"></i> Đơn hàng của tôi</a></li>
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: rgba(255,255,255,0.9); margin-left: 2px; padding: 2px 4px; text-decoration: none;">
+                                                            <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu" style="left: auto; right: 0; min-width: 190px; padding: 6px 0; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); top: 32px; z-index: 9999999;">
+                                                            <li><a href="${pageContext.request.contextPath}/account/profile" style="padding: 8px 16px; font-size: 13px; color: #333;"><i class="fa fa-id-card-o" style="margin-right: 8px; color: #f26723;"></i> Quản lý tài khoản</a></li>
+                                                            <li><a href="${pageContext.request.contextPath}/account/orders" style="padding: 8px 16px; font-size: 13px; color: #333;"><i class="fa fa-shopping-basket" style="margin-right: 8px; color: #f26723;"></i> Đơn hàng của tôi</a></li>
+                                                            <li><a href="${pageContext.request.contextPath}/account/wishlist" style="padding: 8px 16px; font-size: 13px; color: #333;"><i class="fa fa-heart" style="margin-right: 8px; color: #e11d48;"></i> Sản phẩm yêu thích</a></li>
                                                             <li class="divider" style="margin: 4px 0;"></li>
                                                             <li><a href="${pageContext.request.contextPath}/logout" style="padding: 8px 16px; font-size: 13px; color: #dc2626;"><i class="fa fa-sign-out" style="margin-right: 8px;"></i> Đăng xuất</a></li>
                                                         </ul>
                                                     </span>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <i class="fa fa-user"></i> <a href="${pageContext.request.contextPath}/register">Đăng ký</a> | <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+                                                    <span style="font-size: 13px; color: #ffffff; white-space: nowrap;">
+                                                        <i class="fa fa-user"></i> <a href="${pageContext.request.contextPath}/register" style="color: #ffffff; text-decoration: none; font-weight: 500;">Đăng ký</a> | <a href="${pageContext.request.contextPath}/login" style="color: #ffffff; text-decoration: none; font-weight: 500;">Đăng nhập</a>
+                                                    </span>
                                                 </c:otherwise>
                                             </c:choose>
-                                        </p>
-                                        <div class="cart-top-menu">
-                                            <div class="login dropdown">
-                                                <a href="${pageContext.request.contextPath}/cart" class="dropdown-toggle cart-icon" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        </div>
+                                        <div class="cart-top-menu" style="float: none; margin: 0; display: inline-flex; align-items: center;">
+                                            <div class="login dropdown" style="position: relative;">
+                                                <a href="${pageContext.request.contextPath}/cart" class="dropdown-toggle cart-icon" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color: #ffffff; font-weight: 600; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;">
                                                    <i class="fa fa-shopping-bag"></i> Giỏ hàng (${empty sessionScope.cart ? 0 : sessionScope.cart.totalQuantity})
                                                 </a>
-                                                <div class="dropdown-menu cart-dropdown" aria-labelledby="dropdownMenu1">
+                                                <div class="dropdown-menu cart-dropdown" aria-labelledby="dropdownMenu1" style="top: 32px; z-index: 9999999;">
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.cart or empty sessionScope.cart.items}">
                                                             <p style="padding: 20px; color: #888; text-align: center; margin: 0;">Giỏ hàng của bạn đang trống.</p>
@@ -224,9 +231,17 @@
                                                     <ul>
                                                         <li><a href="${pageContext.request.contextPath}/track-order">Tra cứu đơn hàng</a></li>
                                                         <li><a href="${pageContext.request.contextPath}/team">Đội ngũ chuyên gia</a></li>
-                                                        <li><a href="${pageContext.request.contextPath}/404.jsp">Trang lỗi 404</a></li>
-                                                        <li><a href="${pageContext.request.contextPath}/login">Đăng nhập tài khoản</a></li>
-                                                        <li><a href="${pageContext.request.contextPath}/register">Đăng ký thành viên</a></li>
+                                                        <c:choose>
+                                                            <c:when test="${not empty sessionScope.currentUser and empty sessionScope.currentAdmin}">
+                                                                <li><a href="${pageContext.request.contextPath}/account/profile">Quản lý tài khoản</a></li>
+                                                                <li><a href="${pageContext.request.contextPath}/account/orders">Đơn hàng của tôi</a></li>
+                                                                <li><a href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <li><a href="${pageContext.request.contextPath}/login">Đăng nhập tài khoản</a></li>
+                                                                <li><a href="${pageContext.request.contextPath}/register">Đăng ký thành viên</a></li>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </ul>
                                                 </li>
                                                 <li class="${param.activeMenu == 'contact' ? 'current-page-item' : ''}"><a href="${pageContext.request.contextPath}/contact">Liên hệ & Tư vấn</a></li>
@@ -241,7 +256,7 @@
                                         </div>
                                         <div class="search-form">
                                             <form action="${pageContext.request.contextPath}/shop" method="get">
-                                                <input type="search" name="keyword" placeholder="Tìm kiếm thiết bị..." >
+                                                <input type="search" name="keyword" placeholder="Tìm kiếm camera, khóa thông minh, thiết bị an ninh..." >
                                                 <button type="submit"><i class="fa fa-search"></i></button>
                                             </form>
                                         </div>
