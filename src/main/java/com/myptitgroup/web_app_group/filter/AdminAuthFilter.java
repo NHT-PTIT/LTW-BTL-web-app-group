@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * Filter bảo vệ phân hệ quản trị Admin
  * Chặn truy cập trái phép vào các đường dẫn /admin/* khi chưa đăng nhập
  */
-@WebFilter(filterName = "AdminAuthFilter", urlPatterns = {"/admin/*"})
+@WebFilter(filterName = "AdminAuthFilter", urlPatterns = {"/admin/*", "/admin"})
 public class AdminAuthFilter implements Filter {
 
     @Override

@@ -14,7 +14,10 @@
             <div>
                 <div class="admin-topbar-title">${isEdit ? 'SỬA DANH MỤC' : 'THÊM DANH MỤC MỚI'}</div>
                 <p style="font-size: 13px; color: var(--admin-muted); margin-top: 2px;">
-                    ${isEdit ? 'Chỉnh sửa thông tin danh mục: '.concat(category.name) : 'Thiết lập danh mục mới để phân loại thiết bị biến tần & năng lượng mặt trời.'}
+                    <c:choose>
+                        <c:when test="${isEdit}">Chỉnh sửa thông tin danh mục: <c:out value="${category.name}"/></c:when>
+                        <c:otherwise>Thiết lập danh mục mới để phân loại thiết bị biến tần & năng lượng mặt trời.</c:otherwise>
+                    </c:choose>
                 </p>
             </div>
         </div>

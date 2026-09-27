@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/common/admin-header.jsp" />
 <jsp:include page="/WEB-INF/views/common/admin-sidebar.jsp" />
@@ -67,30 +68,32 @@
                             <tr>
                                 <td><span style="color: var(--admin-muted); font-size: 12px;">#${c.id}</span></td>
                                 <td style="min-width: 180px;">
-                                    <div style="font-weight: 700; color: #0f172a;">${c.fullName}</div>
+                                    <div style="font-weight: 700; color: #0f172a;"><c:out value="${c.fullName}"/></div>
                                     <div style="margin-top: 2px;">
                                         <a href="tel:${c.phone}" style="color: #0284c7; text-decoration: none; font-size: 13px; font-weight: 500;">
-                                            <i class="fa-solid fa-phone me-1" style="font-size: 11px;"></i>${c.phone}
+                                            <i class="fa-solid fa-phone me-1" style="font-size: 11px;"></i><c:out value="${c.phone}"/>
                                         </a>
                                     </div>
                                     <c:if test="${not empty c.email}">
                                         <div style="font-size: 12px; color: var(--admin-muted); margin-top: 2px;">
                                             <a href="mailto:${c.email}" style="color: inherit; text-decoration: none;">
-                                                <i class="fa-solid fa-envelope me-1" style="font-size: 10px;"></i>${c.email}
+                                                <i class="fa-solid fa-envelope me-1" style="font-size: 10px;"></i><c:out value="${c.email}"/>
                                             </a>
                                         </div>
                                     </c:if>
                                 </td>
                                 <td style="max-width: 320px;">
                                     <div style="font-weight: 600; color: #1e293b; margin-bottom: 4px;">
-                                        ${not empty c.subject ? c.subject : 'Tư vấn biến tần & hệ thống điện mặt trời'}
+                                        <c:out value="${not empty c.subject ? c.subject : 'Tư vấn biến tần & hệ thống điện mặt trời'}"/>
                                     </div>
-                                    <div style="font-size: 13px; color: #475569; background: #f8fafc; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; line-height: 1.4;">
-                                        "${c.message}"
+                                    <div style="font-size: 13px; color: #475569; background: #f8fafc; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; line-height: 1.4; word-break: break-word;">
+                                        "<c:out value="${c.message}"/>"
                                     </div>
                                 </td>
                                 <td>
-                                    <span style="font-size: 12px; color: var(--admin-muted);">${c.getFormattedCreatedAt()}</span>
+                                    <span style="font-size: 12px; color: var(--admin-muted);">
+                                        <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy HH:mm" />
+                                    </span>
                                 </td>
                                 <td>
                                     <c:choose>
@@ -119,7 +122,7 @@
                                                 <i class="fa-solid fa-check"></i>
                                             </button>
                                         </div>
-                                        <input type="text" name="adminNotes" value="${c.adminNotes}" placeholder="Ghi chú tư vấn (đã gọi, hẹn khảo sát...)" 
+                                        <input type="text" name="adminNotes" value="<c:out value='${c.adminNotes}'/>" placeholder="Ghi chú tư vấn (đã gọi, hẹn khảo sát...)" 
                                                class="admin-input" style="font-size: 12px; padding: 4px 8px;">
                                     </form>
                                 </td>

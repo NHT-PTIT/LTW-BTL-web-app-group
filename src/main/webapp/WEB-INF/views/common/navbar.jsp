@@ -10,9 +10,7 @@
             <i class="fa-solid fa-envelope me-1"></i> ${companyInfo != null ? companyInfo.email : 'contact@ptittech.vn'}
         </div>
         <div>
-            <a href="${pageContext.request.contextPath}/admin/login" style="color: #94a3b8; font-size: 12px;">
-                <i class="fa-solid fa-lock me-1"></i> Quản trị viên
-            </a>
+            <!-- Khu vực thông tin liên hệ -->
         </div>
     </div>
 </div>

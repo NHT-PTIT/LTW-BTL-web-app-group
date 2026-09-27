@@ -62,7 +62,17 @@
                 <c:choose>
                     <c:when test="${not empty teamMembers}">
                         <c:forEach items="${teamMembers}" var="member">
-                            <c:set var="avatarImg" value="${not empty member.avatarUrl ? (member.avatarUrl.startsWith('http') ? member.avatarUrl : pageContext.request.contextPath.concat('/').concat(member.avatarUrl)) : pageContext.request.contextPath.concat('/assets/img/team-1.jpg')}" />
+                            <c:set var="avatarImg" value="${pageContext.request.contextPath}/assets/img/team-1.jpg" />
+                            <c:if test="${not empty member.avatarUrl}">
+                                <c:choose>
+                                    <c:when test="${member.avatarUrl.startsWith('http')}">
+                                        <c:set var="avatarImg" value="${member.avatarUrl}" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="avatarImg" value="${pageContext.request.contextPath}/${member.avatarUrl}" />
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:if>
                             <div class="col-md-3 col-sm-6" style="margin-bottom: 35px;">
                                 <div class="single-team-slide" style="background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 14px rgba(0,0,0,0.04); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';">
                                     <div class="team-img" style="position: relative;">

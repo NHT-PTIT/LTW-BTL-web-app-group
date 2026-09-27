@@ -84,15 +84,15 @@
         <div class="admin-filters-bar">
             <!-- Tabs Trạng Thái -->
             <div class="admin-tab-group">
-                <a href="${pageContext.request.contextPath}/admin/users?status=ALL${not empty keyword ? '&keyword='.concat(keyword) : ''}" 
+                <a href="${pageContext.request.contextPath}/admin/users?status=ALL<c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if>" 
                    class="admin-tab ${currentStatus == 'ALL' ? 'active' : ''}">
                     Tất cả <span style="font-size: 11px; opacity: 0.8;">(${userStats['TOTAL']})</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/admin/users?status=ACTIVE${not empty keyword ? '&keyword='.concat(keyword) : ''}" 
+                <a href="${pageContext.request.contextPath}/admin/users?status=ACTIVE<c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if>" 
                    class="admin-tab ${currentStatus == 'ACTIVE' ? 'active' : ''}">
                     Hoạt động <span style="font-size: 11px; opacity: 0.8;">(${userStats['ACTIVE']})</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/admin/users?status=LOCKED${not empty keyword ? '&keyword='.concat(keyword) : ''}" 
+                <a href="${pageContext.request.contextPath}/admin/users?status=LOCKED<c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if>" 
                    class="admin-tab ${currentStatus == 'LOCKED' ? 'active' : ''}">
                     Bị khóa <span style="font-size: 11px; opacity: 0.8;">(${userStats['LOCKED']})</span>
                 </a>
@@ -263,4 +263,5 @@
     </div>
 </main>
 
-<jsp:include page="/WEB-INF/views/common/admin-footer.jsp" />
+</body>
+</html>

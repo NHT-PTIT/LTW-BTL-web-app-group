@@ -75,6 +75,7 @@ public class LoginServlet extends HttpServlet {
 
         // Đăng nhập thành công -> Tạo phiên làm việc mới
         HttpSession session = request.getSession(true);
+        session.removeAttribute("currentAdmin"); // Tách biệt phiên làm việc giữa Admin và User
         session.setAttribute("currentUser", user);
 
         // Điều hướng thông minh

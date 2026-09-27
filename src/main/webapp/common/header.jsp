@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-xs-6">
                         <c:choose>
-                            <c:when test="${not empty sessionScope.currentUser}">
+                            <c:when test="${not empty sessionScope.currentUser and empty sessionScope.currentAdmin}">
                                 <p><i class="fa fa-user"></i> <a href="${pageContext.request.contextPath}/account/profile">${sessionScope.currentUser.fullName}</a> | <a href="${pageContext.request.contextPath}/account/wishlist" style="color: #e11d48;"><i class="fa fa-heart"></i> Yêu thích</a> | <a href="${pageContext.request.contextPath}/logout" style="color: #dc2626;">Đăng xuất</a></p>
                             </c:when>
                             <c:otherwise>
@@ -132,7 +132,7 @@
                                     <div class="single-top-right">
                                         <p>
                                             <c:choose>
-                                                <c:when test="${not empty sessionScope.currentUser}">
+                                                <c:when test="${not empty sessionScope.currentUser and empty sessionScope.currentAdmin}">
                                                     <span class="dropdown" style="display: inline-block;">
                                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #0f172a; font-weight: 600;">
                                                             <i class="fa fa-user-circle" style="color: #f26723;"></i> Xin chào, <strong>${sessionScope.currentUser.fullName}</strong> <i class="fa fa-angle-down"></i>
@@ -149,9 +149,6 @@
                                                     <i class="fa fa-user"></i> <a href="${pageContext.request.contextPath}/register">Đăng ký</a> | <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
                                                 </c:otherwise>
                                             </c:choose>
-                                            <a href="${pageContext.request.contextPath}/admin/dashboard" title="Trang Quản Trị Hệ Thống" style="margin-left: 8px; color: #f26723; font-weight: bold;">
-                                                <i class="fa fa-lock"></i> Admin
-                                            </a>
                                         </p>
                                         <div class="cart-top-menu">
                                             <div class="login dropdown">

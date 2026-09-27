@@ -2,6 +2,7 @@ package com.myptitgroup.web_app_group.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * JavaBean ánh xạ bảng contact_inquiries (Liên hệ & Yêu cầu tư vấn)
@@ -138,5 +139,10 @@ public class ContactInquiry implements Serializable {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getFormattedCreatedAt() {
+        if (createdAt == null) return "";
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(createdAt);
     }
 }

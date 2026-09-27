@@ -101,6 +101,12 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
+        if (userDAO.getLastError() != null) {
+            request.setAttribute("error", "Lỗi kết nối cơ sở dữ liệu: " + userDAO.getLastError());
+            request.getRequestDispatcher("/register.jsp").forward(request, response);
+            return;
+        }
+
         // Tạo user mới
         String passwordHash = SecurityUtils.hashPassword(password);
         User newUser = new User(username, passwordHash, fullName, email, phone, address);
@@ -109,7 +115,11 @@ public class RegisterServlet extends HttpServlet {
         if (success) {
             response.sendRedirect(request.getContextPath() + "/login?msg=reg_success");
         } else {
-            request.setAttribute("error", "Đăng ký không thành công do lỗi hệ thống. Vui lòng thử lại!");
+            String errorMsg = "Đăng ký không thành công do lỗi hệ thống.";
+            if (userDAO.getLastError() != null && !userDAO.getLastError().trim().isEmpty()) {
+                errorMsg += " Chi tiết: " + userDAO.getLastError();
+            }
+            request.setAttribute("error", errorMsg);
             request.getRequestDispatcher("/register.jsp").forward(request, response);
         }
     }

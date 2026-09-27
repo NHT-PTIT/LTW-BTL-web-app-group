@@ -143,17 +143,17 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <p>
-                                        <input type="text" name="fullName" placeholder="Họ và tên của bạn *" value="<c:out value='${not empty formFullName ? formFullName : (not empty sessionScope.currentUser ? sessionScope.currentUser.fullName : "")}' />" required>
+                                        <input type="text" name="fullName" placeholder="Họ và tên của bạn *" value="<c:out value='${not empty formFullName ? formFullName : (not empty sessionScope.currentUser and empty sessionScope.currentAdmin ? sessionScope.currentUser.fullName : "")}' />" required>
                                     </p>
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <p>
-                                        <input type="email" name="email" placeholder="Địa chỉ Email *" value="<c:out value='${not empty formEmail ? formEmail : (not empty sessionScope.currentUser ? sessionScope.currentUser.email : "")}' />" required>
+                                        <input type="email" name="email" placeholder="Địa chỉ Email *" value="<c:out value='${not empty formEmail ? formEmail : (not empty sessionScope.currentUser and empty sessionScope.currentAdmin ? sessionScope.currentUser.email : "")}' />" required>
                                     </p>
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <p>
-                                        <input type="tel" name="phone" placeholder="Số điện thoại liên hệ *" value="<c:out value='${not empty formPhone ? formPhone : (not empty sessionScope.currentUser ? sessionScope.currentUser.phone : "")}' />" required>
+                                        <input type="tel" name="phone" placeholder="Số điện thoại liên hệ *" value="<c:out value='${not empty formPhone ? formPhone : (not empty sessionScope.currentUser and empty sessionScope.currentAdmin ? sessionScope.currentUser.phone : "")}' />" required>
                                     </p>
                                 </div>
                             </div>

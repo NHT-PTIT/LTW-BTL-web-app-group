@@ -21,6 +21,12 @@ import java.util.Map;
  */
 public class UserDAO {
 
+    private String lastError = null;
+
+    public String getLastError() {
+        return lastError;
+    }
+
     private User mapRow(ResultSet rs) throws SQLException {
         User u = new User();
         u.setId(rs.getInt("id"));
@@ -55,6 +61,7 @@ public class UserDAO {
      * Xác thực đăng nhập bằng Username hoặc Email
      */
     public User authenticate(String usernameOrEmail, String rawPassword) {
+        this.lastError = null;
         if (usernameOrEmail == null || rawPassword == null) {
             return null;
         }
@@ -75,6 +82,7 @@ public class UserDAO {
                 }
             }
         } catch (SQLException e) {
+            this.lastError = e.getMessage();
             e.printStackTrace();
         } finally {
             DBContext.close(conn, ps, rs);
@@ -86,6 +94,7 @@ public class UserDAO {
      * Kiểm tra username đã tồn tại chưa
      */
     public boolean existsByUsername(String username) {
+        this.lastError = null;
         String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
         Connection conn = null;
         PreparedStatement ps = null;
@@ -99,6 +108,7 @@ public class UserDAO {
                 return rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
+            this.lastError = e.getMessage();
             e.printStackTrace();
         } finally {
             DBContext.close(conn, ps, rs);
@@ -110,6 +120,7 @@ public class UserDAO {
      * Kiểm tra email đã tồn tại chưa
      */
     public boolean existsByEmail(String email) {
+        this.lastError = null;
         String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
         Connection conn = null;
         PreparedStatement ps = null;
@@ -123,6 +134,7 @@ public class UserDAO {
                 return rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
+            this.lastError = e.getMessage();
             e.printStackTrace();
         } finally {
             DBContext.close(conn, ps, rs);
@@ -134,6 +146,7 @@ public class UserDAO {
      * Đăng ký tài khoản thành viên mới
      */
     public boolean register(User user) {
+        this.lastError = null;
         String sql = "INSERT INTO users (username, password_hash, full_name, email, phone, address, is_active) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
@@ -142,23 +155,25 @@ public class UserDAO {
         try {
             conn = DBContext.getConnection();
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, user.getUsername().trim());
+            ps.setString(1, user.getUsername() != null ? user.getUsername().trim() : "");
             ps.setString(2, user.getPasswordHash());
-            ps.setString(3, user.getFullName().trim());
-            ps.setString(4, user.getEmail().trim());
-            ps.setString(5, user.getPhone() != null ? user.getPhone().trim() : null);
-            ps.setString(6, user.getAddress() != null ? user.getAddress().trim() : null);
+            ps.setString(3, user.getFullName() != null ? user.getFullName().trim() : "");
+            ps.setString(4, user.getEmail() != null ? user.getEmail().trim().toLowerCase() : "");
+            ps.setString(5, (user.getPhone() != null && !user.getPhone().trim().isEmpty()) ? user.getPhone().trim() : null);
+            ps.setString(6, (user.getAddress() != null && !user.getAddress().trim().isEmpty()) ? user.getAddress().trim() : null);
             ps.setBoolean(7, user.isActive());
 
             int affected = ps.executeUpdate();
             if (affected > 0) {
                 rs = ps.getGeneratedKeys();
-                if (rs.next()) {
+                if (rs != null && rs.next()) {
                     user.setId(rs.getInt(1));
                 }
                 return true;
             }
         } catch (SQLException e) {
+            this.lastError = e.getMessage();
+            System.err.println("[UserDAO.register ERROR] Lỗi khi thêm mới user vào CSDL: " + e.getMessage());
             e.printStackTrace();
         } finally {
             DBContext.close(conn, ps, rs);

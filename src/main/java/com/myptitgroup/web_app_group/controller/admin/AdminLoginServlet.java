@@ -62,6 +62,7 @@ public class AdminLoginServlet extends HttpServlet {
         if (admin != null) {
             // Đăng nhập thành công -> Lưu vào Session
             HttpSession session = request.getSession(true);
+            session.removeAttribute("currentUser"); // Đảm bảo người dùng trang web bên ngoài không còn hiển thị thông tin người dùng
             session.setAttribute("currentAdmin", admin);
             response.sendRedirect(request.getContextPath() + "/admin/dashboard");
         } else {

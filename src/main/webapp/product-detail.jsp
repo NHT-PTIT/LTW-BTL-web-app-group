@@ -363,7 +363,7 @@
                                                     </select>
                                                 </div>
 
-                                                <c:if test="${empty sessionScope.currentUser}">
+                                                <c:if test="${empty sessionScope.currentUser or not empty sessionScope.currentAdmin}">
                                                     <div class="form-group" style="margin-bottom: 12px;">
                                                         <label style="font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 4px;">Họ tên của bạn *</label>
                                                         <input type="text" name="customerName" class="form-control" placeholder="Ví dụ: Kỹ sư Hoàng Nam" required style="font-size: 13px;">

@@ -134,13 +134,13 @@
                             <h3>Danh mục sản phẩm</h3>
                             <ul class="product-categories">
                                 <li class="${empty selectedCategoryId ? 'current-cat' : ''}">
-                                    <a href="${pageContext.request.contextPath}/shop${not empty selectedBrand ? '?brand='.concat(selectedBrand) : ''}">
+                                    <a href="${pageContext.request.contextPath}/shop<c:if test="${not empty selectedBrand}">?brand=<c:out value="${selectedBrand}"/></c:if>">
                                         <strong>Tất cả danh mục</strong>
                                     </a>
                                 </li>
                                 <c:forEach items="${categories}" var="cat">
                                     <li class="${selectedCategoryId == cat.id ? 'current-cat' : ''}">
-                                        <a href="${pageContext.request.contextPath}/shop?categoryId=${cat.id}${not empty selectedBrand ? '&brand='.concat(selectedBrand) : ''}">
+                                        <a href="${pageContext.request.contextPath}/shop?categoryId=${cat.id}<c:if test="${not empty selectedBrand}">&brand=<c:out value="${selectedBrand}"/></c:if>">
                                             <c:out value="${cat.name}"/>
                                         </a>
                                     </li>
@@ -153,13 +153,13 @@
                             <h3>Thương hiệu</h3>
                             <ul class="product-categories">
                                 <li class="${empty selectedBrand ? 'current-cat' : ''}">
-                                    <a href="${pageContext.request.contextPath}/shop${not empty selectedCategoryId ? '?categoryId='.concat(selectedCategoryId) : ''}">
+                                    <a href="${pageContext.request.contextPath}/shop<c:if test="${not empty selectedCategoryId}">?categoryId=<c:out value="${selectedCategoryId}"/></c:if>">
                                         <strong>Tất cả thương hiệu</strong>
                                     </a>
                                 </li>
                                 <c:forEach items="${brands}" var="b">
                                     <li class="${selectedBrand == b ? 'current-cat' : ''}">
-                                        <a href="${pageContext.request.contextPath}/shop?brand=${b}${not empty selectedCategoryId ? '&categoryId='.concat(selectedCategoryId) : ''}">
+                                        <a href="${pageContext.request.contextPath}/shop?brand=${b}<c:if test="${not empty selectedCategoryId}">&categoryId=<c:out value="${selectedCategoryId}"/></c:if>">
                                             <c:out value="${b}"/>
                                         </a>
                                     </li>
@@ -314,7 +314,7 @@
                                         <!-- Previous Page Link -->
                                         <c:if test="${currentPage > 1}">
                                             <li>
-                                                <a href="${pageContext.request.contextPath}/shop?page=${currentPage - 1}${not empty selectedCategoryId ? '&categoryId='.concat(selectedCategoryId) : ''}${not empty selectedBrand ? '&brand='.concat(selectedBrand) : ''}${not empty keyword ? '&keyword='.concat(keyword) : ''}${not empty selectedSort ? '&sort='.concat(selectedSort) : ''}">
+                                                <a href="${pageContext.request.contextPath}/shop?page=${currentPage - 1}<c:if test="${not empty selectedCategoryId}">&categoryId=<c:out value="${selectedCategoryId}"/></c:if><c:if test="${not empty selectedBrand}">&brand=<c:out value="${selectedBrand}"/></c:if><c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if><c:if test="${not empty selectedSort}">&sort=<c:out value="${selectedSort}"/></c:if>">
                                                     <i class="fa fa-angle-left"></i>
                                                 </a>
                                             </li>
@@ -323,7 +323,7 @@
                                         <!-- Page Numbers -->
                                         <c:forEach begin="1" end="${totalPages}" var="pageIndex">
                                             <li class="${currentPage == pageIndex ? 'active' : ''}">
-                                                <a href="${pageContext.request.contextPath}/shop?page=${pageIndex}${not empty selectedCategoryId ? '&categoryId='.concat(selectedCategoryId) : ''}${not empty selectedBrand ? '&brand='.concat(selectedBrand) : ''}${not empty keyword ? '&keyword='.concat(keyword) : ''}${not empty selectedSort ? '&sort='.concat(selectedSort) : ''}">
+                                                <a href="${pageContext.request.contextPath}/shop?page=${pageIndex}<c:if test="${not empty selectedCategoryId}">&categoryId=<c:out value="${selectedCategoryId}"/></c:if><c:if test="${not empty selectedBrand}">&brand=<c:out value="${selectedBrand}"/></c:if><c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if><c:if test="${not empty selectedSort}">&sort=<c:out value="${selectedSort}"/></c:if>">
                                                     ${pageIndex}
                                                 </a>
                                             </li>
@@ -332,7 +332,7 @@
                                         <!-- Next Page Link -->
                                         <c:if test="${currentPage < totalPages}">
                                             <li>
-                                                <a href="${pageContext.request.contextPath}/shop?page=${currentPage + 1}${not empty selectedCategoryId ? '&categoryId='.concat(selectedCategoryId) : ''}${not empty selectedBrand ? '&brand='.concat(selectedBrand) : ''}${not empty keyword ? '&keyword='.concat(keyword) : ''}${not empty selectedSort ? '&sort='.concat(selectedSort) : ''}">
+                                                <a href="${pageContext.request.contextPath}/shop?page=${currentPage + 1}<c:if test="${not empty selectedCategoryId}">&categoryId=<c:out value="${selectedCategoryId}"/></c:if><c:if test="${not empty selectedBrand}">&brand=<c:out value="${selectedBrand}"/></c:if><c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if><c:if test="${not empty selectedSort}">&sort=<c:out value="${selectedSort}"/></c:if>">
                                                     <i class="fa fa-angle-right"></i>
                                                 </a>
                                             </li>

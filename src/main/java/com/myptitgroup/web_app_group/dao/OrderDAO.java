@@ -215,12 +215,28 @@ public class OrderDAO {
         }
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            sql.append("AND (order_code LIKE ? OR customer_name LIKE ? OR customer_phone LIKE ? OR customer_email LIKE ?) ");
-            String pat = "%" + keyword.trim() + "%";
-            params.add(pat);
-            params.add(pat);
-            params.add(pat);
-            params.add(pat);
+            String kw = keyword.trim();
+            if (kw.startsWith("#")) {
+                kw = kw.substring(1).trim();
+            }
+            String digits = kw.replaceAll("[^0-9]", "");
+            if (digits.length() >= 8) {
+                sql.append("AND (order_code LIKE ? OR customer_name LIKE ? OR customer_phone LIKE ? OR REPLACE(REPLACE(REPLACE(customer_phone, ' ', ''), '.', ''), '-', '') LIKE ? OR customer_email LIKE ?) ");
+                String pat = "%" + kw + "%";
+                String patDigits = "%" + digits + "%";
+                params.add(pat);
+                params.add(pat);
+                params.add(pat);
+                params.add(patDigits);
+                params.add(pat);
+            } else {
+                sql.append("AND (order_code LIKE ? OR customer_name LIKE ? OR customer_phone LIKE ? OR customer_email LIKE ?) ");
+                String pat = "%" + kw + "%";
+                params.add(pat);
+                params.add(pat);
+                params.add(pat);
+                params.add(pat);
+            }
         }
 
         sql.append("ORDER BY created_at DESC LIMIT ? OFFSET ?");
@@ -262,12 +278,28 @@ public class OrderDAO {
         }
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            sql.append("AND (order_code LIKE ? OR customer_name LIKE ? OR customer_phone LIKE ? OR customer_email LIKE ?) ");
-            String pat = "%" + keyword.trim() + "%";
-            params.add(pat);
-            params.add(pat);
-            params.add(pat);
-            params.add(pat);
+            String kw = keyword.trim();
+            if (kw.startsWith("#")) {
+                kw = kw.substring(1).trim();
+            }
+            String digits = kw.replaceAll("[^0-9]", "");
+            if (digits.length() >= 8) {
+                sql.append("AND (order_code LIKE ? OR customer_name LIKE ? OR customer_phone LIKE ? OR REPLACE(REPLACE(REPLACE(customer_phone, ' ', ''), '.', ''), '-', '') LIKE ? OR customer_email LIKE ?) ");
+                String pat = "%" + kw + "%";
+                String patDigits = "%" + digits + "%";
+                params.add(pat);
+                params.add(pat);
+                params.add(pat);
+                params.add(patDigits);
+                params.add(pat);
+            } else {
+                sql.append("AND (order_code LIKE ? OR customer_name LIKE ? OR customer_phone LIKE ? OR customer_email LIKE ?) ");
+                String pat = "%" + kw + "%";
+                params.add(pat);
+                params.add(pat);
+                params.add(pat);
+                params.add(pat);
+            }
         }
 
         Connection conn = null;

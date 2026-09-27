@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Controller hiển thị Bảng điều khiển tổng quan (Dashboard) cho Quản trị viên
  */
-@WebServlet(name = "AdminDashboardServlet", urlPatterns = {"/admin/dashboard"})
+@WebServlet(name = "AdminDashboardServlet", urlPatterns = {"/admin", "/admin/", "/admin/dashboard", "/admin/index"})
 public class AdminDashboardServlet extends HttpServlet {
 
     private final OrderDAO orderDAO = new OrderDAO();

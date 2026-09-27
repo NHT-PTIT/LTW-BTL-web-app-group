@@ -58,7 +58,7 @@
                             </h3>
 
                             <c:choose>
-                                <c:when test="${not empty sessionScope.currentUser}">
+                                <c:when test="${not empty sessionScope.currentUser and empty sessionScope.currentAdmin}">
                                     <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 15px; border-radius: 4px; margin-bottom: 20px; font-size: 13.5px; color: #1e40af;">
                                         <i class="fa fa-check-circle" style="color: #3b82f6; margin-right: 6px;"></i>
                                         Bạn đang đặt hàng với tài khoản <strong><c:out value="${sessionScope.currentUser.fullName}"/></strong>. Đơn hàng sẽ được liên kết trực tiếp vào <strong>Lịch sử đơn hàng</strong> của bạn.

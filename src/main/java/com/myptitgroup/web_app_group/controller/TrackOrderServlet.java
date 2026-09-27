@@ -27,12 +27,30 @@ public class TrackOrderServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         String query = request.getParameter("q");
+        if (query == null || query.trim().isEmpty()) {
+            query = request.getParameter("keyword");
+        }
+        if (query == null || query.trim().isEmpty()) {
+            query = request.getParameter("orderCode");
+        }
+        if (query == null || query.trim().isEmpty()) {
+            query = request.getParameter("code");
+        }
+        if (query == null || query.trim().isEmpty()) {
+            query = request.getParameter("phone");
+        }
+
         if (query != null) {
             query = query.trim();
         }
 
         if (query != null && !query.isEmpty()) {
-            List<Order> orders = orderDAO.getOrders(null, query, 1, 10);
+            String searchKey = query;
+            if (searchKey.startsWith("#")) {
+                searchKey = searchKey.substring(1).trim();
+            }
+
+            List<Order> orders = orderDAO.getOrders(null, searchKey, 1, 10);
             for (Order o : orders) {
                 o.setItems(orderDAO.getOrderItems(o.getId()));
             }

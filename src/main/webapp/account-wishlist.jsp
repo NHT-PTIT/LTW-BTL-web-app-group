@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:if test="${empty sessionScope.currentUser or not empty sessionScope.currentAdmin}">
+    <c:redirect url="/login" />
+</c:if>
 
 <jsp:include page="/common/header.jsp">
     <jsp:param name="pageTitle" value="Sản phẩm yêu thích - Bleezy Inverter & Solar" />

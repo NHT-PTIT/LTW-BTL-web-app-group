@@ -35,23 +35,23 @@
         <div class="admin-filters-bar">
             <!-- Tabs Trạng Thái -->
             <div class="admin-tab-group">
-                <a href="${pageContext.request.contextPath}/admin/orders?status=ALL${not empty keyword ? '&keyword='.concat(keyword) : ''}" 
+                <a href="${pageContext.request.contextPath}/admin/orders?status=ALL<c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if>" 
                    class="admin-tab ${currentStatus == 'ALL' ? 'active' : ''}">
                     Tất cả <span style="font-size: 11px; opacity: 0.8;">(${orderStats['TOTAL']})</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/admin/orders?status=PENDING${not empty keyword ? '&keyword='.concat(keyword) : ''}" 
+                <a href="${pageContext.request.contextPath}/admin/orders?status=PENDING<c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if>" 
                    class="admin-tab ${currentStatus == 'PENDING' ? 'active' : ''}">
                     Chờ xử lý <span class="nav-badge nav-badge-pending" style="font-size: 10px; padding: 1px 6px;">${orderStats['PENDING']}</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/admin/orders?status=SHIPPING${not empty keyword ? '&keyword='.concat(keyword) : ''}" 
+                <a href="${pageContext.request.contextPath}/admin/orders?status=SHIPPING<c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if>" 
                    class="admin-tab ${currentStatus == 'SHIPPING' ? 'active' : ''}">
                     Đang giao <span style="font-size: 11px; opacity: 0.8;">(${orderStats['SHIPPING']})</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/admin/orders?status=COMPLETED${not empty keyword ? '&keyword='.concat(keyword) : ''}" 
+                <a href="${pageContext.request.contextPath}/admin/orders?status=COMPLETED<c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if>" 
                    class="admin-tab ${currentStatus == 'COMPLETED' ? 'active' : ''}">
                     Hoàn tất <span style="font-size: 11px; opacity: 0.8;">(${orderStats['COMPLETED']})</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/admin/orders?status=CANCELLED${not empty keyword ? '&keyword='.concat(keyword) : ''}" 
+                <a href="${pageContext.request.contextPath}/admin/orders?status=CANCELLED<c:if test="${not empty keyword}">&keyword=<c:out value="${keyword}"/></c:if>" 
                    class="admin-tab ${currentStatus == 'CANCELLED' ? 'active' : ''}">
                     Đã hủy <span style="font-size: 11px; opacity: 0.8;">(${orderStats['CANCELLED']})</span>
                 </a>

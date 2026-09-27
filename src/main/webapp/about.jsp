@@ -129,7 +129,21 @@
                         <c:choose>
                             <c:when test="${not empty teamMembers}">
                                 <c:forEach items="${teamMembers}" var="m" varStatus="loop">
-                                    <c:set var="avatarImg" value="${not empty m.avatarUrl ? (m.avatarUrl.startsWith('http') ? m.avatarUrl : pageContext.request.contextPath.concat('/').concat(m.avatarUrl)) : pageContext.request.contextPath.concat('/assets/img/team-1.jpg')}" />
+                                    <c:choose>
+                                        <c:when test="${not empty m.avatarUrl}">
+                                            <c:choose>
+                                                <c:when test="${m.avatarUrl.startsWith('http')}">
+                                                    <c:set var="avatarImg" value="${m.avatarUrl}" />
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:set var="avatarImg" value="${pageContext.request.contextPath}/${m.avatarUrl}" />
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="avatarImg" value="${pageContext.request.contextPath}/assets/img/team-1.jpg" />
+                                        </c:otherwise>
+                                    </c:choose>
                                     <div class="single-team-slide">
                                         <div class="team-img">
                                             <a href="${pageContext.request.contextPath}/team">

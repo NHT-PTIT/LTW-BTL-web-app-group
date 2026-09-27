@@ -276,4 +276,5 @@
     </div>
 </main>
 
-<jsp:include page="/WEB-INF/views/common/admin-footer.jsp" />
+</body>
+</html>
